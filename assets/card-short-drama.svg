@@ -1,0 +1,15 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="48" fill="#131016"/>
+  <rect x="54" y="52" width="1092" height="571" rx="40" fill="url(#paint0_linear)"/>
+  <circle cx="248" cy="334" r="96" fill="#FF9A7B"/>
+  <circle cx="441" cy="287" r="56" fill="#FFE3A9"/>
+  <circle cx="711" cy="382" r="128" fill="#4E3859"/>
+  <text x="82" y="132" fill="#FFF8F1" font-size="54" font-family="Arial" font-weight="700">SHORT DRAMA</text>
+  <text x="84" y="566" fill="#F5E9E3" font-size="38" font-family="Arial">Story, conflict, pacing, hooks.</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="54" y1="52" x2="1146" y2="623" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#30181B"/>
+      <stop offset="1" stop-color="#1A151D"/>
+    </linearGradient>
+  </defs>
+</svg>

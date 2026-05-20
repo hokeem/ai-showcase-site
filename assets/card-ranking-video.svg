@@ -1,0 +1,16 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="48" fill="#171016"/>
+  <rect x="52" y="52" width="1096" height="571" rx="40" fill="url(#paint0_linear)"/>
+  <rect x="126" y="420" width="182" height="118" rx="26" fill="#FFCC71"/>
+  <rect x="352" y="326" width="182" height="212" rx="26" fill="#FFA2F0"/>
+  <rect x="578" y="238" width="182" height="300" rx="26" fill="#D4B2FF"/>
+  <rect x="804" y="156" width="182" height="382" rx="26" fill="#F3EDFF"/>
+  <text x="96" y="126" fill="#FFF7FF" font-size="54" font-family="Arial" font-weight="700">RANKING</text>
+  <text x="96" y="592" fill="#F6E8FF" font-size="38" font-family="Arial">Lists, comparisons, top picks, punchy pacing.</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="52" y1="52" x2="1148" y2="623" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#271525"/>
+      <stop offset="1" stop-color="#151018"/>
+    </linearGradient>
+  </defs>
+</svg>

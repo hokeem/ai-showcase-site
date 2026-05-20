@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Creative Showcase</title>
+    <meta
+      name="description"
+      content="AI 生成图片、视频与图文作品集，涵盖短剧、科普、资讯、排行榜、工具分享、视频脚本、游戏与图文内容。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="hero" id="top">
+        <div class="hero__noise"></div>
+        <div class="hero__copy">
+          <p class="hero__eyebrow">AIGC作品集 / AIGC Portfolio</p>
+          <h1 class="hero__title">HOKEEM</h1>
+          <p class="hero__stamp">SELECTED.WORKS</p>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__visual-frame">
+            <div class="hero__visual-overlay"></div>
+            <img
+              src="./assets/hero-placeholder.svg"
+              alt="Hero preview placeholder"
+              id="hero-preview"
+            />
+          </div>
+        </div>
+
+        <div class="hero__mirror">
+          <p class="hero__mirror-label">AI作品集 / AI Portfolio</p>
+          <strong class="hero__mirror-title">PORTFOLIO</strong>
+        </div>
+
+        <div class="hero__summary">
+          <span class="hero__arrow">&lt;</span>
+          <p>
+            一些经过市场验证并获得真实流量的 AIGC 作品。
+            A selection of AI-made visuals, videos and post formats that have
+            already proven they can attract real market attention and traffic.
+          </p>
+        </div>
+
+        <div class="hero__ticker" aria-hidden="true">
+          <div class="hero__ticker-track">
+            <span>SELECTED AIGC WORKS</span>
+            <span>SHORT DRAMA</span>
+            <span>NEWS MOTION</span>
+            <span>TOOL STORIES</span>
+            <span>IMAGE POSTS</span>
+            <span>GAME VISUALS</span>
+            <span>SELECTED AIGC WORKS</span>
+            <span>SHORT DRAMA</span>
+            <span>NEWS MOTION</span>
+            <span>TOOL STORIES</span>
+            <span>IMAGE POSTS</span>
+            <span>GAME VISUALS</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="intro">
+          <div class="intro__heading">
+            <h2>
+              <span>MARKET-TESTED</span>
+              <span>AIGC WORKS</span>
+              <span>THAT EARNED</span>
+              <span>REAL TRAFFIC</span>
+            </h2>
+          </div>
+        </section>
+
+        <section class="catalog" id="catalog">
+          <div class="category-grid" id="category-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <section class="drawer" id="category-drawer" aria-hidden="true">
+      <div class="drawer__backdrop" data-close-drawer></div>
+      <div class="drawer__panel">
+        <button class="drawer__close" type="button" data-close-drawer>
+          关闭 / Close
+        </button>
+        <div class="drawer__header">
+          <p class="drawer__eyebrow" id="drawer-tag"></p>
+          <h3 id="drawer-title"></h3>
+          <p id="drawer-description"></p>
+        </div>
+        <div class="drawer__works" id="drawer-works"></div>
+      </div>
+    </section>
+
+    <section class="lightbox" id="media-lightbox" aria-hidden="true">
+      <div class="lightbox__backdrop" data-close-lightbox></div>
+      <div class="lightbox__dialog">
+        <button class="lightbox__close" type="button" data-close-lightbox>
+          关闭 / Close
+        </button>
+        <div class="lightbox__meta">
+          <p id="lightbox-category"></p>
+          <h3 id="lightbox-title"></h3>
+          <span id="lightbox-note"></span>
+        </div>
+        <div class="lightbox__media" id="lightbox-media"></div>
+        <div class="lightbox__proof" id="lightbox-proof"></div>
+      </div>
+    </section>
+
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

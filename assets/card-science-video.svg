@@ -1,0 +1,16 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="675" rx="48" fill="#101416"/>
+  <rect x="52" y="52" width="1096" height="571" rx="40" fill="url(#paint0_linear)"/>
+  <rect x="146" y="158" width="304" height="192" rx="28" fill="#B8FF68"/>
+  <rect x="488" y="126" width="536" height="64" rx="20" fill="#EEFFF1"/>
+  <rect x="488" y="220" width="432" height="52" rx="18" fill="#A5FFD5"/>
+  <rect x="488" y="298" width="474" height="52" rx="18" fill="#7DE6FF"/>
+  <text x="82" y="118" fill="#F4FFF5" font-size="54" font-family="Arial" font-weight="700">SCIENCE VIDEO</text>
+  <text x="82" y="566" fill="#D9F0E1" font-size="38" font-family="Arial">Explain ideas with motion and structure.</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="52" y1="52" x2="1148" y2="623" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#162420"/>
+      <stop offset="1" stop-color="#0E1720"/>
+    </linearGradient>
+  </defs>
+</svg>
