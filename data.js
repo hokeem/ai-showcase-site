@@ -1,5 +1,5 @@
 window.SHOWCASE_DATA = {
-  heroImage: "./assets/hero-leopard.png",
+  heroImage: "./assets/hero-leopard.webp",
   categories: [
     {
       id: "short-drama",
@@ -8,6 +8,7 @@ window.SHOWCASE_DATA = {
       description: "AI先自动找爆款短剧并拆脚本，再用小云雀短剧agent制作。",
       accent: "#ffb36b",
       thumb: "./media/short-drama-1.mp4",
+      previewImage: "./assets/thumb-short-drama-1.webp",
       thumbFormat: "video",
       works: [
         {
@@ -46,6 +47,7 @@ window.SHOWCASE_DATA = {
       description: "AI先做脚本，再用生图模型做分镜，最后剪映拼接。",
       accent: "#c7f36d",
       thumb: "./media/science-video-1.mp4",
+      previewImage: "./assets/thumb-science-video-1.webp",
       thumbFormat: "video",
       works: [
         {
@@ -97,6 +99,7 @@ window.SHOWCASE_DATA = {
       description: "从找素材、下载、拼接到配音全流程 AI 完成，核心是体现AI的找素材跟拼接能力。",
       accent: "#82d1ff",
       thumb: "./media/news-2.mov",
+      previewImage: "./assets/thumb-news-2.webp",
       thumbFormat: "video",
       works: [
         {
@@ -111,7 +114,7 @@ window.SHOWCASE_DATA = {
         {
           title: "资讯类视频 02",
           format: "video",
-          src: "./media/news-2.mov",
+          src: "./media/news-2-web.m4v",
           width: 2160,
           height: 2880,
           duration: "00:52",
@@ -134,6 +137,7 @@ window.SHOWCASE_DATA = {
       description: "先让 AI 做 HTML 结构的素材，再拼成视频。",
       accent: "#eb9fff",
       thumb: "./media/ranking-1.mp4",
+      previewImage: "./assets/thumb-ranking-1.webp",
       thumbFormat: "video",
       works: [
         {
@@ -165,6 +169,7 @@ window.SHOWCASE_DATA = {
       description: "重点训练 AI 如何找到真正好用的工具并组织成视频。",
       accent: "#ffe46e",
       thumb: "./media/tool-1.mp4",
+      previewImage: "./assets/thumb-tool-1.webp",
       thumbFormat: "video",
       works: [
         {
@@ -204,7 +209,7 @@ window.SHOWCASE_DATA = {
         {
           title: "工具分享 03",
           format: "video",
-          src: "./media/tool-3.mp4",
+          src: "./media/tool-3-web.m4v",
           width: 2160,
           height: 2880,
           duration: "01:41",
@@ -220,6 +225,7 @@ window.SHOWCASE_DATA = {
       description: "训练 AI 抓住视频真正重要的部分做理解，并提取脚本。",
       accent: "#89e8dd",
       thumb: "./media/script-1.html",
+      previewImage: "./assets/script-1-preview.webp",
       thumbFormat: "html",
       works: [
         {
@@ -258,6 +264,7 @@ window.SHOWCASE_DATA = {
       description: "在 Aippy等平台上用 agent 搭建的可直接游玩的内容。",
       accent: "#9bb2ff",
       thumb: "./media/game-1.mp4",
+      previewImage: "./assets/thumb-game-1.webp",
       thumbFormat: "video",
       works: [
         {
@@ -329,6 +336,7 @@ window.SHOWCASE_DATA = {
       description: "图片生成 agent 出图，再人工精修。",
       accent: "#ffb1d5",
       thumb: "./media/image-1-1.jpg",
+      previewImage: "./media/image-1-1.jpg",
       thumbFormat: "image",
       works: [
         {
@@ -420,6 +428,80 @@ window.SHOWCASE_DATA = {
           height: 1112,
           description: "Portrait PNG post asset.",
           note: "Full-frame image preview available directly in page."
+        }
+      ]
+    }
+  ],
+  products: [
+    {
+      id: "kwai-creator-ai-tool",
+      tag: "AI Product / Creator Ops",
+      title: "Kwai 创作者 AI 内容拆解工具",
+      description: "面向海外短视频创作者孵化场景，把高质量视频拆成可复用的爆款脚本结构，辅助运营投喂作者。",
+      accent: "#7dd3fc",
+      role: "需求梳理、AI 产品 PRD、Demo 搭建、拆解框架设计、运营落地复盘",
+      outcome: "视频筛选与拆解提效 500%，AI 内容理解准确率提升至 80%，投喂博主首月打开理由平均 +30%、发文量平均 +60%。",
+      methods: ["运营工作流抽象", "爆款视频结构化拆解", "Prompt/Skill 设计", "效果评估体系", "作者孵化"],
+      sections: [
+        {
+          title: "问题",
+          body: "运营同学需要持续筛选优质视频、拆解爆点、整理脚本再投喂创作者，流程重复且依赖人工经验。"
+        },
+        {
+          title: "方案",
+          body: "把视频筛选、内容理解、爆点分析、脚本生成抽象成 AI 产品流程，并将稳定能力沉淀为可复用 Skill。"
+        },
+        {
+          title: "价值",
+          body: "它不是单点内容创作，而是把内容规律转化为可复用的生产系统，让创作者运营具备规模化投喂能力。"
+        }
+      ]
+    },
+    {
+      id: "video-analysis-skill",
+      tag: "AI Workflow / Script Analysis",
+      title: "短视频分析与脚本拆解 Skill",
+      description: "面向短视频研究、脚本复盘和内容策略，把视频转写、分镜观察、结构拆解、脚本表格输出串成标准流程。",
+      accent: "#c7f36d",
+      role: "分析框架设计、Prompt 体系、脚本表格标准、输出模板沉淀",
+      outcome: "把零散的视频分析变成可复用工作流，可用于热点内容复盘、创作者投喂、AI 视频生成前置策划。",
+      methods: ["多模态内容理解", "镜头/音频/文案拆解", "内容规律沉淀", "HTML 报告输出"],
+      sections: [
+        {
+          title: "问题",
+          body: "短视频看似直观，但真正能复用的是节奏、冲突、视觉证据、转折点和用户停留理由。"
+        },
+        {
+          title: "方案",
+          body: "将视频拆成音频、画面、镜头节点和脚本结构，再输出可复制的内容分析表。"
+        },
+        {
+          title: "价值",
+          body: "这个项目体现的是内容策略能力：不仅会做内容，也能定义什么内容值得复制，以及为什么值得复制。"
+        }
+      ]
+    },
+    {
+      id: "recruiter-ai-agent",
+      tag: "AI Agent / Productivity",
+      title: "AI 招聘顾问协同原型",
+      description: "围绕招聘沟通场景，设计候选人信息整理、岗位匹配、话术生成与结果沉淀的 AI Agent Demo。",
+      accent: "#ffb36b",
+      role: "场景拆解、用户链路设计、Demo 原型、候选人列表与汇报材料产出",
+      outcome: "验证 AI Agent 在信息整理、匹配判断、沟通提效、结构化汇报中的可行性。",
+      methods: ["Agent 工作流", "信息结构化", "岗位匹配", "Demo 验证", "B 端效率工具"],
+      sections: [
+        {
+          title: "问题",
+          body: "招聘顾问需要在大量候选人和岗位之间做信息整合、匹配判断和沟通推进，时间被重复整理消耗。"
+        },
+        {
+          title: "方案",
+          body: "将候选人信息、岗位要求、沟通话术和汇报材料放进同一条 AI 协作链路。"
+        },
+        {
+          title: "价值",
+          body: "这个 case 能补充展示你对 AI 产品的理解：AI 不只是生成内容，也可以重构一个业务角色的工作流。"
         }
       ]
     }

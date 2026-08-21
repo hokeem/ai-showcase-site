@@ -14,6 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
+    <link rel="preload" as="image" href="./assets/hero-leopard.webp" fetchpriority="high" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -30,9 +31,13 @@
           <div class="hero__visual-frame">
             <div class="hero__visual-overlay"></div>
             <img
-              src="./assets/hero-placeholder.svg"
-              alt="Hero preview placeholder"
+              src="./assets/hero-leopard.webp"
+              alt="AI creative portfolio hero image"
               id="hero-preview"
+              width="1440"
+              height="811"
+              decoding="async"
+              fetchpriority="high"
             />
           </div>
         </div>
@@ -82,6 +87,18 @@
         </section>
 
         <section class="catalog" id="catalog">
+          <div class="portfolio-switch" aria-label="作品集视图切换">
+            <button class="portfolio-switch__button is-active" type="button" data-view="content">
+              内容作品
+            </button>
+            <button class="portfolio-switch__button" type="button" data-view="product">
+              产品项目
+            </button>
+          </div>
+          <div class="catalog__summary" id="catalog-summary">
+            <p>CONTENT CASES</p>
+            <h2>已验证的 AIGC 内容样本</h2>
+          </div>
           <div class="category-grid" id="category-grid"></div>
         </section>
       </main>

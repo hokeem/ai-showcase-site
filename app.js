@@ -1,6 +1,8 @@
 const data = window.SHOWCASE_DATA;
 
 const categoryGrid = document.getElementById("category-grid");
+const catalogSummary = document.getElementById("catalog-summary");
+const viewButtons = document.querySelectorAll("[data-view]");
 const drawer = document.getElementById("category-drawer");
 const drawerTitle = document.getElementById("drawer-title");
 const drawerTag = document.getElementById("drawer-tag");
@@ -13,6 +15,7 @@ const lightboxNote = document.getElementById("lightbox-note");
 const lightboxMedia = document.getElementById("lightbox-media");
 const lightboxProof = document.getElementById("lightbox-proof");
 const heroPreview = document.getElementById("hero-preview");
+let activeView = "content";
 
 if (heroPreview && data.heroImage) {
   heroPreview.src = data.heroImage;
@@ -31,24 +34,33 @@ const getMediaLabel = (work) => {
   return "查看预览 / View Preview";
 };
 
-const renderThumb = (src, format, title) => {
+const renderThumb = (category, index) => {
+  const { thumb: src, thumbFormat: format, title, previewImage } = category;
   if (format === "video") {
     return `
-      <video
-        src="${src}"
-        muted
-        loop
-        autoplay
-        playsinline
-        preload="metadata"
-      ></video>
+      <div class="category-card__thumb-media">
+        <img
+          src="${previewImage || src}"
+          alt="${title} preview"
+          loading="${index < 4 ? "eager" : "lazy"}"
+          fetchpriority="${index < 2 ? "high" : "auto"}"
+        />
+        <div class="category-card__thumb-badge">
+          <span>封面预览 / Preview</span>
+        </div>
+      </div>
     `;
   }
 
   if (format === "html") {
     return `
       <div class="category-card__thumb-html">
-        <iframe src="${src}" title="${title} preview" loading="lazy" tabindex="-1"></iframe>
+        <img
+          src="${previewImage || "./assets/work-image-placeholder.svg"}"
+          alt="${title} preview"
+          loading="${index < 4 ? "eager" : "lazy"}"
+          fetchpriority="${index < 2 ? "high" : "auto"}"
+        />
         <div class="category-card__thumb-badge">
           <span>脚本预览 / Script Preview</span>
         </div>
@@ -56,22 +68,18 @@ const renderThumb = (src, format, title) => {
     `;
   }
 
-  return `<img src="${src}" alt="${title} preview" loading="lazy" />`;
+  return `<img src="${previewImage || src}" alt="${title} preview" loading="${index < 4 ? "eager" : "lazy"}" fetchpriority="${index < 2 ? "high" : "auto"}" />`;
 };
 
-const renderWorkPreview = (work, { lightbox = false } = {}) => {
+const renderWorkPreview = (work, { lightbox = false, poster = "" } = {}) => {
   if (work.format === "video") {
     return lightbox
       ? `<video src="${work.src}" controls autoplay playsinline preload="metadata"></video>`
       : `
-          <video
-            src="${work.src}"
-            muted
-            loop
-            autoplay
-            playsinline
-            preload="metadata"
-          ></video>
+          <div class="work-card__video-poster">
+            <img src="${poster || "./assets/work-video-placeholder.svg"}" alt="${work.title} video poster" loading="lazy" />
+            <span class="work-card__play" aria-hidden="true">▶</span>
+          </div>
         `;
   }
 
@@ -93,16 +101,16 @@ const renderWorkPreview = (work, { lightbox = false } = {}) => {
   return `<img src="${work.src}" alt="${work.title}" loading="lazy" />`;
 };
 
-const categoryCardTemplate = (category) => `
+const categoryCardTemplate = (category, index) => `
   <article class="category-card" data-category-id="${category.id}" style="--accent:${category.accent}">
     <p class="category-card__tag" style="color:${category.accent}">${category.tag}</p>
     <h3>${category.title}</h3>
     <p>${category.description}</p>
     <div class="category-card__thumb">
-      ${renderThumb(category.thumb, category.thumbFormat, category.title)}
+      ${renderThumb(category, index)}
     </div>
     <div class="category-card__footer">
-      浏览作品 / Browse Works
+      点击进入看完整预览 / Browse Works
       <span>→</span>
     </div>
   </article>
@@ -113,8 +121,11 @@ const workCardTemplate = (category, work, index) => `
     <div
       class="work-card__media work-card__media--${work.format}"
       style="--work-ratio:${getRatioValue(work)}"
+      data-open-media
+      data-category-id="${category.id}"
+      data-work-index="${index}"
     >
-      ${renderWorkPreview(work)}
+      ${renderWorkPreview(work, { poster: work.poster || category.previewImage })}
     </div>
     <div class="work-card__meta">
       <p>${category.title}${formatDuration(work.duration) ? ` · ${formatDuration(work.duration)}` : ""}</p>
@@ -140,6 +151,26 @@ const workCardTemplate = (category, work, index) => `
   </article>
 `;
 
+const productCardTemplate = (product) => `
+  <article class="product-card" data-product-id="${product.id}" style="--accent:${product.accent}">
+    <p class="product-card__tag" style="color:${product.accent}">${product.tag}</p>
+    <h3>${product.title}</h3>
+    <p>${product.description}</p>
+    <div class="product-card__meta">
+      <span>我的角色</span>
+      <strong>${product.role}</strong>
+    </div>
+    <div class="product-card__outcome">${product.outcome}</div>
+    <div class="product-card__methods">
+      ${product.methods.map((method) => `<span>${method}</span>`).join("")}
+    </div>
+    <div class="category-card__footer">
+      查看产品 case / View Case
+      <span>→</span>
+    </div>
+  </article>
+`;
+
 const openDrawer = (category) => {
   drawer.classList.add("is-open");
   drawer.setAttribute("aria-hidden", "false");
@@ -156,6 +187,42 @@ const openDrawer = (category) => {
   drawerWorks.innerHTML = category.works
     .map((work, index) => workCardTemplate(category, work, index))
     .join("");
+};
+
+const openProductDrawer = (product) => {
+  drawer.classList.add("is-open");
+  drawer.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  drawerTag.textContent = product.tag;
+  drawerTitle.textContent = product.title;
+  drawerDescription.textContent = product.description;
+  drawerWorks.innerHTML = `
+    <article class="product-detail">
+      <div class="product-detail__headline">
+        <p>我的角色</p>
+        <strong>${product.role}</strong>
+      </div>
+      <div class="product-detail__headline">
+        <p>结果</p>
+        <strong>${product.outcome}</strong>
+      </div>
+      <div class="product-detail__sections">
+        ${product.sections
+          .map(
+            (section) => `
+              <section>
+                <h4>${section.title}</h4>
+                <p>${section.body}</p>
+              </section>
+            `
+          )
+          .join("")}
+      </div>
+      <div class="product-card__methods">
+        ${product.methods.map((method) => `<span>${method}</span>`).join("")}
+      </div>
+    </article>
+  `;
 };
 
 const closeDrawer = () => {
@@ -216,9 +283,45 @@ const closeLightbox = () => {
   }
 };
 
-categoryGrid.innerHTML = data.categories.map(categoryCardTemplate).join("");
+const renderCatalog = () => {
+  if (activeView === "product") {
+    catalogSummary.innerHTML = `
+      <p>PRODUCT CASES</p>
+      <h2>把内容经验产品化的 AI 项目</h2>
+    `;
+    categoryGrid.classList.add("category-grid--products");
+    categoryGrid.innerHTML = data.products.map(productCardTemplate).join("");
+    return;
+  }
+
+  catalogSummary.innerHTML = `
+    <p>CONTENT CASES</p>
+    <h2>已验证的 AIGC 内容样本</h2>
+  `;
+  categoryGrid.classList.remove("category-grid--products");
+  categoryGrid.innerHTML = data.categories.map(categoryCardTemplate).join("");
+};
+
+viewButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    activeView = button.dataset.view;
+    viewButtons.forEach((item) => {
+      item.classList.toggle("is-active", item === button);
+    });
+    renderCatalog();
+  });
+});
+
+renderCatalog();
 
 categoryGrid.addEventListener("click", (event) => {
+  const productCard = event.target.closest("[data-product-id]");
+  if (productCard) {
+    const product = data.products.find((item) => item.id === productCard.dataset.productId);
+    if (product) openProductDrawer(product);
+    return;
+  }
+
   const card = event.target.closest("[data-category-id]");
   if (!card) return;
   const category = data.categories.find((item) => item.id === card.dataset.categoryId);
