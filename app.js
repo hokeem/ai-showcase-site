@@ -28,9 +28,7 @@ const getWorkTypeLabel = (work) => {
   return "图文作品 / Image";
 };
 
-const renderWorkMedia = (work, poster = "", index = 0) => {
-  const commonAttrs = `data-work-index="${index}"`;
-
+const renderWorkMedia = (work, poster = "") => {
   if (work.format === "video") {
     return `
       <div class="case-media case-media--video" style="--work-ratio:${getRatioValue(work)}">
@@ -56,11 +54,31 @@ const renderWorkMedia = (work, poster = "", index = 0) => {
   }
 
   return `
-    <button class="case-media case-media--image" type="button" ${commonAttrs} style="--work-ratio:${getRatioValue(work)}">
+    <div class="case-media case-media--image" style="--work-ratio:${getRatioValue(work)}">
       <img src="${work.src}" alt="${escapeAttribute(work.title)}" loading="lazy" />
       <span class="case-media__label">查看 / View</span>
-    </button>
+    </div>
   `;
+};
+
+const getDisplayWorks = (category) => {
+  const works = category.works || [];
+
+  if (activeView === "image") {
+    return works.filter((work) => work.format === "image").slice(0, 4);
+  }
+
+  if (activeView === "video") {
+    return works.filter((work) => work.format === "video").slice(0, 3);
+  }
+
+  if (activeView === "aigc") {
+    const videos = works.filter((work) => work.format === "video");
+    if (videos.length) return videos.slice(0, 3);
+    return works.slice(0, 3);
+  }
+
+  return works.slice(0, 1);
 };
 
 const renderProductCase = (product) => `
@@ -99,15 +117,9 @@ const renderProductCase = (product) => `
 `;
 
 const renderCategoryCase = (category) => {
-  const works = category.works || [];
-  const candidateWorks = activeView === "image"
-    ? works.filter((work) => work.format === "image")
-    : activeView === "video"
-      ? works.filter((work) => work.format === "video")
-      : works;
-  const featuredWork = candidateWorks[0];
-
-  if (!featuredWork) return "";
+  const displayWorks = getDisplayWorks(category);
+  if (!displayWorks.length) return "";
+  const isCluster = displayWorks.length > 1;
 
   return `
     <article class="showcase-case" style="--accent:${category.accent}">
@@ -115,12 +127,16 @@ const renderCategoryCase = (category) => {
         <p class="showcase-case__tag">${category.tag}</p>
         <h3>${category.title}</h3>
         <p class="showcase-case__description">${category.description}</p>
-        <div class="case-work">
-          ${renderWorkMedia(featuredWork, featuredWork.poster || category.previewImage)}
-          <div class="case-work__caption">
-            <strong>${featuredWork.title}</strong>
-            <span>${getWorkTypeLabel(featuredWork)}${formatDuration(featuredWork.duration) ? ` · ${formatDuration(featuredWork.duration)}` : ""}</span>
-          </div>
+        <div class="case-work-list ${isCluster ? "case-work-list--cluster" : ""}" style="--work-count:${displayWorks.length}">
+          ${displayWorks.map((work) => `
+            <div class="case-work">
+              ${renderWorkMedia(work, work.poster || category.previewImage)}
+              <div class="case-work__caption">
+                <strong>${work.title}</strong>
+                <span>${getWorkTypeLabel(work)}${formatDuration(work.duration) ? ` · ${formatDuration(work.duration)}` : ""}</span>
+              </div>
+            </div>
+          `).join("")}
         </div>
       </div>
       <div class="showcase-case__side">
