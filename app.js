@@ -31,16 +31,18 @@ const getWorkTypeLabel = (work) => {
 const renderWorkMedia = (work, poster = "") => {
   if (work.format === "video") {
     return `
-      <div class="case-media case-media--video" style="--work-ratio:${getRatioValue(work)}">
-        <video
-          src="${work.src}"
-          poster="${poster || "./assets/work-video-placeholder.svg"}"
-          controls
-          playsinline
-          preload="metadata"
-        ></video>
+      <button
+        class="case-media case-media--video js-video-loader"
+        type="button"
+        style="--work-ratio:${getRatioValue(work)}"
+        data-video-src="${work.src}"
+        data-video-poster="${poster || "./assets/work-video-placeholder.svg"}"
+        data-video-title="${escapeAttribute(work.title)}"
+      >
+        <img src="${poster || "./assets/work-video-placeholder.svg"}" alt="${escapeAttribute(work.title)} video cover" loading="lazy" />
+        <span class="case-media__play" aria-hidden="true">▶</span>
         <span class="case-media__label">播放 / Play</span>
-      </div>
+      </button>
     `;
   }
 
@@ -200,6 +202,30 @@ viewButtons.forEach((button) => {
 heroButtons.forEach((button) => {
   button.addEventListener("click", () => {
     setActiveView(button.dataset.heroView, { scroll: true });
+  });
+});
+
+caseGrid.addEventListener("click", (event) => {
+  const loader = event.target.closest(".js-video-loader");
+  if (!loader) return;
+
+  const player = document.createElement("div");
+  player.className = loader.className.replace("js-video-loader", "").trim();
+  player.classList.add("is-playing");
+  player.style.cssText = loader.style.cssText;
+
+  const video = document.createElement("video");
+  video.src = loader.dataset.videoSrc;
+  video.poster = loader.dataset.videoPoster;
+  video.controls = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.preload = "auto";
+  video.setAttribute("aria-label", loader.dataset.videoTitle || "Portfolio video");
+  player.append(video);
+  loader.replaceWith(player);
+  video.play().catch(() => {
+    video.controls = true;
   });
 });
 
