@@ -39,7 +39,7 @@ window.SHOWCASE_DATA = {
         {
           title: "短剧类型 01",
           format: "video",
-          src: "./media/short-drama-1.mp4",
+          src: "./media/short-drama-1-fast.m4v",
           width: 1280,
           height: 720,
           duration: "00:30",
@@ -81,7 +81,7 @@ window.SHOWCASE_DATA = {
         {
           title: "科普视频 01",
           format: "video",
-          src: "./media/science-video-1.mp4",
+          src: "./media/science-video-1-fast.m4v",
           width: 640,
           height: 360,
           duration: "02:48",
@@ -145,7 +145,7 @@ window.SHOWCASE_DATA = {
         {
           title: "资讯类视频 02",
           format: "video",
-          src: "./media/news-2-web.m4v",
+          src: "./media/news-2-fast.m4v",
           width: 2160,
           height: 2880,
           duration: "00:52",
@@ -177,7 +177,7 @@ window.SHOWCASE_DATA = {
         {
           title: "排行榜类 01",
           format: "video",
-          src: "./media/ranking-1.mp4",
+          src: "./media/ranking-1-fast.m4v",
           width: 720,
           height: 1280,
           duration: "01:50",
@@ -212,7 +212,7 @@ window.SHOWCASE_DATA = {
         {
           title: "工具分享 01",
           format: "video",
-          src: "./media/tool-1.mp4",
+          src: "./media/tool-1-fast.m4v",
           width: 960,
           height: 1280,
           duration: "02:57",
@@ -246,7 +246,7 @@ window.SHOWCASE_DATA = {
         {
           title: "工具分享 03",
           format: "video",
-          src: "./media/tool-3-web.m4v",
+          src: "./media/tool-3-fast.m4v",
           width: 2160,
           height: 2880,
           duration: "01:41",
@@ -313,7 +313,7 @@ window.SHOWCASE_DATA = {
         {
           title: "游戏素材 01",
           format: "video",
-          src: "./media/game-1.mp4",
+          src: "./media/game-1-fast.m4v",
           width: 720,
           height: 1232,
           duration: "00:07",

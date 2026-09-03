@@ -102,24 +102,16 @@ const renderProductCase = (product) => `
 
 const renderCategoryCase = (category) => {
   const works = category.works || [];
-  const coverWorks = activeView === "image"
+  const candidateWorks = activeView === "image"
     ? works.filter((work) => work.format === "image")
     : activeView === "video"
       ? works.filter((work) => work.format === "video")
       : works;
+  const featuredWork = candidateWorks[0];
 
-  const media = coverWorks.map((work) => {
-    const index = visibleWorks.push({ category, work }) - 1;
-    return `
-      <div class="case-work">
-        ${renderWorkMedia(work, work.poster || category.previewImage, index)}
-        <div class="case-work__caption">
-          <strong>${work.title}</strong>
-          <span>${getWorkTypeLabel(work)}${formatDuration(work.duration) ? ` · ${formatDuration(work.duration)}` : ""}</span>
-        </div>
-      </div>
-    `;
-  });
+  if (!featuredWork) return "";
+
+  const index = visibleWorks.push({ category, work: featuredWork }) - 1;
 
   return `
     <article class="showcase-case" style="--accent:${category.accent}">
@@ -127,8 +119,12 @@ const renderCategoryCase = (category) => {
         <p class="showcase-case__tag">${category.tag}</p>
         <h3>${category.title}</h3>
         <p class="showcase-case__description">${category.description}</p>
-        <div class="case-media-grid">
-          ${media.join("")}
+        <div class="case-work">
+          ${renderWorkMedia(featuredWork, featuredWork.poster || category.previewImage, index)}
+          <div class="case-work__caption">
+            <strong>${featuredWork.title}</strong>
+            <span>${getWorkTypeLabel(featuredWork)}${formatDuration(featuredWork.duration) ? ` · ${formatDuration(featuredWork.duration)}` : ""}</span>
+          </div>
         </div>
       </div>
       <div class="showcase-case__side">
@@ -197,7 +193,7 @@ const openLightbox = (category, work) => {
 
   lightboxMedia.className = `lightbox__media lightbox__media--${work.format}`;
   lightboxMedia.innerHTML = work.format === "video"
-    ? `<video src="${work.src}" controls autoplay playsinline preload="metadata"></video>`
+    ? `<video src="${work.src}" controls autoplay playsinline preload="auto"></video>`
     : `<img src="${work.src}" alt="${escapeAttribute(work.title)}" />`;
 
   if (work.highlight || work.proofs?.length) {
