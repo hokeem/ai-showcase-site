@@ -480,6 +480,17 @@ a {
   line-height: 1.75;
 }
 
+.showcase-case__main--portrait .case-work-list {
+  width: min(440px, 100%);
+  margin-inline: auto;
+}
+
+.showcase-case__main--portrait .case-media--video {
+  aspect-ratio: 9 / 16;
+  min-height: 520px;
+  max-height: 680px;
+}
+
 .case-work-list {
   margin-top: 26px;
   display: grid;
@@ -1430,6 +1441,11 @@ a {
 
   .case-media {
     min-height: 190px;
+  }
+
+  .showcase-case__main--portrait .case-media--video {
+    min-height: 420px;
+    max-height: 620px;
   }
 
   .case-work-list--cluster {

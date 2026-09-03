@@ -136,6 +136,7 @@ window.SHOWCASE_DATA = {
       previewImage: "./assets/cover-news-video.webp",
       thumbFormat: "video",
       views: ["video", "image", "aigc"],
+      layout: "portrait",
       workflow: ["AI 辅助找素材和整理新闻线索", "完成素材下载、拼接、配音与节奏组织", "根据小红书反馈沉淀可传播表达方式"],
       result: "小红书示例内容获得 454 赞、310 收藏、22 评论，能体现资讯类 AIGC 的传播验证。",
       works: [

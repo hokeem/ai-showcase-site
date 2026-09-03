@@ -125,7 +125,7 @@ const renderCategoryCase = (category) => {
 
   return `
     <article class="showcase-case" style="--accent:${category.accent}">
-      <div class="showcase-case__main">
+      <div class="showcase-case__main ${category.layout === "portrait" ? "showcase-case__main--portrait" : ""}">
         <p class="showcase-case__tag">${category.tag}</p>
         <h3>${category.title}</h3>
         <p class="showcase-case__description">${category.description}</p>
