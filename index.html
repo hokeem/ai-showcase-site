@@ -47,13 +47,27 @@
           <strong class="hero__mirror-title">PORTFOLIO</strong>
         </div>
 
-        <div class="hero__summary">
-          <span class="hero__arrow">&lt;</span>
-          <p>
-            一些经过市场验证并获得真实流量的 AIGC 作品。
-            A selection of AI-made visuals, videos and post formats that have
-            already proven they can attract real market attention and traffic.
-          </p>
+        <div class="hero__nav" aria-label="作品集分类导航">
+          <button class="hero__nav-card" type="button" data-hero-view="product">
+            <span>01</span>
+            <strong>产品展示</strong>
+            <small>Product Cases</small>
+          </button>
+          <button class="hero__nav-card" type="button" data-hero-view="video">
+            <span>02</span>
+            <strong>视频展示</strong>
+            <small>Video Works</small>
+          </button>
+          <button class="hero__nav-card" type="button" data-hero-view="image">
+            <span>03</span>
+            <strong>图文展示</strong>
+            <small>Image Posts</small>
+          </button>
+          <button class="hero__nav-card" type="button" data-hero-view="aigc">
+            <span>04</span>
+            <strong>AIGC作品</strong>
+            <small>AIGC Works</small>
+          </button>
         </div>
 
         <div class="hero__ticker" aria-hidden="true">
@@ -88,36 +102,31 @@
 
         <section class="catalog" id="catalog">
           <div class="portfolio-switch" aria-label="作品集视图切换">
-            <button class="portfolio-switch__button is-active" type="button" data-view="content">
-              内容作品
+            <button class="portfolio-switch__button is-active" type="button" data-view="product">
+              <strong>产品展示</strong>
+              <span>Product Cases</span>
             </button>
-            <button class="portfolio-switch__button" type="button" data-view="product">
-              产品项目
+            <button class="portfolio-switch__button" type="button" data-view="video">
+              <strong>视频展示</strong>
+              <span>Video Works</span>
+            </button>
+            <button class="portfolio-switch__button" type="button" data-view="image">
+              <strong>图文展示</strong>
+              <span>Image Posts</span>
+            </button>
+            <button class="portfolio-switch__button" type="button" data-view="aigc">
+              <strong>AIGC作品</strong>
+              <span>AIGC Works</span>
             </button>
           </div>
           <div class="catalog__summary" id="catalog-summary">
-            <p>CONTENT CASES</p>
-            <h2>已验证的 AIGC 内容样本</h2>
+            <p>PRODUCT CASES</p>
+            <h2>产品化的 AI 项目经验</h2>
           </div>
-          <div class="category-grid" id="category-grid"></div>
+          <div class="case-grid" id="case-grid"></div>
         </section>
       </main>
     </div>
-
-    <section class="drawer" id="category-drawer" aria-hidden="true">
-      <div class="drawer__backdrop" data-close-drawer></div>
-      <div class="drawer__panel">
-        <button class="drawer__close" type="button" data-close-drawer>
-          关闭 / Close
-        </button>
-        <div class="drawer__header">
-          <p class="drawer__eyebrow" id="drawer-tag"></p>
-          <h3 id="drawer-title"></h3>
-          <p id="drawer-description"></p>
-        </div>
-        <div class="drawer__works" id="drawer-works"></div>
-      </div>
-    </section>
 
     <section class="lightbox" id="media-lightbox" aria-hidden="true">
       <div class="lightbox__backdrop" data-close-lightbox></div>

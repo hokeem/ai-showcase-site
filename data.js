@@ -1,5 +1,27 @@
 window.SHOWCASE_DATA = {
   heroImage: "./assets/hero-leopard.webp",
+  views: {
+    product: {
+      eyebrow: "PRODUCT CASES",
+      title: "产品化的 AI 项目经验",
+      subtitle: "Product Cases"
+    },
+    video: {
+      eyebrow: "VIDEO WORKS",
+      title: "可直接播放的视频作品",
+      subtitle: "Video Works"
+    },
+    image: {
+      eyebrow: "IMAGE POSTS",
+      title: "图文与视觉内容展示",
+      subtitle: "Image Posts"
+    },
+    aigc: {
+      eyebrow: "AIGC WORKS",
+      title: "AIGC 创作流程与能力样本",
+      subtitle: "AIGC Works"
+    }
+  },
   categories: [
     {
       id: "short-drama",
@@ -10,6 +32,9 @@ window.SHOWCASE_DATA = {
       thumb: "./media/short-drama-1.mp4",
       previewImage: "./assets/thumb-short-drama-1.webp",
       thumbFormat: "video",
+      views: ["video", "aigc"],
+      workflow: ["AI 自动检索热门短剧与高潜题材", "拆解人物关系、冲突节奏与脚本结构", "调用小云雀短剧 agent 生成分镜和成片"],
+      result: "形成可复用的短剧生产链路，适合展示 AI 从选题、脚本到视频生成的完整能力。",
       works: [
         {
           title: "短剧类型 01",
@@ -49,6 +74,9 @@ window.SHOWCASE_DATA = {
       thumb: "./media/science-video-1.mp4",
       previewImage: "./assets/thumb-science-video-1.webp",
       thumbFormat: "video",
+      views: ["video", "aigc"],
+      workflow: ["先用 AI 完成选题和科普脚本", "用生图模型生成关键分镜素材", "在剪映中完成节奏、字幕和画面拼接"],
+      result: "适合展示 AI 辅助解释型内容生产：从知识结构化到视觉化表达。",
       works: [
         {
           title: "科普视频 01",
@@ -101,6 +129,9 @@ window.SHOWCASE_DATA = {
       thumb: "./media/news-2.mov",
       previewImage: "./assets/thumb-news-2.webp",
       thumbFormat: "video",
+      views: ["video", "image", "aigc"],
+      workflow: ["AI 辅助找素材和整理新闻线索", "完成素材下载、拼接、配音与节奏组织", "根据小红书反馈沉淀可传播表达方式"],
+      result: "小红书示例内容获得 454 赞、310 收藏、22 评论，能体现资讯类 AIGC 的传播验证。",
       works: [
         {
           title: "资讯类图文 01",
@@ -139,6 +170,9 @@ window.SHOWCASE_DATA = {
       thumb: "./media/ranking-1.mp4",
       previewImage: "./assets/thumb-ranking-1.webp",
       thumbFormat: "video",
+      views: ["video", "aigc"],
+      workflow: ["用 AI 生成排行榜选题结构", "产出 HTML 视觉素材和信息排版", "拼接成适合平台消费的视频内容"],
+      result: "体现信息类内容的结构化包装能力，把静态资料转成更易消费的视频形式。",
       works: [
         {
           title: "排行榜类 01",
@@ -171,6 +205,9 @@ window.SHOWCASE_DATA = {
       thumb: "./media/tool-1.mp4",
       previewImage: "./assets/thumb-tool-1.webp",
       thumbFormat: "video",
+      views: ["video", "aigc"],
+      workflow: ["筛选真实有用的 AI/效率工具", "提炼工具亮点、使用场景和用户收益", "组织成短视频脚本并完成视频化表达"],
+      result: "工具分享示例曾获得 701 赞、1905 收藏、21 评论，能体现选题判断和种草内容包装。",
       works: [
         {
           title: "工具分享 01",
@@ -227,6 +264,9 @@ window.SHOWCASE_DATA = {
       thumb: "./media/script-1.html",
       previewImage: "./assets/script-1-preview.webp",
       thumbFormat: "html",
+      views: ["product", "aigc"],
+      workflow: ["对视频进行音频、画面和镜头节点拆解", "提取冲突、节奏、转折和用户停留理由", "输出可复用的脚本分析网页"],
+      result: "这个项目更像内容策略工具：把“看懂视频”变成可复用的分析标准。",
       works: [
         {
           title: "视频脚本 01",
@@ -266,6 +306,9 @@ window.SHOWCASE_DATA = {
       thumb: "./media/game-1.mp4",
       previewImage: "./assets/thumb-game-1.webp",
       thumbFormat: "video",
+      views: ["video", "aigc"],
+      workflow: ["用 agent 快速生成可交互游戏原型", "验证玩法、视觉和操作反馈", "沉淀为可展示的动态素材"],
+      result: "展示 AI agent 在互动内容和轻量游戏原型中的生成能力。",
       works: [
         {
           title: "游戏素材 01",
@@ -338,6 +381,9 @@ window.SHOWCASE_DATA = {
       thumb: "./media/image-1-1.jpg",
       previewImage: "./media/image-1-1.jpg",
       thumbFormat: "image",
+      views: ["image", "aigc"],
+      workflow: ["用图片生成 agent 产出基础视觉", "按平台审美和传播需求人工精修", "整理为可发布的图文素材"],
+      result: "展示 AI 视觉内容从生成到精修、再到图文发布的完整过程。",
       works: [
         {
           title: "图片类 1.1",
