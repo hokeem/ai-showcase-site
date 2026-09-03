@@ -5,16 +5,9 @@ const catalog = document.getElementById("catalog");
 const catalogSummary = document.getElementById("catalog-summary");
 const viewButtons = document.querySelectorAll("[data-view]");
 const heroButtons = document.querySelectorAll("[data-hero-view]");
-const lightbox = document.getElementById("media-lightbox");
-const lightboxCategory = document.getElementById("lightbox-category");
-const lightboxTitle = document.getElementById("lightbox-title");
-const lightboxNote = document.getElementById("lightbox-note");
-const lightboxMedia = document.getElementById("lightbox-media");
-const lightboxProof = document.getElementById("lightbox-proof");
 const heroPreview = document.getElementById("hero-preview");
 
 let activeView = "product";
-let visibleWorks = [];
 
 if (heroPreview && data.heroImage) {
   heroPreview.src = data.heroImage;
@@ -40,11 +33,16 @@ const renderWorkMedia = (work, poster = "", index = 0) => {
 
   if (work.format === "video") {
     return `
-      <button class="case-media case-media--video" type="button" ${commonAttrs} style="--work-ratio:${getRatioValue(work)}">
-        <img src="${poster || "./assets/work-video-placeholder.svg"}" alt="${escapeAttribute(work.title)} video poster" loading="lazy" />
-        <span class="case-media__play" aria-hidden="true">▶</span>
+      <div class="case-media case-media--video" style="--work-ratio:${getRatioValue(work)}">
+        <video
+          src="${work.src}"
+          poster="${poster || "./assets/work-video-placeholder.svg"}"
+          controls
+          playsinline
+          preload="metadata"
+        ></video>
         <span class="case-media__label">播放 / Play</span>
-      </button>
+      </div>
     `;
   }
 
@@ -111,8 +109,6 @@ const renderCategoryCase = (category) => {
 
   if (!featuredWork) return "";
 
-  const index = visibleWorks.push({ category, work: featuredWork }) - 1;
-
   return `
     <article class="showcase-case" style="--accent:${category.accent}">
       <div class="showcase-case__main">
@@ -120,7 +116,7 @@ const renderCategoryCase = (category) => {
         <h3>${category.title}</h3>
         <p class="showcase-case__description">${category.description}</p>
         <div class="case-work">
-          ${renderWorkMedia(featuredWork, featuredWork.poster || category.previewImage, index)}
+          ${renderWorkMedia(featuredWork, featuredWork.poster || category.previewImage)}
           <div class="case-work__caption">
             <strong>${featuredWork.title}</strong>
             <span>${getWorkTypeLabel(featuredWork)}${formatDuration(featuredWork.duration) ? ` · ${formatDuration(featuredWork.duration)}` : ""}</span>
@@ -160,7 +156,6 @@ const getCasesForView = () => {
 
 const setActiveView = (nextView, { scroll = false } = {}) => {
   activeView = nextView;
-  visibleWorks = [];
 
   const view = data.views[activeView];
   catalogSummary.innerHTML = `
@@ -180,56 +175,6 @@ const setActiveView = (nextView, { scroll = false } = {}) => {
   }
 };
 
-const openLightbox = (category, work) => {
-  lightbox.classList.add("is-open");
-  lightbox.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-
-  lightboxCategory.textContent = category.title;
-  lightboxTitle.textContent = work.title;
-  lightboxNote.textContent = [work.description, work.note, formatDuration(work.duration)]
-    .filter(Boolean)
-    .join(" · ");
-
-  lightboxMedia.className = `lightbox__media lightbox__media--${work.format}`;
-  lightboxMedia.innerHTML = work.format === "video"
-    ? `<video src="${work.src}" controls autoplay playsinline preload="auto"></video>`
-    : `<img src="${work.src}" alt="${escapeAttribute(work.title)}" />`;
-
-  if (work.highlight || work.proofs?.length) {
-    lightboxProof.innerHTML = `
-      ${work.highlight ? `<div class="lightbox__highlight">${work.highlight}</div>` : ""}
-      ${
-        work.proofs?.length
-          ? `<div class="lightbox__proof-grid">
-              ${work.proofs
-                .map(
-                  (proof) => `
-                    <figure class="lightbox__proof-card">
-                      <img src="${proof.image}" alt="${escapeAttribute(proof.caption)}" loading="lazy" />
-                      <figcaption>${proof.caption}</figcaption>
-                    </figure>
-                  `
-                )
-                .join("")}
-            </div>`
-          : ""
-      }
-    `;
-  } else {
-    lightboxProof.innerHTML = "";
-  }
-};
-
-const closeLightbox = () => {
-  lightbox.classList.remove("is-open");
-  lightbox.setAttribute("aria-hidden", "true");
-  lightboxMedia.className = "lightbox__media";
-  lightboxMedia.innerHTML = "";
-  lightboxProof.innerHTML = "";
-  document.body.style.overflow = "";
-};
-
 viewButtons.forEach((button) => {
   button.addEventListener("click", () => {
     setActiveView(button.dataset.view);
@@ -240,27 +185,6 @@ heroButtons.forEach((button) => {
   button.addEventListener("click", () => {
     setActiveView(button.dataset.heroView, { scroll: true });
   });
-});
-
-caseGrid.addEventListener("click", (event) => {
-  const mediaButton = event.target.closest("[data-work-index]");
-  if (!mediaButton) return;
-
-  const item = visibleWorks[Number(mediaButton.dataset.workIndex)];
-  if (!item) return;
-  openLightbox(item.category, item.work);
-});
-
-lightbox.addEventListener("click", (event) => {
-  if (event.target.closest("[data-close-lightbox]")) {
-    closeLightbox();
-  }
-});
-
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeLightbox();
-  }
 });
 
 setActiveView(activeView);

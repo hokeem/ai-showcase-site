@@ -138,14 +138,15 @@ a {
   position: absolute;
   left: 26px;
   bottom: 54px;
-  width: min(360px, calc(100% - 52px));
+  width: min(520px, calc(100% - 52px));
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 14px;
   z-index: 3;
 }
 
 .hero__nav-card {
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
@@ -154,18 +155,40 @@ a {
   column-gap: 12px;
   row-gap: 2px;
   align-items: center;
-  min-height: 64px;
-  padding: 14px 16px;
+  min-height: 84px;
+  padding: 18px 22px;
   border: 1px solid rgba(255, 216, 102, 0.2);
-  border-radius: 18px;
+  border-radius: 22px;
   background: rgba(9, 9, 8, 0.68);
   backdrop-filter: blur(12px);
   color: var(--text);
   font: inherit;
   text-align: left;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 243, 210, 0.08);
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 243, 210, 0.08),
+    0 14px 34px rgba(0, 0, 0, 0.28);
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.hero__nav-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(115deg, transparent 0%, transparent 26%, rgba(255, 239, 166, 0.95) 38%, rgba(244, 217, 92, 0.42) 46%, transparent 60%, transparent 100%);
+  transform: translateX(-120%);
+  animation: shimmerSweep 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero__nav-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 20px;
+  background: rgba(9, 9, 8, 0.82);
+  pointer-events: none;
 }
 
 .hero__nav-card:hover {
@@ -176,22 +199,28 @@ a {
 
 .hero__nav-card span {
   grid-area: index;
+  position: relative;
+  z-index: 1;
   color: rgba(244, 217, 92, 0.88);
   font-family: "Anton", "Noto Sans SC", sans-serif;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .hero__nav-card strong {
   grid-area: title;
+  position: relative;
+  z-index: 1;
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.35rem;
   line-height: 1.2;
 }
 
 .hero__nav-card small {
   grid-area: label;
+  position: relative;
+  z-index: 1;
   color: rgba(255, 247, 225, 0.64);
-  font-size: 0.78rem;
+  font-size: 0.86rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -323,8 +352,8 @@ a {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-  padding: 8px;
+  gap: 12px;
+  padding: 10px;
   border: 1px solid var(--line);
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.045);
@@ -332,8 +361,8 @@ a {
 }
 
 .portfolio-switch__button {
-  min-height: 86px;
-  padding: 16px 18px;
+  min-height: 108px;
+  padding: 22px 24px;
   border: 0;
   border-radius: 20px;
   color: var(--muted);
@@ -349,7 +378,7 @@ a {
 
 .portfolio-switch__button strong {
   color: inherit;
-  font-size: clamp(1.05rem, 1.6vw, 1.45rem);
+  font-size: clamp(1.2rem, 1.9vw, 1.75rem);
   line-height: 1.15;
 }
 
@@ -464,7 +493,8 @@ a {
   place-items: center;
   width: 100%;
   aspect-ratio: var(--work-ratio, 16 / 9);
-  min-height: 260px;
+  min-height: 240px;
+  max-height: 440px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
@@ -480,6 +510,24 @@ a {
   object-fit: contain;
   background: #050505;
   transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.case-media--video {
+  aspect-ratio: 16 / 9;
+}
+
+.case-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #050505;
+}
+
+.case-media--video .case-media__label {
+  top: 14px;
+  right: auto;
+  bottom: auto;
+  width: fit-content;
 }
 
 .case-media:hover img {
@@ -518,6 +566,16 @@ a {
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  pointer-events: none;
+}
+
+@keyframes shimmerSweep {
+  0%, 42% {
+    transform: translateX(-120%);
+  }
+  68%, 100% {
+    transform: translateX(120%);
+  }
 }
 
 .case-work__caption {
