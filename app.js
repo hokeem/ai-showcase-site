@@ -92,6 +92,17 @@ const renderProductCase = (product) => `
       <div class="product-card__methods">
         ${product.methods.map((method) => `<span>${method}</span>`).join("")}
       </div>
+      ${
+        product.media
+          ? `<div class="product-showcase__media ${product.media.layout === "portrait" ? "product-showcase__media--portrait" : ""}">
+              ${renderWorkMedia(product.media, product.media.poster)}
+              <div class="case-work__caption">
+                <strong>${product.media.title}</strong>
+                <span>产品演示 / Demo · ${product.media.duration}</span>
+              </div>
+            </div>`
+          : ""
+      }
     </div>
     <div class="showcase-case__side">
       <div class="product-detail__headline">

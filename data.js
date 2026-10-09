@@ -499,26 +499,69 @@ window.SHOWCASE_DATA = {
   ],
   products: [
     {
-      id: "kwai-creator-ai-tool",
+      id: "kwai-content-platform",
       tag: "AI Product / Creator Ops",
-      title: "Kwai 创作者 AI 内容拆解工具",
-      description: "面向海外短视频创作者孵化场景，把高质量视频拆成可复用的爆款脚本结构，辅助运营投喂作者。",
+      title: "快手爆款视频爬取 + 拆解平台",
+      description: "为运营集中完成爆款视频抓取、筛选、内容理解与脚本拆解，快速沉淀可复用的内容结构。",
       accent: "#7dd3fc",
-      role: "需求梳理、AI 产品 PRD、Demo 搭建、拆解框架设计、运营落地复盘",
+      role: "工作流梳理、AI 产品设计、Demo 搭建、视频拆解框架设计",
       outcome: "视频筛选与拆解提效 500%，AI 内容理解准确率提升至 80%，投喂博主首月打开理由平均 +30%、发文量平均 +60%。",
-      methods: ["运营工作流抽象", "爆款视频结构化拆解", "Prompt/Skill 设计", "效果评估体系", "作者孵化"],
+      methods: ["爆款视频抓取", "多模态内容理解", "脚本结构化拆解", "Prompt / Skill 设计"],
+      media: {
+        title: "Koko 内容中台产品演示",
+        format: "video",
+        src: "./media/kwai-content-platform.mp4",
+        poster: "./assets/poster-kwai-content-platform.webp",
+        width: 1280,
+        height: 690,
+        duration: "00:54"
+      },
       sections: [
         {
           title: "问题",
-          body: "运营同学需要持续筛选优质视频、拆解爆点、整理脚本再投喂创作者，流程重复且依赖人工经验。"
+          body: "人工找视频、拆爆点、整理脚本耗时且难以规模化。"
         },
         {
           title: "方案",
-          body: "把视频筛选、内容理解、爆点分析、脚本生成抽象成 AI 产品流程，并将稳定能力沉淀为可复用 Skill。"
+          body: "把抓取、筛选、爆点分析和脚本生成串成一条 AI 工作流。"
         },
         {
           title: "价值",
-          body: "它不是单点内容创作，而是把内容规律转化为可复用的生产系统，让创作者运营具备规模化投喂能力。"
+          body: "让内容规律可以被重复调用，支撑规模化创作者投喂。"
+        }
+      ]
+    },
+    {
+      id: "kwai-creator-inspiration-platform",
+      tag: "AI Product / Creator Growth",
+      title: "快手百万创作者的灵感获取平台",
+      description: "面向 Kwai 创作者，把趋势、优质案例和脚本建议转化为可以直接开拍的创作灵感。",
+      accent: "#ff9d5c",
+      role: "创作者需求洞察、产品链路设计、内容推荐逻辑、运营场景落地",
+      outcome: "将找题材、看案例、选脚本和提交作品放进同一条链路，降低创作者从获得灵感到开始创作的门槛。",
+      methods: ["趋势内容推荐", "创作者分层", "脚本灵感库", "创作任务管理"],
+      media: {
+        title: "Koko Kwai 创作者端演示",
+        format: "video",
+        src: "./media/kwai-inspiration-platform.mp4",
+        poster: "./assets/poster-kwai-inspiration-platform.webp",
+        width: 720,
+        height: 1230,
+        duration: "00:32",
+        layout: "portrait"
+      },
+      sections: [
+        {
+          title: "问题",
+          body: "创作者常常不是不会拍，而是不知道下一条应该拍什么。"
+        },
+        {
+          title: "方案",
+          body: "根据内容偏好推荐题材、参考视频和可执行脚本。"
+        },
+        {
+          title: "价值",
+          body: "把平台内容趋势变成创作者每天都能使用的灵感入口。"
         }
       ]
     },

@@ -454,6 +454,26 @@ a {
   grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
 }
 
+.product-showcase__media {
+  margin-top: 24px;
+}
+
+.product-showcase__media .case-media {
+  min-height: 0;
+}
+
+.product-showcase__media--portrait .case-media--video {
+  width: min(360px, 100%);
+  margin-inline: auto;
+  aspect-ratio: 720 / 1230;
+  max-height: 560px;
+}
+
+.product-showcase__media--portrait .case-work__caption {
+  width: min(360px, 100%);
+  margin-inline: auto;
+}
+
 .showcase-case__main,
 .showcase-case__side {
   min-width: 0;
