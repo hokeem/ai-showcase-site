@@ -6,20 +6,15 @@ window.SHOWCASE_DATA = {
       title: "产品化的 AI 项目经验",
       subtitle: "Product Cases"
     },
-    video: {
-      eyebrow: "VIDEO WORKS",
-      title: "可直接播放的视频作品",
-      subtitle: "Video Works"
-    },
     image: {
       eyebrow: "IMAGE POSTS",
       title: "图文与视觉内容展示",
       subtitle: "Image Posts"
     },
     aigc: {
-      eyebrow: "AIGC WORKS",
-      title: "AIGC 创作流程与能力样本",
-      subtitle: "AIGC Works"
+      eyebrow: "AIGC VIDEOS",
+      title: "AIGC 视频作品",
+      subtitle: "AIGC Videos"
     }
   },
   categories: [
@@ -30,7 +25,7 @@ window.SHOWCASE_DATA = {
       description: "从糖玩新品、服务品牌到家电产品，用 AIGC 完成风格设定、镜头生成与商业叙事。",
       accent: "#ffb36b",
       previewImage: "./assets/aigc-amos-doodle-egg.webp",
-      views: ["video", "aigc"],
+      views: ["aigc"],
       workflow: ["围绕产品卖点确定视觉概念与叙事结构", "用参考图、角色设定和提示词控制画面一致性", "组合生成镜头并完成剪辑、字幕与品牌落版"],
       result: "覆盖实拍融合、卡通角色和拟人化产品叙事，形成可直接用于品牌传播的完整成片。",
       processImage: {
@@ -42,6 +37,7 @@ window.SHOWCASE_DATA = {
         {
           title: "阿麦斯涂鸦蛋",
           label: "糖玩新品 TVC",
+          source: "来源：AMOS 涂鸦蛋糖玩新品 TVC",
           format: "video",
           src: "./media/aigc-amos-doodle-egg.mp4",
           poster: "./assets/aigc-amos-doodle-egg.webp",
@@ -52,6 +48,7 @@ window.SHOWCASE_DATA = {
         {
           title: "猫头鹰维修 · 小修匠",
           label: "品牌形象片",
+          source: "来源：猫头鹰维修品牌形象片",
           format: "video",
           src: "./media/aigc-owl-repair.mp4",
           poster: "./assets/aigc-owl-repair.webp",
@@ -62,6 +59,7 @@ window.SHOWCASE_DATA = {
         {
           title: "扫地机器人",
           label: "产品广告片",
+          source: "来源：家电产品广告片",
           format: "video",
           src: "./media/aigc-robot-vacuum.mp4",
           poster: "./assets/aigc-robot-vacuum.webp",
@@ -78,13 +76,14 @@ window.SHOWCASE_DATA = {
       description: "把不同品类转换成有辨识度的视觉语言，覆盖三维卡通叙事、护肤质感与自然主题产品片。",
       accent: "#82d1ff",
       previewImage: "./assets/aigc-mini-game-film.webp",
-      views: ["video", "aigc"],
+      views: ["aigc"],
       workflow: ["先定义品类对应的视觉风格与核心意象", "生成关键镜头并校准产品、角色和场景一致性", "按广告节奏组织特写、转场、字幕与声音"],
       result: "一套流程适配三维动画、护肤和美妆品类，能根据产品气质切换不同的 AIGC 视觉表达。",
       works: [
         {
           title: "小程序短片",
           label: "3D 动画短片",
+          source: "来源：小程序 3D 动画宣传短片",
           format: "video",
           src: "./media/aigc-mini-game-film.mp4",
           poster: "./assets/aigc-mini-game-film.webp",
@@ -95,6 +94,7 @@ window.SHOWCASE_DATA = {
         {
           title: "面膜护肤 TVC",
           label: "护肤 TVC",
+          source: "来源：护肤品牌 TVC，源素材按 8K 生成",
           format: "video",
           src: "./media/aigc-mask-tvc.mp4",
           poster: "./assets/aigc-mask-tvc.webp",
@@ -105,6 +105,7 @@ window.SHOWCASE_DATA = {
         {
           title: "FOXCUP 植物双萃水散粉",
           label: "美妆产品片",
+          source: "来源：FOXCUP 植物双萃水散粉产品片",
           format: "video",
           src: "./media/aigc-foxcup-powder.mp4",
           poster: "./assets/aigc-foxcup-powder.webp",
@@ -115,54 +116,21 @@ window.SHOWCASE_DATA = {
       ]
     },
     {
-      id: "aigc-vertical-dramas",
-      tag: "AIGC / Vertical Drama",
-      title: "AI 竖屏短剧",
-      description: "两条真人写实短剧线，分别验证英文冒险叙事与都市情感叙事的竖屏生成能力。",
-      accent: "#eb9fff",
-      previewImage: "./assets/aigc-vertical-drama-en.webp",
-      views: ["video", "aigc"],
-      layout: "portrait-pair",
-      workflow: ["按竖屏消费场景设计人物关系和冲突节点", "用角色参考与场景提示保持连续镜头一致性", "以对白、特写和贴身字幕推进叙事"],
-      result: "两支 80 秒以上的完整竖屏成片，覆盖中英文对白与不同题材，可直接点击观看。",
-      works: [
-        {
-          title: "竖屏短剧 · 英文线",
-          label: "AI Short Drama",
-          format: "video",
-          src: "./media/aigc-vertical-drama-en.mp4",
-          poster: "./assets/aigc-vertical-drama-en.webp",
-          width: 540,
-          height: 960,
-          duration: "01:21"
-        },
-        {
-          title: "竖屏短剧 · 都市情感线",
-          label: "AI 都市情感短剧",
-          format: "video",
-          src: "./media/aigc-vertical-drama-cn.mp4",
-          poster: "./assets/aigc-vertical-drama-cn.webp",
-          width: 540,
-          height: 960,
-          duration: "01:31"
-        }
-      ]
-    },
-    {
       id: "short-drama",
       tag: "Video / Narrative",
-      title: "短剧类",
+      title: "短剧",
       description: "AI先自动找爆款短剧并拆脚本，再用小云雀短剧agent制作。",
       accent: "#ffb36b",
       thumb: "./media/short-drama-1.mp4",
       previewImage: "./assets/cover-short-drama.webp",
       thumbFormat: "video",
-      views: ["video", "aigc"],
+      views: ["aigc"],
       workflow: ["AI 自动检索热门短剧与高潜题材", "拆解人物关系、冲突节奏与脚本结构", "调用小云雀短剧 agent 生成分镜和成片"],
       result: "形成可复用的短剧生产链路，适合展示 AI 从选题、脚本到视频生成的完整能力。",
       works: [
         {
-          title: "短剧类型 01",
+          title: "AI 横屏短剧",
+          source: "来源：小云雀短剧 Agent 生成实验",
           format: "video",
           src: "./media/short-drama-1-fast.m4v",
           poster: "./assets/frame-short-drama-1-fast.webp",
@@ -173,7 +141,8 @@ window.SHOWCASE_DATA = {
           note: "可直接在网页内播放预览。"
         },
         {
-          title: "短剧类型 02",
+          title: "AI 竖屏短剧",
+          source: "来源：小云雀短剧 Agent 生成实验",
           format: "video",
           src: "./media/short-drama-2-fast.m4v",
           poster: "./assets/frame-short-drama-2-fast.webp",
@@ -189,19 +158,40 @@ window.SHOWCASE_DATA = {
               caption: "短剧题材热度参考截图"
             }
           ]
+        },
+        {
+          title: "竖屏短剧 · 英文线",
+          source: "来源：AI 真人短剧项目英文线",
+          format: "video",
+          src: "./media/aigc-vertical-drama-en.mp4",
+          poster: "./assets/aigc-vertical-drama-en.webp",
+          width: 540,
+          height: 960,
+          duration: "01:21"
+        },
+        {
+          title: "竖屏短剧 · 都市情感线",
+          source: "来源：AI 真人短剧项目都市情感线",
+          format: "video",
+          src: "./media/aigc-vertical-drama-cn.mp4",
+          poster: "./assets/aigc-vertical-drama-cn.webp",
+          width: 540,
+          height: 960,
+          duration: "01:31"
         }
       ]
     },
     {
       id: "science-video",
       tag: "Video / Explain",
-      title: "科普视频类",
+      title: "科普视频",
+      source: "来源：个人 AIGC 科普视频实验",
       description: "AI先做脚本，再用生图模型做分镜，最后剪映拼接。",
       accent: "#c7f36d",
       thumb: "./media/science-video-1.mp4",
       previewImage: "./assets/cover-science-video.webp",
       thumbFormat: "video",
-      views: ["video", "aigc"],
+      views: ["aigc"],
       workflow: ["先用 AI 完成选题和科普脚本", "用生图模型生成关键分镜素材", "在剪映中完成节奏、字幕和画面拼接"],
       result: "适合展示 AI 辅助解释型内容生产：从知识结构化到视觉化表达。",
       works: [
@@ -254,13 +244,14 @@ window.SHOWCASE_DATA = {
     {
       id: "news-video",
       tag: "Mixed / News",
-      title: "资讯类",
+      title: "资讯视频",
+      source: "来源：个人小红书资讯内容",
       description: "从找素材、下载、拼接到配音全流程 AI 完成，核心是体现AI的找素材跟拼接能力。",
       accent: "#82d1ff",
       thumb: "./media/news-2.mov",
       previewImage: "./assets/cover-news-video.webp",
       thumbFormat: "video",
-      views: ["video", "image", "aigc"],
+      views: ["image", "aigc"],
       layout: "portrait",
       workflow: ["AI 辅助找素材和整理新闻线索", "完成素材下载、拼接、配音与节奏组织", "根据小红书反馈沉淀可传播表达方式"],
       result: "小红书示例内容获得 454 赞、310 收藏、22 评论，能体现资讯类 AIGC 的传播验证。",
@@ -297,13 +288,14 @@ window.SHOWCASE_DATA = {
     {
       id: "ranking-video",
       tag: "Video / Ranking",
-      title: "排行榜类",
+      title: "排行榜视频",
+      source: "来源：AI HTML 素材转视频实验",
       description: "先让 AI 做 HTML 结构的素材，再拼成视频。",
       accent: "#eb9fff",
       thumb: "./media/ranking-1.mp4",
       previewImage: "./assets/cover-ranking-video.webp",
       thumbFormat: "video",
-      views: ["video", "aigc"],
+      views: ["aigc"],
       workflow: ["用 AI 生成排行榜选题结构", "产出 HTML 视觉素材和信息排版", "拼接成适合平台消费的视频内容"],
       result: "体现信息类内容的结构化包装能力，把静态资料转成更易消费的视频形式。",
       works: [
@@ -334,13 +326,14 @@ window.SHOWCASE_DATA = {
     {
       id: "tool-video",
       tag: "Video / Tool",
-      title: "工具分享类",
+      title: "工具分享",
+      source: "来源：个人小红书工具分享内容",
       description: "重点训练 AI 如何找到真正好用的工具并组织成视频。",
       accent: "#ffe46e",
       thumb: "./media/tool-1.mp4",
       previewImage: "./assets/cover-tool-video.webp",
       thumbFormat: "video",
-      views: ["video", "aigc"],
+      views: ["aigc"],
       workflow: ["筛选真实有用的 AI/效率工具", "提炼工具亮点、使用场景和用户收益", "组织成短视频脚本并完成视频化表达"],
       result: "工具分享示例曾获得 701 赞、1905 收藏、21 评论，能体现选题判断和种草内容包装。",
       works: [
@@ -402,7 +395,7 @@ window.SHOWCASE_DATA = {
       thumb: "./media/script-1.html",
       previewImage: "./assets/script-1-preview.webp",
       thumbFormat: "html",
-      views: ["product", "aigc"],
+      views: ["product"],
       workflow: ["对视频进行音频、画面和镜头节点拆解", "提取冲突、节奏、转折和用户停留理由", "输出可复用的脚本分析网页"],
       result: "这个项目更像内容策略工具：把“看懂视频”变成可复用的分析标准。",
       works: [
@@ -438,13 +431,14 @@ window.SHOWCASE_DATA = {
     {
       id: "game-video",
       tag: "Video / Game",
-      title: "游戏类",
+      title: "游戏与互动",
+      source: "来源：Aippy Agent 游戏原型",
       description: "在 Aippy等平台上用 agent 搭建的可直接游玩的内容。",
       accent: "#9bb2ff",
       thumb: "./media/game-1.mp4",
       previewImage: "./assets/cover-game-video.webp",
       thumbFormat: "video",
-      views: ["video", "aigc"],
+      views: ["aigc"],
       workflow: ["用 agent 快速生成可交互游戏原型", "验证玩法、视觉和操作反馈", "沉淀为可展示的动态素材"],
       result: "展示 AI agent 在互动内容和轻量游戏原型中的生成能力。",
       works: [
@@ -525,7 +519,8 @@ window.SHOWCASE_DATA = {
       thumb: "./media/image-1-1.jpg",
       previewImage: "./media/image-1-1.jpg",
       thumbFormat: "image",
-      views: ["image", "aigc"],
+      views: ["image"],
+      source: "来源：图片生成 Agent + 人工精修",
       workflow: ["用图片生成 agent 产出基础视觉", "按平台审美和传播需求人工精修", "整理为可发布的图文素材"],
       result: "展示 AI 视觉内容从生成到精修、再到图文发布的完整过程。",
       works: [

@@ -68,17 +68,11 @@ const getDisplayWorks = (category) => {
   const works = category.works || [];
 
   if (activeView === "image") {
-    return works.filter((work) => work.format === "image").slice(0, 4);
-  }
-
-  if (activeView === "video") {
-    return works.filter((work) => work.format === "video").slice(0, 3);
+    return works.filter((work) => work.format === "image");
   }
 
   if (activeView === "aigc") {
-    const videos = works.filter((work) => work.format === "video");
-    if (videos.length) return videos.slice(0, 3);
-    return works.slice(0, 3);
+    return works.filter((work) => work.format === "video");
   }
 
   return works.slice(0, 1);
@@ -133,46 +127,43 @@ const renderProductCase = (product) => `
 const renderCategoryCase = (category) => {
   const displayWorks = getDisplayWorks(category);
   if (!displayWorks.length) return "";
-  const isCluster = displayWorks.length > 1;
+  const landscapeWorks = displayWorks.filter((work) => !work.width || !work.height || work.width >= work.height);
+  const portraitWorks = displayWorks.filter((work) => work.width && work.height && work.width < work.height);
+  const renderGroup = (label, works, orientation) => {
+    if (!works.length) return "";
 
-  return `
-    <article class="showcase-case" style="--accent:${category.accent}">
-      <div class="showcase-case__main ${category.layout === "portrait" ? "showcase-case__main--portrait" : ""}">
-        <p class="showcase-case__tag">${category.tag}</p>
-        <h3>${category.title}</h3>
-        <p class="showcase-case__description">${category.description}</p>
-        <div class="case-work-list ${isCluster ? "case-work-list--cluster" : ""} ${category.layout === "portrait-pair" ? "case-work-list--portrait-pair" : ""}" style="--work-count:${displayWorks.length}">
-          ${displayWorks.map((work) => `
-            <div class="case-work">
+    return `
+      <section class="collection-group">
+        ${landscapeWorks.length && portraitWorks.length ? `<p class="collection-group__label">${label}</p>` : ""}
+        <div class="collection-grid collection-grid--${orientation}" style="--item-count:${works.length}">
+          ${works.map((work) => `
+            <div class="collection-card">
               ${renderWorkMedia(work, work.poster || category.previewImage)}
-              <div class="case-work__caption">
+              <div class="collection-card__caption">
                 <strong>${work.title}</strong>
-                <span>${getWorkTypeLabel(work)}${formatDuration(work.duration) ? ` · ${formatDuration(work.duration)}` : ""}</span>
+                <span>${work.source || category.source || getWorkTypeLabel(work)}</span>
+                ${formatDuration(work.duration) ? `<small>${formatDuration(work.duration)}</small>` : ""}
               </div>
             </div>
           `).join("")}
         </div>
-      </div>
-      <div class="showcase-case__side">
-        <div class="case-process">
-          <h4>制作流程 / Workflow</h4>
-          <ol>
-            ${(category.workflow || []).map((step) => `<li>${step}</li>`).join("")}
-          </ol>
-          ${
-            category.processImage
-              ? `<figure class="case-process__proof">
-                  <img src="${category.processImage.src}" alt="${escapeAttribute(category.processImage.alt)}" loading="lazy" />
-                  <figcaption>${category.processImage.caption}</figcaption>
-                </figure>`
-              : ""
-          }
-        </div>
-        <div class="case-result">
-          <h4>作品成果 / Result</h4>
-          <p>${category.result || "已整理为可直接展示的内容案例。"}</p>
-        </div>
-      </div>
+      </section>
+    `;
+  };
+
+  return `
+    <article class="collection-section" style="--accent:${category.accent}">
+      <header class="collection-section__head">
+        <h3>${category.title}</h3>
+      </header>
+      ${renderGroup("横屏 / Landscape", landscapeWorks, "landscape")}
+      ${renderGroup("竖屏 / Portrait", portraitWorks, "portrait")}
+      ${category.processImage ? `
+        <figure class="collection-process">
+          <img src="${category.processImage.src}" alt="${escapeAttribute(category.processImage.alt)}" loading="lazy" />
+          <figcaption>${category.processImage.caption}</figcaption>
+        </figure>
+      ` : ""}
     </article>
   `;
 };

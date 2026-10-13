@@ -351,7 +351,7 @@ a {
 .portfolio-switch {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   padding: 10px;
   border: 1px solid var(--line);
@@ -435,6 +435,125 @@ a {
 .case-grid {
   display: grid;
   gap: 20px;
+}
+
+.collection-section {
+  padding: 34px 0 42px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 40%, rgba(255, 255, 255, 0.1));
+}
+
+.collection-section:first-child {
+  border-top: 0;
+}
+
+.collection-section__head {
+  margin-bottom: 22px;
+}
+
+.collection-section__head h3 {
+  margin: 0;
+  font-family: "Noto Serif SC", "Noto Sans SC", serif;
+  font-size: clamp(2rem, 3.2vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.collection-group + .collection-group {
+  margin-top: 30px;
+}
+
+.collection-group__label {
+  margin: 0 0 12px;
+  color: rgba(244, 242, 239, 0.46);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.collection-grid {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.collection-grid--landscape {
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+}
+
+.collection-grid--portrait {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.collection-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.collection-card .case-media {
+  min-height: 0;
+  max-height: none;
+  border-radius: 14px;
+}
+
+.collection-grid--landscape .case-media--video {
+  aspect-ratio: 16 / 9;
+}
+
+.collection-grid--portrait .case-media--video {
+  aspect-ratio: 9 / 16;
+}
+
+.collection-card__caption {
+  position: relative;
+  display: grid;
+  gap: 5px;
+  padding: 13px 2px 2px;
+}
+
+.collection-card__caption strong {
+  padding-right: 48px;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.collection-card__caption span {
+  color: rgba(244, 242, 239, 0.58);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.collection-card__caption small {
+  position: absolute;
+  top: 14px;
+  right: 2px;
+  color: rgba(244, 217, 92, 0.76);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.collection-process {
+  width: min(680px, 100%);
+  margin: 24px 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.collection-process img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 7.5;
+  object-fit: cover;
+}
+
+.collection-process figcaption {
+  padding: 10px 12px;
+  color: rgba(244, 242, 239, 0.56);
+  font-size: 0.78rem;
 }
 
 .showcase-case {
@@ -568,18 +687,7 @@ a {
 }
 
 .case-media--video::after {
-  content: "点击后加载视频 / Click to load";
-  position: absolute;
-  right: 14px;
-  top: 14px;
-  padding: 8px 10px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.62);
-  color: rgba(255, 247, 225, 0.82);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  pointer-events: none;
+  display: none;
 }
 
 .case-media--video.is-playing::after,
@@ -596,10 +704,7 @@ a {
 }
 
 .case-media--video .case-media__label {
-  top: 14px;
-  right: auto;
-  bottom: auto;
-  width: fit-content;
+  display: none;
 }
 
 .case-work-list--cluster .case-work {
@@ -1458,7 +1563,7 @@ a {
   }
 
   .portfolio-switch {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .portfolio-switch__button {
@@ -1500,6 +1605,14 @@ a {
 
   .case-media--video::after {
     display: none;
+  }
+
+  .collection-grid--landscape {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-grid--portrait {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .showcase-case__main--portrait .case-media--video {
@@ -1544,6 +1657,28 @@ a {
 
   .hero__nav-card {
     min-height: 68px;
+  }
+
+  .collection-section {
+    padding: 26px 0 32px;
+  }
+
+  .collection-grid {
+    gap: 10px;
+  }
+
+  .collection-card {
+    padding: 8px;
+    border-radius: 15px;
+  }
+
+  .collection-card__caption strong {
+    padding-right: 0;
+    font-size: 0.9rem;
+  }
+
+  .collection-card__caption small {
+    position: static;
   }
 
   .case-work-list--portrait-pair {
