@@ -79,47 +79,19 @@ const getDisplayWorks = (category) => {
 };
 
 const renderProductCase = (product) => `
-  <article class="showcase-case showcase-case--product" style="--accent:${product.accent}">
-    <div class="showcase-case__main">
-      <p class="showcase-case__tag">${product.tag}</p>
+  <article class="product-gallery__card ${product.media ? "product-gallery__card--media" : ""}" style="--accent:${product.accent}">
+    ${
+      product.media
+        ? `<div class="product-gallery__media ${product.media.layout === "portrait" ? "product-gallery__media--portrait" : ""}">
+            ${renderWorkMedia(product.media, product.media.poster)}
+          </div>`
+        : ""
+    }
+    <div class="product-gallery__copy">
+      <p class="product-gallery__tag">${product.tag}</p>
       <h3>${product.title}</h3>
-      <p class="showcase-case__description">${product.description}</p>
-      <div class="product-card__methods">
-        ${product.methods.map((method) => `<span>${method}</span>`).join("")}
-      </div>
-      ${
-        product.media
-          ? `<div class="product-showcase__media ${product.media.layout === "portrait" ? "product-showcase__media--portrait" : ""}">
-              ${renderWorkMedia(product.media, product.media.poster)}
-              <div class="case-work__caption">
-                <strong>${product.media.title}</strong>
-                <span>产品演示 / Demo · ${product.media.duration}</span>
-              </div>
-            </div>`
-          : ""
-      }
-    </div>
-    <div class="showcase-case__side">
-      <div class="product-detail__headline">
-        <p>我的角色 / Role</p>
-        <strong>${product.role}</strong>
-      </div>
-      <div class="product-detail__headline">
-        <p>项目结果 / Outcome</p>
-        <strong>${product.outcome}</strong>
-      </div>
-      <div class="product-detail__sections">
-        ${product.sections
-          .map(
-            (section) => `
-              <section>
-                <h4>${section.title}</h4>
-                <p>${section.body}</p>
-              </section>
-            `
-          )
-          .join("")}
-      </div>
+      <p>${product.description}</p>
+      ${product.media ? `<span>${product.media.title} · ${product.media.duration}</span>` : ""}
     </div>
   </article>
 `;
@@ -197,6 +169,7 @@ const setActiveView = (nextView, { scroll = false } = {}) => {
     button.classList.toggle("is-active", button.dataset.view === activeView);
   });
 
+  caseGrid.classList.toggle("case-grid--product", activeView === "product");
   caseGrid.innerHTML = getCasesForView().join("");
 
   if (scroll) {

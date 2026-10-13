@@ -251,7 +251,7 @@ window.SHOWCASE_DATA = {
       thumb: "./media/news-2.mov",
       previewImage: "./assets/cover-news-video.webp",
       thumbFormat: "video",
-      views: ["image", "aigc"],
+      views: ["aigc"],
       layout: "portrait",
       workflow: ["AI 辅助找素材和整理新闻线索", "完成素材下载、拼接、配音与节奏组织", "根据小红书反馈沉淀可传播表达方式"],
       result: "小红书示例内容获得 454 赞、310 收藏、22 评论，能体现资讯类 AIGC 的传播验证。",
@@ -511,6 +511,285 @@ window.SHOWCASE_DATA = {
       ]
     },
     {
+      id: "hotcoin-x-social",
+      tag: "Image / Social",
+      title: "Hotcoin X 社媒视觉",
+      description: "面向交易所 X 平台的财经内容视觉。",
+      accent: "#8df2b6",
+      previewImage: "./assets/tradfi-01.webp",
+      thumbFormat: "image",
+      views: ["image"],
+      source: "来源：Hotcoin X / TradFi 社媒宣传内容",
+      works: [
+        {
+          title: "Costco Q4 财报预告 01",
+          format: "image",
+          src: "./assets/tradfi-01.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "Costco Q4 财报预告 02",
+          format: "image",
+          src: "./assets/tradfi-02.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "Micron FY2026 Q4 财报预告 01",
+          format: "image",
+          src: "./assets/tradfi-03.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "Micron FY2026 Q4 财报预告 02",
+          format: "image",
+          src: "./assets/tradfi-04.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "PepsiCo 2026 Q3 财报预告 01",
+          format: "image",
+          src: "./assets/tradfi-05.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "PepsiCo 2026 Q3 财报预告 02",
+          format: "image",
+          src: "./assets/tradfi-06.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "达美航空 Q3 财报预告 01",
+          format: "image",
+          src: "./assets/tradfi-07.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "达美航空 Q3 财报预告 02",
+          format: "image",
+          src: "./assets/tradfi-08.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美联储官员动态：John Williams",
+          format: "image",
+          src: "./assets/tradfi-09.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美联储官员动态：Philip Jefferson",
+          format: "image",
+          src: "./assets/tradfi-10.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美联储官员动态：Thomas Barkin",
+          format: "image",
+          src: "./assets/tradfi-11.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美国 9 月 PMI 01",
+          format: "image",
+          src: "./assets/tradfi-12.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美国 9 月 PMI 02",
+          format: "image",
+          src: "./assets/tradfi-13.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美国 9 月 PMI 03",
+          format: "image",
+          src: "./assets/tradfi-14.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美国消费者信心 01",
+          format: "image",
+          src: "./assets/tradfi-15.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美国消费者信心 02",
+          format: "image",
+          src: "./assets/tradfi-16.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美股 AI 受益产业链",
+          format: "image",
+          src: "./assets/tradfi-17.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美股 ETF 50 强 01",
+          format: "image",
+          src: "./assets/tradfi-18.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美股 ETF 50 强 02",
+          format: "image",
+          src: "./assets/tradfi-19.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美股 ETF 50 强 03",
+          format: "image",
+          src: "./assets/tradfi-20.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美股 ETF 50 强 04",
+          format: "image",
+          src: "./assets/tradfi-21.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "美股 ETF 50 强 05",
+          format: "image",
+          src: "./assets/tradfi-22.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "十月美股财报时间线",
+          format: "image",
+          src: "./assets/tradfi-23.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "每日美股盘前观察",
+          format: "image",
+          src: "./assets/tradfi-24.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "今晚关注：宏观日历",
+          format: "image",
+          src: "./assets/tradfi-25.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "AI 与隐私基础设施上新",
+          format: "image",
+          src: "./assets/tradfi-26.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "TradFi 新资产上线",
+          format: "image",
+          src: "./assets/tradfi-27.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "AMC 暑期票房 01",
+          format: "image",
+          src: "./assets/tradfi-28.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "AMC 暑期票房 02",
+          format: "image",
+          src: "./assets/tradfi-29.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "AMC 暑期票房 03",
+          format: "image",
+          src: "./assets/tradfi-30.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "一顿晚餐的另一种选择",
+          format: "image",
+          src: "./assets/tradfi-31.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "投入全球市场",
+          format: "image",
+          src: "./assets/tradfi-32.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "Your Time Zone. Your Market.",
+          format: "image",
+          src: "./assets/tradfi-33.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "市场不该被时间按下暂停",
+          format: "image",
+          src: "./assets/tradfi-34.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "保险基金公开可查",
+          format: "image",
+          src: "./assets/tradfi-35.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "储备金报告 01",
+          format: "image",
+          src: "./assets/tradfi-36.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "储备资产结构",
+          format: "image",
+          src: "./assets/tradfi-37.webp",
+          width: 1,
+          height: 1
+        },
+        {
+          title: "Hotcoin 媒体工具包",
+          format: "image",
+          src: "./assets/tradfi-38.webp",
+          width: 1,
+          height: 1
+        }
+      ]
+    },
+    {
       id: "image-post",
       tag: "Image / Post",
       title: "图文类",
@@ -622,7 +901,7 @@ window.SHOWCASE_DATA = {
       id: "kwai-content-platform",
       tag: "AI Product / Creator Ops",
       title: "快手爆款视频爬取 + 拆解平台",
-      description: "为运营集中完成爆款视频抓取、筛选、内容理解与脚本拆解，快速沉淀可复用的内容结构。",
+      description: "面向运营的爆款视频抓取与拆解平台，串联筛选、内容理解和脚本输出。视频筛选与拆解效率提升 500%。",
       accent: "#7dd3fc",
       role: "工作流梳理、AI 产品设计、Demo 搭建、视频拆解框架设计",
       outcome: "视频筛选与拆解提效 500%，AI 内容理解准确率提升至 80%，投喂博主首月打开理由平均 +30%、发文量平均 +60%。",
@@ -655,7 +934,7 @@ window.SHOWCASE_DATA = {
       id: "kwai-creator-inspiration-platform",
       tag: "AI Product / Creator Growth",
       title: "快手百万创作者的灵感获取平台",
-      description: "面向 Kwai 创作者，把趋势、优质案例和脚本建议转化为可以直接开拍的创作灵感。",
+      description: "面向 Kwai 创作者的灵感入口，把趋势内容、优质案例和脚本建议转成可以直接开拍的创作方案。",
       accent: "#ff9d5c",
       role: "创作者需求洞察、产品链路设计、内容推荐逻辑、运营场景落地",
       outcome: "将找题材、看案例、选脚本和提交作品放进同一条链路，降低创作者从获得灵感到开始创作的门槛。",
@@ -689,7 +968,7 @@ window.SHOWCASE_DATA = {
       id: "video-analysis-skill",
       tag: "AI Workflow / Script Analysis",
       title: "短视频分析与脚本拆解 Skill",
-      description: "面向短视频研究、脚本复盘和内容策略，把视频转写、分镜观察、结构拆解、脚本表格输出串成标准流程。",
+      description: "把视频转写、分镜观察和脚本拆解整合为标准分析流程，用于内容复盘与创作者投喂。",
       accent: "#c7f36d",
       role: "分析框架设计、Prompt 体系、脚本表格标准、输出模板沉淀",
       outcome: "把零散的视频分析变成可复用工作流，可用于热点内容复盘、创作者投喂、AI 视频生成前置策划。",
@@ -713,7 +992,7 @@ window.SHOWCASE_DATA = {
       id: "recruiter-ai-agent",
       tag: "AI Agent / Productivity",
       title: "AI 招聘顾问协同原型",
-      description: "围绕招聘沟通场景，设计候选人信息整理、岗位匹配、话术生成与结果沉淀的 AI Agent Demo。",
+      description: "围绕候选人整理、岗位匹配和沟通话术搭建的 AI Agent 原型。",
       accent: "#ffb36b",
       role: "场景拆解、用户链路设计、Demo 原型、候选人列表与汇报材料产出",
       outcome: "验证 AI Agent 在信息整理、匹配判断、沟通提效、结构化汇报中的可行性。",
