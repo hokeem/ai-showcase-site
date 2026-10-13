@@ -387,48 +387,6 @@ window.SHOWCASE_DATA = {
       ]
     },
     {
-      id: "video-script",
-      tag: "HTML / Script",
-      title: "视频脚本",
-      description: "训练 AI 抓住视频真正重要的部分做理解，并提取脚本。",
-      accent: "#89e8dd",
-      thumb: "./media/script-1.html",
-      previewImage: "./assets/script-1-preview.webp",
-      thumbFormat: "html",
-      views: ["product"],
-      workflow: ["对视频进行音频、画面和镜头节点拆解", "提取冲突、节奏、转折和用户停留理由", "输出可复用的脚本分析网页"],
-      result: "这个项目更像内容策略工具：把“看懂视频”变成可复用的分析标准。",
-      works: [
-        {
-          title: "视频脚本 01",
-          format: "html",
-          src: "./media/script-1.html",
-          width: 1680,
-          height: 1100,
-          description: "脚本拆解网页预览，可直接在站内细看。",
-          note: "先看缩略预览，再点击细看脚本。"
-        },
-        {
-          title: "视频脚本 02",
-          format: "html",
-          src: "./media/script-2.html",
-          width: 1680,
-          height: 1100,
-          description: "详细脚本拆解网页，可直接在站内细看。",
-          note: "先看缩略预览，再点击细看脚本。"
-        },
-        {
-          title: "视频脚本 03",
-          format: "html",
-          src: "./media/script-3.html",
-          width: 1680,
-          height: 1100,
-          description: "长页脚本与镜头分析网页。",
-          note: "先看缩略预览，再点击细看脚本。"
-        }
-      ]
-    },
-    {
       id: "game-video",
       tag: "Video / Game",
       title: "游戏与互动",
@@ -519,6 +477,7 @@ window.SHOWCASE_DATA = {
       previewImage: "./assets/tradfi-01.webp",
       thumbFormat: "image",
       views: ["image"],
+      compact: true,
       source: "来源：Hotcoin X / TradFi 社媒宣传内容",
       works: [
         {
@@ -961,54 +920,6 @@ window.SHOWCASE_DATA = {
         {
           title: "价值",
           body: "把平台内容趋势变成创作者每天都能使用的灵感入口。"
-        }
-      ]
-    },
-    {
-      id: "video-analysis-skill",
-      tag: "AI Workflow / Script Analysis",
-      title: "短视频分析与脚本拆解 Skill",
-      description: "把视频转写、分镜观察和脚本拆解整合为标准分析流程，用于内容复盘与创作者投喂。",
-      accent: "#c7f36d",
-      role: "分析框架设计、Prompt 体系、脚本表格标准、输出模板沉淀",
-      outcome: "把零散的视频分析变成可复用工作流，可用于热点内容复盘、创作者投喂、AI 视频生成前置策划。",
-      methods: ["多模态内容理解", "镜头/音频/文案拆解", "内容规律沉淀", "HTML 报告输出"],
-      sections: [
-        {
-          title: "问题",
-          body: "短视频看似直观，但真正能复用的是节奏、冲突、视觉证据、转折点和用户停留理由。"
-        },
-        {
-          title: "方案",
-          body: "将视频拆成音频、画面、镜头节点和脚本结构，再输出可复制的内容分析表。"
-        },
-        {
-          title: "价值",
-          body: "这个项目体现的是内容策略能力：不仅会做内容，也能定义什么内容值得复制，以及为什么值得复制。"
-        }
-      ]
-    },
-    {
-      id: "recruiter-ai-agent",
-      tag: "AI Agent / Productivity",
-      title: "AI 招聘顾问协同原型",
-      description: "围绕候选人整理、岗位匹配和沟通话术搭建的 AI Agent 原型。",
-      accent: "#ffb36b",
-      role: "场景拆解、用户链路设计、Demo 原型、候选人列表与汇报材料产出",
-      outcome: "验证 AI Agent 在信息整理、匹配判断、沟通提效、结构化汇报中的可行性。",
-      methods: ["Agent 工作流", "信息结构化", "岗位匹配", "Demo 验证", "B 端效率工具"],
-      sections: [
-        {
-          title: "问题",
-          body: "招聘顾问需要在大量候选人和岗位之间做信息整合、匹配判断和沟通推进，时间被重复整理消耗。"
-        },
-        {
-          title: "方案",
-          body: "将候选人信息、岗位要求、沟通话术和汇报材料放进同一条 AI 协作链路。"
-        },
-        {
-          title: "价值",
-          body: "这个 case 能补充展示你对 AI 产品的理解：AI 不只是生成内容，也可以重构一个业务角色的工作流。"
         }
       ]
     }

@@ -107,7 +107,7 @@ const renderCategoryCase = (category) => {
     return `
       <section class="collection-group">
         ${landscapeWorks.length && portraitWorks.length ? `<p class="collection-group__label">${label}</p>` : ""}
-        <div class="collection-grid collection-grid--${orientation}" style="--item-count:${works.length}">
+        <div class="collection-grid collection-grid--${orientation} ${category.compact ? "collection-grid--compact" : ""}" style="--item-count:${works.length}">
           ${works.map((work) => `
             <div class="collection-card">
               ${renderWorkMedia(work, work.poster || category.previewImage)}

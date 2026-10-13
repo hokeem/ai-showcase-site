@@ -536,11 +536,15 @@ a {
 }
 
 .collection-grid--landscape {
-  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 480px));
 }
 
 .collection-grid--portrait {
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, 280px));
+}
+
+.collection-grid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
 }
 
 .collection-card {
@@ -1622,6 +1626,15 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .collection-grid--landscape {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-grid--portrait,
+  .collection-grid--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .portfolio-switch {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1672,6 +1685,10 @@ a {
   }
 
   .collection-grid--portrait {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .collection-grid--compact {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
