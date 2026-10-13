@@ -23,6 +23,7 @@ const getRatioValue = (item) => {
 const escapeAttribute = (value = "") => String(value).replace(/"/g, "&quot;");
 
 const getWorkTypeLabel = (work) => {
+  if (work.label) return work.label;
   if (work.format === "video") return "视频作品 / Video";
   if (work.format === "html") return "脚本页面 / Script";
   return "图文作品 / Image";
@@ -140,7 +141,7 @@ const renderCategoryCase = (category) => {
         <p class="showcase-case__tag">${category.tag}</p>
         <h3>${category.title}</h3>
         <p class="showcase-case__description">${category.description}</p>
-        <div class="case-work-list ${isCluster ? "case-work-list--cluster" : ""}" style="--work-count:${displayWorks.length}">
+        <div class="case-work-list ${isCluster ? "case-work-list--cluster" : ""} ${category.layout === "portrait-pair" ? "case-work-list--portrait-pair" : ""}" style="--work-count:${displayWorks.length}">
           ${displayWorks.map((work) => `
             <div class="case-work">
               ${renderWorkMedia(work, work.poster || category.previewImage)}
@@ -158,6 +159,14 @@ const renderCategoryCase = (category) => {
           <ol>
             ${(category.workflow || []).map((step) => `<li>${step}</li>`).join("")}
           </ol>
+          ${
+            category.processImage
+              ? `<figure class="case-process__proof">
+                  <img src="${category.processImage.src}" alt="${escapeAttribute(category.processImage.alt)}" loading="lazy" />
+                  <figcaption>${category.processImage.caption}</figcaption>
+                </figure>`
+              : ""
+          }
         </div>
         <div class="case-result">
           <h4>作品成果 / Result</h4>

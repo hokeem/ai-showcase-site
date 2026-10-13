@@ -24,6 +24,131 @@ window.SHOWCASE_DATA = {
   },
   categories: [
     {
+      id: "aigc-brand-films",
+      tag: "AIGC / Brand Films",
+      title: "品牌与产品视觉",
+      description: "从糖玩新品、服务品牌到家电产品，用 AIGC 完成风格设定、镜头生成与商业叙事。",
+      accent: "#ffb36b",
+      previewImage: "./assets/aigc-amos-doodle-egg.webp",
+      views: ["video", "aigc"],
+      workflow: ["围绕产品卖点确定视觉概念与叙事结构", "用参考图、角色设定和提示词控制画面一致性", "组合生成镜头并完成剪辑、字幕与品牌落版"],
+      result: "覆盖实拍融合、卡通角色和拟人化产品叙事，形成可直接用于品牌传播的完整成片。",
+      processImage: {
+        src: "./assets/aigc-amos-doodle-egg-process.webp",
+        alt: "阿麦斯涂鸦蛋 AIGC 制作流程节点图",
+        caption: "阿麦斯涂鸦蛋：多参考图、角色设定与镜头生成过程"
+      },
+      works: [
+        {
+          title: "阿麦斯涂鸦蛋",
+          label: "糖玩新品 TVC",
+          format: "video",
+          src: "./media/aigc-amos-doodle-egg.mp4",
+          poster: "./assets/aigc-amos-doodle-egg.webp",
+          width: 1280,
+          height: 720,
+          duration: "00:59"
+        },
+        {
+          title: "猫头鹰维修 · 小修匠",
+          label: "品牌形象片",
+          format: "video",
+          src: "./media/aigc-owl-repair.mp4",
+          poster: "./assets/aigc-owl-repair.webp",
+          width: 1280,
+          height: 720,
+          duration: "00:25"
+        },
+        {
+          title: "扫地机器人",
+          label: "产品广告片",
+          format: "video",
+          src: "./media/aigc-robot-vacuum.mp4",
+          poster: "./assets/aigc-robot-vacuum.webp",
+          width: 1280,
+          height: 720,
+          duration: "00:54"
+        }
+      ]
+    },
+    {
+      id: "aigc-visual-films",
+      tag: "AIGC / Visual Films",
+      title: "3D 动画与美妆视觉",
+      description: "把不同品类转换成有辨识度的视觉语言，覆盖三维卡通叙事、护肤质感与自然主题产品片。",
+      accent: "#82d1ff",
+      previewImage: "./assets/aigc-mini-game-film.webp",
+      views: ["video", "aigc"],
+      workflow: ["先定义品类对应的视觉风格与核心意象", "生成关键镜头并校准产品、角色和场景一致性", "按广告节奏组织特写、转场、字幕与声音"],
+      result: "一套流程适配三维动画、护肤和美妆品类，能根据产品气质切换不同的 AIGC 视觉表达。",
+      works: [
+        {
+          title: "小程序短片",
+          label: "3D 动画短片",
+          format: "video",
+          src: "./media/aigc-mini-game-film.mp4",
+          poster: "./assets/aigc-mini-game-film.webp",
+          width: 1280,
+          height: 720,
+          duration: "01:00"
+        },
+        {
+          title: "面膜护肤 TVC",
+          label: "护肤 TVC",
+          format: "video",
+          src: "./media/aigc-mask-tvc.mp4",
+          poster: "./assets/aigc-mask-tvc.webp",
+          width: 1280,
+          height: 720,
+          duration: "01:03"
+        },
+        {
+          title: "FOXCUP 植物双萃水散粉",
+          label: "美妆产品片",
+          format: "video",
+          src: "./media/aigc-foxcup-powder.mp4",
+          poster: "./assets/aigc-foxcup-powder.webp",
+          width: 1280,
+          height: 720,
+          duration: "00:32"
+        }
+      ]
+    },
+    {
+      id: "aigc-vertical-dramas",
+      tag: "AIGC / Vertical Drama",
+      title: "AI 竖屏短剧",
+      description: "两条真人写实短剧线，分别验证英文冒险叙事与都市情感叙事的竖屏生成能力。",
+      accent: "#eb9fff",
+      previewImage: "./assets/aigc-vertical-drama-en.webp",
+      views: ["video", "aigc"],
+      layout: "portrait-pair",
+      workflow: ["按竖屏消费场景设计人物关系和冲突节点", "用角色参考与场景提示保持连续镜头一致性", "以对白、特写和贴身字幕推进叙事"],
+      result: "两支 80 秒以上的完整竖屏成片，覆盖中英文对白与不同题材，可直接点击观看。",
+      works: [
+        {
+          title: "竖屏短剧 · 英文线",
+          label: "AI Short Drama",
+          format: "video",
+          src: "./media/aigc-vertical-drama-en.mp4",
+          poster: "./assets/aigc-vertical-drama-en.webp",
+          width: 540,
+          height: 960,
+          duration: "01:21"
+        },
+        {
+          title: "竖屏短剧 · 都市情感线",
+          label: "AI 都市情感短剧",
+          format: "video",
+          src: "./media/aigc-vertical-drama-cn.mp4",
+          poster: "./assets/aigc-vertical-drama-cn.webp",
+          width: 540,
+          height: 960,
+          duration: "01:31"
+        }
+      ]
+    },
+    {
       id: "short-drama",
       tag: "Video / Narrative",
       title: "短剧类",

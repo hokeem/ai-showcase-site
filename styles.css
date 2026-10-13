@@ -617,6 +617,19 @@ a {
   object-fit: contain;
 }
 
+.case-work-list--portrait-pair {
+  min-height: 560px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.case-work-list--portrait-pair .case-media {
+  min-height: 500px;
+}
+
+.case-work-list--portrait-pair .case-media--video::after {
+  display: none;
+}
+
 .case-media:hover img {
   transform: scale(1.02);
   opacity: 0.86;
@@ -703,6 +716,28 @@ a {
   padding-left: 20px;
   color: rgba(244, 242, 239, 0.82);
   line-height: 1.85;
+}
+
+.case-process__proof {
+  margin: 22px 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: #050505;
+}
+
+.case-process__proof img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 7.5;
+  object-fit: cover;
+}
+
+.case-process__proof figcaption {
+  padding: 11px 12px;
+  color: rgba(244, 242, 239, 0.68);
+  font-size: 0.78rem;
+  line-height: 1.5;
 }
 
 .case-result p {
@@ -1473,6 +1508,15 @@ a {
     aspect-ratio: auto;
   }
 
+  .case-work-list--portrait-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 430px;
+  }
+
+  .case-work-list--portrait-pair .case-media {
+    min-height: 370px;
+  }
+
   .category-card p {
     max-width: 100%;
   }
@@ -1496,6 +1540,14 @@ a {
 
   .hero__nav-card {
     min-height: 68px;
+  }
+
+  .case-work-list--portrait-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .case-work-list--portrait-pair .case-media {
+    min-height: 520px;
   }
 
   .intro__heading {
