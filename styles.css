@@ -1498,6 +1498,10 @@ a {
     min-height: 190px;
   }
 
+  .case-media--video::after {
+    display: none;
+  }
+
   .showcase-case__main--portrait .case-media--video {
     min-height: 420px;
     max-height: 620px;
