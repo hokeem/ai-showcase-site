@@ -1,98 +1,38 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Creative Showcase</title>
-    <meta
-      name="description"
-      content="AI 生成图片、视频与图文作品集，涵盖短剧、科普、资讯、排行榜、工具分享、视频脚本、游戏与图文内容。"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preload" as="image" href="./assets/hero-leopard.webp" fetchpriority="high" />
-    <link rel="stylesheet" href="./styles.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0907" />
+    <meta name="description" content="Hokeem’s portfolio of vibe-coded products, AIGC video, and visual work." />
+    <title>HOKEEM | Selected Work</title>
+    <link rel="preload" as="image" href="./assets/hero-leopard.webp" />
+    <link rel="stylesheet" href="./styles.css?v=profile-card-20261016" />
+    <script src="./project-data.js?v=kol-product-20261016" defer></script>
+    <script src="./app.js?v=profile-card-20261016" defer></script>
   </head>
   <body>
-    <div class="site-shell">
-      <header class="hero" id="top">
-        <div class="hero__noise"></div>
-        <div class="hero__copy">
-          <p class="hero__eyebrow">AIGC作品集 / AIGC Portfolio</p>
-          <h1 class="hero__title">HOKEEM</h1>
-          <p class="hero__stamp">SELECTED.WORKS</p>
-        </div>
+    <header class="site-header" id="site-header">
+      <a class="brand brand--custom" href="#home" aria-label="HOKEEM Home"><span class="brand-logo"><img src="./assets/hokeem-leopard-logo-original-20261015.png" alt="HOKEEM leopard logo" width="1614" height="975" decoding="async" fetchpriority="high"></span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#home" data-nav="home">Home <small>01</small></a>
+        <a href="#work" data-nav="work">Portfolio <small>02</small></a>
+        <a href="#about" data-nav="about">About <small>03</small></a>
+        <a href="#contact" data-nav="contact">Contact <small>04</small></a>
+      </nav>
+      <a class="header-link contact-cta" href="#contact" aria-label="Contact Denghaoqing"><span class="contact-cta__portrait"><img src="./assets/denghaoqing-avatar.png" alt="" width="1574" height="1260" decoding="async"></span><span class="contact-cta__details"><span class="contact-cta__heading">Let's Connect <span aria-hidden="true">↗</span></span><strong>Denghaoqing</strong><small>VIBE CODING / AIGC</small></span></a>
+      <button class="mobile-toggle" type="button" data-menu aria-label="Open navigation" aria-expanded="false">Menu +</button>
+    </header>
 
-        <div class="hero__visual">
-          <div class="hero__visual-frame">
-            <div class="hero__visual-overlay"></div>
-            <img
-              src="./assets/hero-leopard.webp"
-              alt="AI creative portfolio hero image"
-              id="hero-preview"
-              width="1440"
-              height="811"
-              decoding="async"
-              fetchpriority="high"
-            />
-          </div>
-        </div>
+    <main id="app" tabindex="-1"></main>
 
-        <div class="hero__mirror">
-          <p class="hero__mirror-label">AI作品集 / AI Portfolio</p>
-          <strong class="hero__mirror-title">PORTFOLIO</strong>
-        </div>
+    <footer class="site-footer portfolio-footer" role="contentinfo"><div class="portfolio-footer__top"><div><span>HOKEEM / SELECTED WORK</span><h2>Content, products,<br>and everything I create.</h2></div><a class="underlined-link" href="#work">Explore All Work <span>↗</span></a></div><div class="portfolio-footer__bottom"><span>© 2026 HOKEEM</span><nav aria-label="Footer navigation"><a href="#home">Home</a><a href="#work">Portfolio</a><a href="#about">About Me</a><a href="#contact">More</a></nav><a href="#home">Back to Top ↑</a></div></footer>
 
-        <div class="hero__nav" aria-label="作品集分类导航">
-          <button class="hero__nav-card" type="button" data-hero-view="product">
-            <span>01</span>
-            <strong>产品展示</strong>
-            <small>Product Cases</small>
-          </button>
-          <button class="hero__nav-card" type="button" data-hero-view="image">
-            <span>02</span>
-            <strong>图文展示</strong>
-            <small>Image Posts</small>
-          </button>
-          <button class="hero__nav-card" type="button" data-hero-view="aigc">
-            <span>03</span>
-            <strong>AIGC视频</strong>
-            <small>AIGC Videos</small>
-          </button>
-        </div>
-
-      </header>
-
-      <main class="content">
-        <section class="catalog" id="catalog">
-          <div class="portfolio-switch" aria-label="作品集视图切换">
-            <button class="portfolio-switch__button is-active" type="button" data-view="product">
-              <strong>产品展示</strong>
-              <span>Product Cases</span>
-            </button>
-            <button class="portfolio-switch__button" type="button" data-view="image">
-              <strong>图文展示</strong>
-              <span>Image Posts</span>
-            </button>
-            <button class="portfolio-switch__button" type="button" data-view="aigc">
-              <strong>AIGC视频</strong>
-              <span>AIGC Videos</span>
-            </button>
-          </div>
-          <div class="catalog__summary" id="catalog-summary">
-            <p>PRODUCT CASES</p>
-            <h2>产品化的 AI 项目经验</h2>
-          </div>
-          <div class="case-grid" id="case-grid"></div>
-        </section>
-      </main>
-    </div>
-
-    <script src="./data.js"></script>
-    <script src="./app.js"></script>
+    <dialog id="image-dialog" class="image-dialog" aria-label="Image viewer">
+      <button id="close-dialog" class="image-dialog__close" type="button" aria-label="Close image">×</button>
+      <img id="dialog-image" alt="" />
+      <p id="dialog-caption"></p>
+    </dialog>
   </body>
 </html>

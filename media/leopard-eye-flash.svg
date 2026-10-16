@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1672" height="941" viewBox="0 0 1672 941">
+  <defs>
+    <clipPath id="iris">
+      <path d="M963 374 C978 358 1019 344 1044 350 C1047 374 1036 406 1013 421 C995 428 972 415 963 394 Z"/>
+    </clipPath>
+    <radialGradient id="glow" cx="54%" cy="56%" r="54%">
+      <stop offset="0" stop-color="#fffbdc" stop-opacity=".79"/>
+      <stop offset=".42" stop-color="#ffd36f" stop-opacity=".54"/>
+      <stop offset="1" stop-color="#e69322" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sweep" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fff8d0" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#fffef3" stop-opacity=".82"/>
+      <stop offset="1" stop-color="#fff8d0" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="bloom" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+  <g clip-path="url(#iris)">
+    <ellipse cx="1004" cy="387" rx="50" ry="47" fill="url(#glow)"/>
+    <path d="M1028 343 L1053 343 L989 429 L975 429 Z" fill="url(#sweep)" opacity=".55"/>
+  </g>
+  <circle cx="1036" cy="365" r="14" fill="#fff4bb" opacity=".75" filter="url(#bloom)"/>
+  <path d="M1036 353 L1038 363 L1048 365 L1038 367 L1036 377 L1034 367 L1024 365 L1034 363 Z" fill="#fff9e5" opacity=".88"/>
+</svg>
