@@ -585,5 +585,53 @@ window.PORTFOLIO_PROJECTS = [
     "description": "Tall portrait visual post.",
     "image": "./media/image-3-3.jpg",
     "aspect": "portrait"
+  },
+  {
+    "id": "hotcoin-x-social-7",
+    "type": "image",
+    "group": "selected-images",
+    "groupTitle": "Selected Images",
+    "title": "Delta Air Lines Q3 Earnings Preview 01",
+    "subtitle": "Editorial & Social Design",
+    "source": "Hotcoin X / TradFi Social Content",
+    "description": "Financial and market visuals created for Hotcoin on X.",
+    "image": "./assets/tradfi-07.webp",
+    "aspect": "square"
+  },
+  {
+    "id": "hotcoin-x-social-12",
+    "type": "image",
+    "group": "selected-images",
+    "groupTitle": "Selected Images",
+    "title": "US September PMI 01",
+    "subtitle": "Editorial & Social Design",
+    "source": "Hotcoin X / TradFi Social Content",
+    "description": "Financial and market visuals created for Hotcoin on X.",
+    "image": "./assets/tradfi-12.webp",
+    "aspect": "square"
+  },
+  {
+    "id": "hotcoin-x-social-31",
+    "type": "image",
+    "group": "selected-images",
+    "groupTitle": "Selected Images",
+    "title": "Another Way to Spend a Dinner",
+    "subtitle": "Editorial & Social Design",
+    "source": "Hotcoin X / TradFi Social Content",
+    "description": "Financial and market visuals created for Hotcoin on X.",
+    "image": "./assets/tradfi-31.webp",
+    "aspect": "square"
+  },
+  {
+    "id": "hotcoin-x-social-33",
+    "type": "image",
+    "group": "selected-images",
+    "groupTitle": "Selected Images",
+    "title": "Your Time Zone. Your Market.",
+    "subtitle": "Editorial & Social Design",
+    "source": "Hotcoin X / TradFi Social Content",
+    "description": "Financial and market visuals created for Hotcoin on X.",
+    "image": "./assets/tradfi-33.webp",
+    "aspect": "square"
   }
 ];

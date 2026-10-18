@@ -1,4 +1,6 @@
 const projects = window.PORTFOLIO_PROJECTS;
+const i18n=window.HOKEEM_I18N;
+const musicTracks=window.HOKEEM_MUSIC;
 const app = document.getElementById('app');
 const header = document.getElementById('site-header');
 const siteFooter = document.querySelector('.portfolio-footer');
@@ -11,6 +13,45 @@ const count = type => projects.filter(p=>p.type===type).length;
 const pad = n => String(n).padStart(2,'0');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let activeType='all', activeGroup='all';
+const navigationEntries=new Map();
+let currentEntryId=null, entrySequence=0;
+try { history.scrollRestoration='manual'; } catch {}
+function rememberScroll(){
+ if(currentEntryId&&navigationEntries.has(currentEntryId))navigationEntries.get(currentEntryId).y=window.scrollY;
+}
+window.addEventListener('scroll',rememberScroll,{passive:true});
+document.addEventListener('click',event=>{
+ if(event.target.closest('a[href^="#"]'))rememberScroll();
+},true);
+function enterNavigation(){
+ const incoming=history.state?.hokeemNav;
+ if(incoming&&navigationEntries.has(incoming.id)){
+  currentEntryId=incoming.id;return navigationEntries.get(incoming.id).y;
+ }
+ const id='page-'+(++entrySequence),from=currentEntryId;
+ history.replaceState({...history.state,hokeemNav:{id,from}},'',location.href);
+ navigationEntries.set(id,{y:0});currentEntryId=id;return 0;
+}
+function syncUtilities(){
+ const button=document.getElementById('page-back');
+ const from=history.state?.hokeemNav?.from;
+ const page=location.hash.slice(1).split('/')[0]||'home';
+ button.textContent=from&&navigationEntries.has(from)?'← Back':page==='project'?'← Back to Portfolio':page==='home'?'← Portfolio':'← Back Home';
+ document.querySelectorAll('button[data-language]').forEach(button=>{
+  const active=button.dataset.language===i18n.language;
+  button.classList.toggle('is-active',active);button.setAttribute('aria-pressed',String(active));
+ });
+}
+function goBack(){
+ const from=history.state?.hokeemNav?.from;
+ if(from&&navigationEntries.has(from)){history.back();return;}
+ const [page,id]=location.hash.slice(1).split('/');
+ const project=page==='project'?projects.find(p=>p.id===id):null;
+ const target=project?'#work/'+project.type:page==='home'?'#work':'#home';
+ history.replaceState(history.state,'',target);
+ route({scrollTarget:project?'#portfolio-index':null});
+}
+
 // Reveal on arrival, then keep only visible scroll effects in the animation loop.
 // Sticky cards and section containers never receive a transform.
 const viewMotion=(()=>{
@@ -269,12 +310,12 @@ function personalIntro(){
 }
 function featuredWork(){
  const selected=projects.filter(p=>p.type==='product');
- return `<section class="page-section home-featured" id="selected-work" aria-labelledby="featured-heading">${sectionBar('02','Product Showcase')}<div class="featured-layout"><div class="featured-context"><span class="eyebrow">VIBE CODING / PRODUCT DEMOS</span><h2 id="featured-heading">Vibe-coded<br>Products</h2><p>Four products built around creator discovery, content production, and KOL collaboration.</p><a class="underlined-link" href="#work/product">Explore the Products <span>↗</span></a></div><div class="featured-stack">${selected.map((p,i)=>`<a class="featured-card" href="#project/${p.id}" style="--card-order:${i}" aria-label="Watch ${escapeHtml(p.title)} demo"><div class="featured-media" style="--featured-art:url('${p.image}')"><div class="featured-media__blur" aria-hidden="true"></div><span class="featured-media__crop"><img class="featured-media__image" src="${p.image}" alt="${escapeHtml(p.title)} product cover" loading="lazy" width="1440" height="1080"></span><span class="featured-media__open" aria-hidden="true">↗</span></div><div class="featured-meta"><span>(${pad(i+1)})</span><div><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.subtitle)}</p></div><span class="featured-meta__type">PRODUCT DEMO</span></div></a>`).join('')}</div><div class="featured-all"><a class="featured-all__link" href="#work/product" aria-label="Explore all ${selected.length} product demos"><span class="featured-all__kicker">ALL PRODUCT DEMOS / ${pad(selected.length)}</span><strong>Explore All<br>Demos</strong><span class="featured-all__arrow" aria-hidden="true">↗</span></a></div></div></section>`;
+ return `<section class="page-section home-featured" id="selected-work" aria-labelledby="featured-heading">${sectionBar('02','Product Showcase')}<div class="featured-layout"><div class="featured-context"><span class="eyebrow">VIBE CODING / PRODUCT DEMOS</span><h2 id="featured-heading">Vibe-coding</h2><p>Four products built around creator discovery, content production, and KOL collaboration.</p><a class="underlined-link" href="#work/product">Explore the Products <span>↗</span></a></div><div class="featured-stack">${selected.map((p,i)=>`<a class="featured-card" href="#project/${p.id}" style="--card-order:${i}" aria-label="Watch ${escapeHtml(p.title)} demo"><div class="featured-media" style="--featured-art:url('${p.image}')"><div class="featured-media__blur" aria-hidden="true"></div><span class="featured-media__crop"><img class="featured-media__image" src="${p.image}" alt="${escapeHtml(p.title)} product cover" loading="lazy" width="1440" height="1080"></span><span class="featured-media__open" aria-hidden="true">↗</span></div><div class="featured-meta"><span>(${pad(i+1)})</span><div><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.subtitle)}</p></div><span class="featured-meta__type">PRODUCT DEMO</span></div></a>`).join('')}</div><div class="featured-all"><a class="featured-all__link" href="#work/product" aria-label="Explore all ${selected.length} product demos"><span class="featured-all__kicker">ALL PRODUCT DEMOS / ${pad(selected.length)}</span><strong>Explore All<br>Demos</strong><span class="featured-all__arrow" aria-hidden="true">↗</span></a></div></div></section>`;
 }
 function home(){
- const formats=[{type:'video',title:'Video Works',subtitle:'AI Visual Films / Short Dramas / Hypit',description:'AI visual films, short dramas, and production cases made with Hypit.',image:'./assets/aigc-amos-doodle-egg.webp'},{type:'image',title:'Images & Visuals',subtitle:'Editorial / Brand / Social',description:'Market stories, information cards, and visual series, available as full-size images.',image:'./assets/tradfi-01.webp'}];
+ const formats=[{type:'video',title:'Video Works',subtitle:'AI Visual Films / Short Dramas / Hypit',description:'AI visual films, short dramas, and production cases made with Hypit.',image:'./assets/aigc-amos-doodle-egg.webp'},{type:'image',title:'Images & Visuals',subtitle:'Editorial / Brand / Social',description:'Market stories, information cards, and visual series, available as full-size images.',image:'./assets/cover-images-john-williams-20261019.webp'}];
  const creativeCards=formats.map((f,i)=>`<article class="personal-format-card"><span class="format-number">${pad(i+1)}</span><a class="format-image" href="#work/${f.type}" aria-label="Explore ${f.title}"><img src="${f.image}" alt="${f.title} / Selected Work" loading="lazy" width="960" height="640"></a><div class="format-copy"><h3><a href="#work/${f.type}">${f.title}</a></h3><p class="format-subtitle">${f.subtitle}</p><p>${f.description}</p><a class="format-link" href="#work/${f.type}">Explore ${count(f.type)} ${f.type==='image'?'Images':'Videos'} ↗</a></div></article>`).join('');
- const musicCard=`<article class="personal-format-card personal-format-card--upcoming"><span class="format-number">03</span><div class="format-image format-image--music" role="img" aria-label="Music projects coming soon"><span class="music-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="music-cover-note">MUSIC / NEXT CHAPTER</span></div><div class="format-copy"><h3>Music</h3><p class="format-subtitle">Original Music / Coming Soon</p><p>Music projects will be added here once the work is ready to share.</p><span class="format-link format-link--pending">Coming Soon</span></div></article>`;
+ const musicCard=`<article class="personal-format-card"><span class="format-number">03</span><a class="format-image" href="#music" aria-label="Explore Music"><img src="${musicTracks[0].image}" alt="${escapeHtml(musicTracks[0].title)}" loading="lazy" width="1000" height="1000"></a><div class="format-copy"><h3><a href="#music">Music</a></h3><p class="format-subtitle">Original Music</p><p>Original songs · 3M plays across platforms.</p><a class="format-link" href="#music">Listen to the Music ↗</a></div></article>`;
  return `<section class="hero hero--home">${brandCover('home')}<div class="home-hero-content"><div class="home-hero-intro"><span class="eyebrow">HOKEEM / VIBE CODING PRODUCTS &amp; AIGC VISUALS</span><p>Products.<br>Videos.<br>Visuals.</p><a class="underlined-link" href="#work">Explore Work <span>↗</span></a></div><div class="hero-signature"><h1>PORTFOLIO</h1></div></div></section>${personalIntro()}${featuredWork()}<section class="page-section personal-formats">${sectionBar('03','Creative Portfolio')}<h2 class="formats-heading">Films, visuals &amp; music.</h2><div class="format-list">${creativeCards}${musicCard}</div></section>`;
 }
 function media(p){
@@ -283,7 +324,11 @@ function media(p){
 }
 function detail(p){
  const others=projects.filter(x=>x.id!==p.id&&x.group===p.group).slice(0,p.type==='image'?6:2);
- return `<section class="hero hero--detail"><div class="hero__image" style="background-image:url('${p.image}')"></div><div class="hero__content hero__content--detail"><span>${typeName[p.type]} / ${escapeHtml(p.groupTitle)}</span><h1>${escapeHtml(p.title)}</h1><div class="hero__detail-bottom"><span>${escapeHtml(p.source)}</span><a href="#work/${p.type}">All ${typeLabel[p.type]} ↗</a></div></div></section><section class="page-section detail-section">${sectionBar('01','Project Overview')}<div class="detail-intro"><p>${escapeHtml(p.description)}</p><dl><dt>FORMAT</dt><dd>${typeLabel[p.type]}</dd><dt>COLLECTION</dt><dd>${escapeHtml(p.groupTitle)}</dd><dt>SOURCE</dt><dd>${escapeHtml(p.source)}</dd></dl></div><div class="detail-media ${p.aspect==='portrait'?'detail-media--portrait':''}">${media(p)}</div><a class="back-link" href="#work/${p.type}">← Back to ${typeLabel[p.type]}</a></section>${others.length?`<section class="page-section related-work">${sectionBar('02','Related Work')}<div class="group-heading"><h2>Related Work</h2></div><div class="work-grid ${p.type==='image'?'work-grid--images':''}">${others.map(card).join('')}</div></section>`:''}`;
+ const cue=p.type==='image'?'Scroll down to view the full image':'Scroll down to watch the video';
+ return `<section class="hero hero--detail"><div class="hero__image" style="background-image:url('${p.image}')"></div><div class="hero__content hero__content--detail"><span>${typeName[p.type]} / ${escapeHtml(p.groupTitle)}</span><h1>${escapeHtml(p.title)}</h1><button class="project-scroll-cue" type="button" data-scroll-project><span>${cue}</span><span aria-hidden="true">↓</span></button></div></section><section class="page-section detail-section" id="project-overview">${sectionBar('01','Project Overview')}<div class="project-layout"><div class="detail-media ${p.aspect==='portrait'?'detail-media--portrait':''}">${media(p)}</div><article class="project-copy"><span class="eyebrow">${escapeHtml(p.groupTitle)}</span><h2>${escapeHtml(p.title)}</h2><p>${escapeHtml(p.description)}</p><dl class="project-facts"><div><dt>FORMAT</dt><dd>${typeLabel[p.type]}</dd></div>${p.duration?`<div><dt>DURATION</dt><dd>${p.duration}</dd></div>`:''}</dl><button class="project-back" type="button" data-page-back>← Back to Portfolio</button></article></div></section>${others.length?`<section class="page-section related-work">${sectionBar('02','Related Work')}<div class="group-heading"><h2>Related Work</h2></div><div class="work-grid ${p.type==='image'?'work-grid--images':''}">${others.map(card).join('')}</div></section>`:''}`;
+}
+function music(){
+ return `<section class="hero hero--music"><div class="hero__image" aria-hidden="true" style="background-image:url('${musicTracks[0].image}')"></div><div class="music-hero-content"><span class="eyebrow">HOKEEM / ORIGINAL MUSIC</span><h1>Music</h1><p>Original songs, shared with the world.</p><div class="music-total"><strong>3M</strong><span>plays across platforms</span></div></div></section><section class="page-section music-collection">${sectionBar('01','Original Music')}<div class="music-collection__intro"><p>Listen to three original releases on NetEase Cloud Music.</p><span>03 TRACKS</span></div><div class="music-grid">${musicTracks.map((track,i)=>`<article class="music-track"><a class="music-cover" href="${track.url}" target="_blank" rel="noopener noreferrer" aria-label="Listen to ${escapeHtml(track.title)}"><img src="${track.image}" alt="${escapeHtml(track.title)}" loading="lazy" width="1000" height="1000"><span aria-hidden="true">↗</span></a><span class="music-track__number">(${pad(i+1)}) / HOKEEM</span><h2>${escapeHtml(track.title)}</h2><p class="music-track__artist">${escapeHtml(track.artist)}</p><p class="music-track__album">${escapeHtml(track.album)}</p><a class="underlined-link" href="${track.url}" target="_blank" rel="noopener noreferrer">Listen on NetEase <span>↗</span></a></article>`).join('')}</div></section>`;
 }
 function careerArticle(entry){
  const name=entry.name,brands=entry.brands;
@@ -306,7 +351,8 @@ function about(){
  <section class="page-section career-section career-compact" id="career-experience">${sectionBar('02','Life & Work')}${chronology}</section>`;
 }
 function contact(){return `<section class="hero hero--contact">${brandCover('contact')}<div class="contact-screen"><span>HOKEEM / CONTACT</span><h1>Let's<br>connect.</h1><div class="contact-person"><img src="./assets/hokeem-avatar-light-20261018.webp" alt="Denghaoqing avatar" width="192" height="154"><div><span>YOU'RE REACHING</span><strong>Denghaoqing</strong></div></div><div class="contact-screen__links"><div class="contact-method"><span>WECHAT</span><strong>dhq159162</strong><button type="button" data-copy="dhq159162" aria-label="Copy WeChat ID dhq159162">Copy ID ↗</button></div><a class="contact-method" href="https://t.me/hokeemDeng" target="_blank" rel="noopener noreferrer" aria-label="Message @hokeemDeng on Telegram"><span>TELEGRAM</span><strong>@hokeemDeng</strong><em>Open Telegram ↗</em></a></div><p class="contact-feedback" role="status" aria-live="polite"></p></div></section>`;}
-function route(){
+function route(options={}){
+ const restoreY=options.preserveScroll?window.scrollY:enterNavigation();
  let hash;try{hash=decodeURIComponent(location.hash.slice(1))||'home';}catch{hash='home';}
  let [page,id,groupId]=hash.split('/');
  if(page==='work'){
@@ -318,23 +364,27 @@ function route(){
  if(page==='work'){activeType=portfolioTypes.includes(id)?id:'all';activeGroup=projects.some(x=>x.group===groupId&&(activeType==='all'||x.type===activeType))?groupId:'all';}
  if(imageDialog.open)imageDialog.close();
  app.querySelectorAll('video').forEach(video=>video.pause());
- app.innerHTML=p?detail(p):({home,work,about,contact}[page]||home)();
+ app.innerHTML=p?detail(p):({home,work,about,contact,music}[page]||home)();
  app.append(siteFooter);
  prepareSectionTransitions();
- const active=p?'project':(['home','work','about','contact'].includes(page)?page:'home');
+ const active=p?'project':(['home','work','about','contact','music'].includes(page)?page:'home');
  document.body.dataset.page=active;
  header.hidden=false;
  document.querySelector('.site-footer').hidden=false;
- document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('is-active',a.dataset.nav===(p?'work':page)));
- document.title=`${p?p.title:({home:'Selected Work',work:'Portfolio',about:'About',contact:'Contact'}[page]||'Selected Work')} | HOKEEM`;
+ document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('is-active',a.dataset.nav===(p?'work':page==='music'?'work':page)));
+ document.title=`${i18n.t(p?p.title:({home:'Selected Work',work:'Portfolio',about:'About',contact:'Contact',music:'Music'}[page]||'Selected Work'))} | HOKEEM`;
  document.querySelector('.mobile-panel')?.remove();
- window.scrollTo({top:0,behavior:'instant'});
+ syncUtilities();
+ i18n.apply(document.body);
  animateView();
+ window.scrollTo({top:restoreY,behavior:'instant'});
+ if(options.scrollTarget)document.querySelector(options.scrollTarget)?.scrollIntoView({behavior:'instant'});
 }
 function refreshCatalog(){
  document.getElementById('group-filters').innerHTML=groupFilters();
  document.getElementById('group-filters').hidden=activeType!=='video';
  document.getElementById('catalog-body').innerHTML=catalogBody();
+ i18n.apply(document.getElementById('portfolio-index'));
  animateView(false);
 }
 function toggleMenu(){
@@ -342,7 +392,7 @@ function toggleMenu(){
  if(existing){existing.remove();document.querySelectorAll('.mobile-toggle').forEach(b=>b.setAttribute('aria-expanded','false'));return;}
  const nav=document.createElement('nav');nav.className='mobile-panel';nav.setAttribute('aria-label','Mobile navigation');
  nav.innerHTML='<button type="button" data-close-menu aria-label="Close navigation">Close ×</button><a href="#home">Home <small>01</small></a><a href="#work">Portfolio <small>02</small></a><a href="#about">About <small>03</small></a><a href="#contact">Contact <small>04</small></a>';
- document.body.append(nav);nav.querySelector('button').focus();document.querySelectorAll('.mobile-toggle').forEach(b=>b.setAttribute('aria-expanded','true'));
+ document.body.append(nav);i18n.apply(nav);nav.querySelector('button').focus();document.querySelectorAll('.mobile-toggle').forEach(b=>b.setAttribute('aria-expanded','true'));
 }
 app.addEventListener('playing',e=>{
  const video=e.target;
@@ -358,19 +408,22 @@ app.addEventListener('error',e=>{
  const status=video.closest('.video-player').querySelector('.video-status');
  if(video.dataset.fallback && !video.dataset.fallbackTried){
   video.dataset.fallbackTried='true';
-  status.textContent='Loading the compatible video format…';
+  status.textContent=i18n.t('Loading the compatible video format…');
   video.src=video.dataset.fallback;
   video.load();
  }else{
-  status.textContent='Video could not load. Please reload or open it separately.';
+  status.textContent=i18n.t('Video could not load. Please reload or open it separately.');
  }
 },true);
 app.addEventListener('click',e=>{
+ if(e.target.closest('[data-scroll-project]')){document.getElementById('project-overview')?.scrollIntoView({behavior:reducedMotion.matches?'instant':'smooth',block:'start'});return;}
+ if(e.target.closest('[data-page-back]')){goBack();return;}
+
  const copy=e.target.closest('[data-copy]');
  if(copy){
   const status=app.querySelector('.contact-feedback');
-  if(!navigator.clipboard?.writeText){status.textContent='Select the WeChat ID above to copy it.';return;}
-  navigator.clipboard.writeText(copy.dataset.copy).then(()=>{status.textContent='WeChat ID copied.';}).catch(()=>{status.textContent='Select the WeChat ID above to copy it.';});
+  if(!navigator.clipboard?.writeText){status.textContent=i18n.t('Select the WeChat ID above to copy it.');return;}
+  navigator.clipboard.writeText(copy.dataset.copy).then(()=>{status.textContent=i18n.t('WeChat ID copied.');}).catch(()=>{status.textContent=i18n.t('Select the WeChat ID above to copy it.');});
   return;
  }
  const carouselControl=e.target.closest('[data-carousel-direction]');
@@ -379,15 +432,15 @@ app.addEventListener('click',e=>{
  if(filter){
   activeType=filter.dataset.filter;activeGroup='all';
   document.querySelectorAll('[data-filter]').forEach(b=>{b.classList.toggle('is-active',b===filter);b.setAttribute('aria-pressed',String(b===filter));});
-  history.replaceState(null,'',activeType==='all'?'#work':'#work/'+activeType);refreshCatalog();return;
+  history.replaceState(history.state,'',activeType==='all'?'#work':'#work/'+activeType);refreshCatalog();return;
  }
- const group=e.target.closest('[data-group]');if(group){activeGroup=group.dataset.group;history.replaceState(null,'',`#work/${activeType}${activeGroup==='all'?'':'/'+activeGroup}`);refreshCatalog();return;}
- const image=e.target.closest('[data-image]');if(image){document.getElementById('dialog-image').src=image.dataset.image;document.getElementById('dialog-image').alt=image.dataset.title;document.getElementById('dialog-caption').textContent=image.dataset.title;imageDialog.showModal();return;}
+ const group=e.target.closest('[data-group]');if(group){activeGroup=group.dataset.group;history.replaceState(history.state,'',`#work/${activeType}${activeGroup==='all'?'':'/'+activeGroup}`);refreshCatalog();return;}
+ const image=e.target.closest('[data-image]');if(image){document.getElementById('dialog-image').src=image.dataset.image;document.getElementById('dialog-image').alt=image.dataset.title;document.getElementById('dialog-caption').textContent=image.dataset.title;i18n.apply(imageDialog);imageDialog.showModal();return;}
  const faq=e.target.closest('[data-faq-answer]');if(faq){
   const opened=faq.getAttribute('aria-expanded')==='true';faq.setAttribute('aria-expanded',String(!opened));faq.querySelector('.faq-answer')?.remove();if(!opened){const p=document.createElement('p');p.className='faq-answer';p.textContent=faq.dataset.faqAnswer;faq.append(p);}return;
  }
 });
-document.addEventListener('click',e=>{if(e.target.closest('[data-close-menu],#site-header [data-menu]'))toggleMenu();if(e.target.closest('.mobile-panel a')){document.querySelector('.mobile-panel')?.remove();document.querySelectorAll('.mobile-toggle').forEach(b=>b.setAttribute('aria-expanded','false'));}});
+document.addEventListener('click',e=>{const samePage=e.target.closest('a[href^="#"]');if(samePage&&samePage.getAttribute('href')===location.hash){e.preventDefault();window.scrollTo({top:0,behavior:reducedMotion.matches?'instant':'smooth'});}if(e.target.closest('[data-close-menu],#site-header [data-menu]'))toggleMenu();if(e.target.closest('.mobile-panel a')){document.querySelector('.mobile-panel')?.remove();document.querySelectorAll('.mobile-toggle').forEach(b=>b.setAttribute('aria-expanded','false'));}});
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){document.querySelector('.mobile-panel')?.remove();document.querySelectorAll('.mobile-toggle').forEach(b=>b.setAttribute('aria-expanded','false'));}
  if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-faq-answer],[data-menu],[data-carousel-direction]')){e.preventDefault();e.target.click();}
@@ -396,3 +449,18 @@ document.getElementById('close-dialog').addEventListener('click',()=>imageDialog
 imageDialog.addEventListener('click',e=>{if(e.target===imageDialog)imageDialog.close();});
 window.addEventListener('hashchange',route);
 route();
+
+document.getElementById('page-back').addEventListener('click',goBack);
+document.querySelectorAll('button[data-language]').forEach(button=>button.addEventListener('click',()=>{
+ const next=button.dataset.language;
+ if(next===i18n.language)return;
+ rememberScroll();
+ const oldVideo=app.querySelector('video');
+ const playback=oldVideo?{time:oldVideo.currentTime,paused:oldVideo.paused,muted:oldVideo.muted,volume:oldVideo.volume}:null;
+ i18n.set(next);route({preserveScroll:true});
+ const video=app.querySelector('video');
+ if(video&&playback){
+  const restore=()=>{video.currentTime=playback.time;video.muted=playback.muted;video.volume=playback.volume;if(!playback.paused)video.play().catch(()=>{});};
+  if(video.readyState>=1)restore();else video.addEventListener('loadedmetadata',restore,{once:true});
+ }
+}));

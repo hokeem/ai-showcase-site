@@ -23,14 +23,16 @@
         }
       })();
     </script>
-    <link rel="stylesheet" href="./styles.css?v=leopard-speed-20261018" />
-    <script src="./project-data.js?v=full-covers-20261018" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=bilingual-20261019" />
+    <script src="./project-data.js?v=bilingual-20261019" defer></script>
     <script src="./career-data.js?v=life-work-only-20261018" defer></script>
-    <script src="./app.js?v=leopard-speed-20261018" defer></script>
+    <script src="./music-data.js?v=bilingual-20261019" defer></script>
+    <script src="./i18n.js?v=bilingual-20261019" defer></script>
+    <script src="./app.js?v=bilingual-20261019" defer></script>
   </head>
   <body>
     <header class="site-header" id="site-header">
-      <a class="brand brand--custom" href="#home" aria-label="HOKEEM Home"><span class="brand-logo"><img src="./assets/hokeem-logo-light-20261018.webp" alt="HOKEEM leopard logo" width="240" height="145" decoding="async" fetchpriority="low"></span></a>
+      <a class="brand brand--custom" href="#home" aria-label="HOKEEM Home"><span class="brand-logo"><img src="./assets/hokeem-logo-transparent-20261019.svg" alt="HOKEEM leopard logo" width="240" height="145" decoding="async" fetchpriority="low"></span></a>
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#home" data-nav="home">Home <small>01</small></a>
         <a href="#work" data-nav="work">Portfolio <small>02</small></a>
@@ -43,7 +45,16 @@
 
     <main id="app" tabindex="-1"></main>
 
-    <footer class="site-footer portfolio-footer" role="contentinfo"><div class="portfolio-footer__top"><div><span>HOKEEM / SELECTED WORK</span><h2>Content, products,<br>and everything I create.</h2></div><a class="underlined-link" href="#work">Explore All Work <span>↗</span></a></div><div class="portfolio-footer__bottom"><span>© 2026 HOKEEM</span><nav aria-label="Footer navigation"><a href="#home">Home</a><a href="#work">Portfolio</a><a href="#about">About Me</a><a href="#contact">More</a></nav><a href="#home">Back to Top ↑</a></div></footer>
+    <footer class="site-footer portfolio-footer" role="contentinfo"><div class="portfolio-footer__top"><div><span>HOKEEM / SELECTED WORK</span><h2>What you see is but<br>one ten-thousandth of me.</h2></div><a class="underlined-link" href="#work">Explore All Work <span>↗</span></a></div><div class="portfolio-footer__bottom"><span>© 2026 HOKEEM</span><nav aria-label="Footer navigation"><a href="#home">Home</a><a href="#work">Portfolio</a><a href="#about">About Me</a><a href="#contact">More</a></nav><a href="#home">Back to Top ↑</a></div></footer>
+
+
+    <div class="site-utilities" aria-label="Page controls">
+      <button class="page-back-control" id="page-back" type="button" aria-label="Go back to the previous page">← Back</button>
+      <div class="language-switch" role="group" aria-label="Choose language">
+        <button type="button" data-language="en" aria-label="Switch to English" aria-pressed="true" data-no-translate>EN</button>
+        <button type="button" data-language="zh" aria-label="Switch to Chinese" aria-pressed="false" data-no-translate>中文</button>
+      </div>
+    </div>
 
     <dialog id="image-dialog" class="image-dialog" aria-label="Image viewer">
       <button id="close-dialog" class="image-dialog__close" type="button" aria-label="Close image">×</button>
