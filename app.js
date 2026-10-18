@@ -98,8 +98,9 @@ const viewMotion=(()=>{
     each('.home-hero-intro > *,.hero-signature > *,.page-hero-title > *,.hero__content--bottom > p,.hero__content--detail > *,.contact-screen > *',(el,i)=>reveal(el,180+Math.min(i,5)*95,el.matches('h1')?'title':'rise'));
     each('.section-bar',el=>reveal(el,0,'fade'));
     each('.formats-heading,.personal-bio__layout h2,.portfolio-footer h2',el=>reveal(el,0,'title'));
-    each('.intro-row > h3,.intro-row > p,.intro-results dl > div,.intro-results > a,.intro-project figcaption,.format-number,.format-image,.format-copy,.group-heading,.filter-row,.group-filters,.personal-bio__layout p,.personal-bio__layout .underlined-link,.detail-intro > *,.detail-media,.back-link,.portfolio-footer__top > div > span,.portfolio-footer__top > a,.portfolio-footer__bottom',el=>reveal(el,el.matches('.format-copy')?140:0,el.matches('.detail-media')?'fade':'rise'));
+    each('.intro-row > h3,.intro-row > p,.intro-results dl > div,.intro-results > a,.experience-heading,.experience-row,.experience-footer,.intro-project figcaption,.format-number,.format-image,.format-copy,.group-heading,.filter-row,.group-filters,.personal-bio__layout p,.personal-bio__layout .underlined-link,.detail-intro > *,.detail-media,.back-link,.portfolio-footer__top > div > span,.portfolio-footer__top > a,.portfolio-footer__bottom',el=>reveal(el,el.matches('.format-copy')?140:0,el.matches('.detail-media')?'fade':'rise'));
     each('.work-grid',grid=>[...grid.children].forEach((el,i)=>reveal(el,Math.min(i%7,4)*65)));
+    each('.career-section__heading,.career-entry,.career-education,.career-highlights > li,.career-practice__grid > div,.career-practice > a',el=>reveal(el,0));
     each('.featured-context > *,.featured-all > a',(el,i)=>reveal(el,Math.min(i,3)*75));
     each('.featured-card',el=>{
       if(registered.has(el))return;
@@ -224,8 +225,36 @@ function pageHero(title,description,kind='about'){
  const image=kind==='work'?'./assets/portfolio-black-gold-20261015.webp':'./assets/about-leopard-profile-20261015.webp';
  return `<section class="hero hero--${kind}"><div class="hero__image" aria-hidden="true" style="background-image:url('${image}')"></div><div class="hero__content hero__content--bottom"><div class="page-hero-title"><span class="eyebrow">HOKEEM / SELECTED WORK</span><h1>${escapeHtml(title)}</h1></div><p>${escapeHtml(description)}</p></div></section>`;
 }
+const career = window.HOKEEM_CAREER;
+const homebarNames={fuqi:'future homebar',yeluzi:'yeluzi homebar',yunv:'yunvhomebar'};
+const experienceTypes={
+ physical:{label:'Brick & Mortar',title:'Brick-and-mortar business',icon:'<path d="M2 6h12M3 6v8h10V6M2 6l1-4h10l1 4M6 14V9h4v5"/>'},
+ internet:{label:'Internet',title:'Internet company',icon:'<circle cx="8" cy="8" r="6"/><path d="M2 8h12M8 2c3 3 3 9 0 12-3-3-3-9 0-12Z"/>'},
+ investment:{label:'Investment',title:'Investment company',icon:'<path d="M2 13h12M3 10l4-4 3 2 4-5M10 3h4v4"/>'},
+ ai:{label:'AI',title:'AI company',icon:'<path d="m8 1 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z"/>'},
+ advertising:{label:'Advertising',title:'Advertising company',icon:'<path d="m2 6 9-3v10l-9-3ZM11 6l3-1v6l-3-1M4 11l1 3h3l-1-2"/>'},
+ web3:{label:'Web3',title:'Web3 company',icon:'<path d="m8 1 6 3.5v7L8 15l-6-3.5v-7ZM2 4.5 8 8l6-3.5M8 8v7"/>'},
+ community:{label:'Community',title:'Community',icon:'<circle cx="6" cy="5" r="2.5"/><path d="M1 14v-1a5 5 0 0 1 10 0v1M11 3a2.5 2.5 0 0 1 0 5M13 10a4 4 0 0 1 2 4"/>'}
+};
+const brandTypes=Object.fromEntries(career.timeline.flatMap(entry=>entry.brands.map(id=>[id,entry.type])));
+function experienceBadge(type){
+ const badge=experienceTypes[type];
+ return badge?`<span class="experience-badge" data-type="${type}" title="${badge.title}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${badge.icon}</svg><span>${badge.label}</span></span>`:'';
+}
+function brandTile(id, name, extraClass=''){
+ return `<div class="experience-logo ${extraClass}"><img src="./assets/brand-${id}-black-20261018.webp" alt="${escapeHtml(name)} logo" loading="lazy" decoding="async" width="480" height="300"></div>`;
+}
+function experienceList(){
+ const years=[...new Set(career.timeline.map(entry=>entry.start.slice(0,4)))].sort();
+ const rows=years.map(year=>{
+  const entries=career.timeline.filter(entry=>entry.start.startsWith(year));
+  const brands=entries.flatMap(entry=>entry.brands.map(id=>({id,name:homebarNames[id]||entry.name,role:entry.role,start:entry.start,type:entry.type})));
+  return `<li class="experience-row experience-row--year" data-year="${year}"><h4 class="experience-year">${year}</h4><ul class="experience-year__brands" tabindex="0" aria-label="${year} companies and projects">${brands.map(brand=>`<li class="experience-brand" data-brand="${brand.id}" data-start="${brand.start}" title="${escapeHtml(brand.name+' · '+brand.role)}"><figure>${brandTile(brand.id,brand.name)}<figcaption><span class="experience-brand__name">${escapeHtml(brand.name)}</span>${experienceBadge(brand.type)}</figcaption></figure></li>`).join('')}</ul></li>`;
+ }).join('');
+ return `<div class="intro-experience" aria-labelledby="experience-title"><div class="experience-heading"><h3 id="experience-title">(Experience)</h3><span>COMPANIES, PROJECTS &amp; COMMUNITIES</span></div><ul class="experience-list">${rows}</ul><div class="experience-footer"><a class="underlined-link" href="#about">Explore My Work <span>↗</span></a></div></div>`;
+}
 function personalIntro(){
- return `<section class="page-section personal-intro" id="about-intro">${sectionBar('01','About Me')}<h2 class="intro-lead">I connect content insights with hands-on creation, building AI products and creator workflows while making films, images, and stories.</h2><div class="intro-layout"><figure class="intro-project intro-project--portrait"><img src="./assets/about-leopard-suit-hat-20261015.webp" alt="Hokeem’s leopard persona in a black suit, standing upright with one hand lowering a round black hat" loading="lazy" decoding="async" width="1024" height="1536"><figcaption>HOKEEM / THE PERSON BEHIND THE WORK</figcaption></figure><div class="intro-rows"><div class="intro-row"><h3>(Products)</h3><p>At Kwai, I worked on creator tools for video discovery and inspiration. At Hotcoin, I built a TradFi visual content workspace organized around 11 production modules.</p></div><div class="intro-row"><h3>(Visuals)</h3><p>My creative work spans brand films, AI short dramas, explainers, news videos, and social visuals for Hotcoin. Explore each format to see the finished work.</p></div><div class="intro-row"><h3>(In Numbers)</h3><div class="intro-results"><dl><div><dt>Product Demos</dt><dd>${pad(count('product'))}</dd></div><div><dt>Video Works</dt><dd>${pad(count('video'))}</dd></div><div><dt>Images & Visuals</dt><dd>${pad(count('image'))}</dd></div></dl><a class="underlined-link" href="#work">Explore My Work <span>↗</span></a></div></div></div></div></section>`;
+ return `<section class="page-section personal-intro" id="about-intro">${sectionBar('01','About Me')}<h2 class="intro-lead">Humanity writes its endless story, and calls it the world. With the life I’m given, I hope to add stories only I could tell, and to love people by name. All else may fade.</h2><div class="intro-layout"><figure class="intro-project intro-project--portrait"><img src="./assets/about-leopard-suit-hat-20261015.webp" alt="Hokeem’s leopard persona in a black suit, standing upright with one hand lowering a round black hat" loading="lazy" decoding="async" width="1024" height="1536"><figcaption>HOKEEM / THE PERSON BEHIND THE WORK</figcaption></figure>${experienceList()}</div></section>`;
 }
 function featuredWork(){
  const selected=projects.filter(p=>p.type==='product');
@@ -245,7 +274,22 @@ function detail(p){
  const others=projects.filter(x=>x.id!==p.id&&x.group===p.group).slice(0,p.type==='image'?6:2);
  return `<section class="hero hero--detail"><div class="hero__image" style="background-image:url('${p.image}')"></div><div class="hero__content hero__content--detail"><span>${typeName[p.type]} / ${escapeHtml(p.groupTitle)}</span><h1>${escapeHtml(p.title)}</h1><div class="hero__detail-bottom"><span>${escapeHtml(p.source)}</span><a href="#work/${p.type}">All ${typeLabel[p.type]} ↗</a></div></div></section><section class="page-section detail-section">${sectionBar('01','Project Overview')}<div class="detail-intro"><p>${escapeHtml(p.description)}</p><dl><dt>FORMAT</dt><dd>${typeLabel[p.type]}</dd><dt>COLLECTION</dt><dd>${escapeHtml(p.groupTitle)}</dd><dt>SOURCE</dt><dd>${escapeHtml(p.source)}</dd></dl></div><div class="detail-media ${p.aspect==='portrait'?'detail-media--portrait':''}">${media(p)}</div><a class="back-link" href="#work/${p.type}">← Back to ${typeLabel[p.type]}</a></section>${others.length?`<section class="page-section related-work">${sectionBar('02','Related Work')}<div class="group-heading"><h2>Related Work</h2></div><div class="work-grid ${p.type==='image'?'work-grid--images':''}">${others.map(card).join('')}</div></section>`:''}`;
 }
-function about(){return pageHero('About Hokeem', 'Starting with creator needs. Turning content insights into products and ideas into finished work.')+`<section class="page-section personal-bio">${sectionBar('01','About Me')}<div class="personal-bio__layout"><h2>Content.<br>Product.<br>Visual.</h2><div><p>I’m Hokeem. I work across AI content products, creator operations, and visual storytelling, taking ideas from an initial insight to a working prototype or finished piece.</p><p>My Kwai projects explore how creators find inspiration and how operations teams discover, screen, and analyze videos. At Hotcoin, I built a TradFi visual content workspace with 11 content modules. My KOL cooperation platform explores campaign discovery and creator collaboration.</p><p>This portfolio brings together four product projects and a range of films, short dramas, explainers, tool guides, game demos, and social visuals. Each project includes its original media.</p><a class="underlined-link" href="#work">Explore My Work <span>↗</span></a></div></div></section>`;}
+function careerArticle(entry,project=false){
+ const name=project?entry.name:entry.company;
+ const brands=project?entry.brands:[entry.brand];
+ return `<li class="career-entry"><div class="career-entry__date">${escapeHtml(entry.dates)}</div><div class="career-entry__copy"><h3>${escapeHtml(name)}</h3><p class="career-entry__role">${escapeHtml(entry.role)}</p><p class="career-entry__summary">${escapeHtml(entry.summary)}</p></div>${brands.length?`<div class="career-entry__brands${brands.length>1?' career-entry__brands--multiple':''}">${brands.map(id=>`<div class="career-brand">${brandTile(id,brands.length>1?(homebarNames[id]||name):name)}${experienceBadge(brandTypes[id])}</div>`).join('')}</div>`:''}</li>`;
+}
+function about(){
+ const education=career.education;
+ return pageHero('About Hokeem', 'Creator operations, AI products, independent projects — and the people and places behind them.')+`
+ <section class="page-section personal-bio">${sectionBar('01','About Me')}
+  <div class="personal-bio__layout"><h2>Making things.<br>Finding my way.</h2><div><p>I’m Hokeem, also known as Deng Haoqing. I work across creator operations, AI tools and content, taking ideas from an observation to a working product or finished piece.</p><p>My experience spans internet platforms, overseas marketing, independent media and running bars. Across these different settings, I keep coming back to people: understanding what they need, creating something for them, and learning from what happens next.</p><a class="underlined-link" href="#work">View My Portfolio <span>↗</span></a></div></div>
+ </section>
+ <section class="page-section career-section" id="career-experience">${sectionBar('02','Experience')}<div class="career-section__heading"><h2>Where I’ve worked.</h2><p>Creator development, content operations and international marketing.</p></div><ul class="career-list">${career.roles.map(entry=>careerArticle(entry)).join('')}</ul></section>
+ <section class="page-section career-section" id="career-projects">${sectionBar('03','Independent & Community')}<div class="career-section__heading"><h2>Other chapters.</h2><p>Things I’ve built, communities I’ve joined and ideas I’ve brought to life.</p></div><ul class="career-list">${career.projects.map(entry=>careerArticle(entry,true)).join('')}</ul></section>
+ <section class="page-section career-background" id="career-background">${sectionBar('04','Education & Beyond')}<div class="career-background__layout"><div class="career-education"><span class="eyebrow">EDUCATION</span><p class="career-education__date">${escapeHtml(education.dates)}</p><h2>${escapeHtml(education.school)}</h2><p>${escapeHtml(education.summary)}</p></div><div><ul class="career-highlights">${career.highlights.map(item=>`<li><span>${escapeHtml(item.date)}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.text)}</p></li>`).join('')}</ul></div></div></section>
+ <section class="page-section career-practice">${sectionBar('05','My Practice')}<div class="career-practice__grid">${career.practice.map(item=>`<div><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.text)}</p></div>`).join('')}</div><a class="underlined-link" href="#work">View My Portfolio <span>↗</span></a></section>`;
+}
 function contact(){return `<section class="hero hero--contact"><div class="hero__image" aria-hidden="true" style="background-image:url('./assets/contact-leopard-hat-20261015.webp')"></div><div class="contact-screen"><span>HOKEEM / CONTACT</span><h1>Let's<br>connect.</h1><div class="contact-person"><img src="./assets/denghaoqing-avatar.png" alt="Denghaoqing avatar" width="1574" height="1260"><div><span>YOU'RE REACHING</span><strong>Denghaoqing</strong></div></div><div class="contact-screen__links"><div class="contact-method"><span>WECHAT</span><strong>dhq159162</strong><button type="button" data-copy="dhq159162" aria-label="Copy WeChat ID dhq159162">Copy ID ↗</button></div><a class="contact-method" href="https://t.me/hokeemDeng" target="_blank" rel="noopener noreferrer" aria-label="Message @hokeemDeng on Telegram"><span>TELEGRAM</span><strong>@hokeemDeng</strong><em>Open Telegram ↗</em></a></div><p class="contact-feedback" role="status" aria-live="polite"></p></div></section>`;}
 function route(){
  let hash;try{hash=decodeURIComponent(location.hash.slice(1))||'home';}catch{hash='home';}
