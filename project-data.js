@@ -257,36 +257,6 @@ window.PORTFOLIO_PROJECTS = [
     "videoWebm": "./media/tool-video-1-browser.webm"
   },
   {
-    "id": "tool-video-2",
-    "type": "video",
-    "group": "hypit-production",
-    "groupTitle": "Hypit Production Cases",
-    "title": "Tool Guide 02",
-    "subtitle": "Hypit / Tool Walkthrough",
-    "source": "Personal Tool Guides for Xiaohongshu",
-    "description": "A video guide to a useful tool.",
-    "image": "./assets/frame-tool-2-fast.webp",
-    "video": "./media/tool-video-2-browser.mp4",
-    "aspect": "portrait",
-    "duration": "02:06",
-    "videoWebm": "./media/tool-video-2-browser.webm"
-  },
-  {
-    "id": "tool-video-3",
-    "type": "video",
-    "group": "hypit-production",
-    "groupTitle": "Hypit Production Cases",
-    "title": "Tool Guide 03",
-    "subtitle": "Hypit / Tool Walkthrough",
-    "source": "Personal Tool Guides for Xiaohongshu",
-    "description": "A video guide to a useful tool.",
-    "image": "./assets/frame-tool-3-fast.webp",
-    "video": "./media/tool-video-3-browser.mp4",
-    "aspect": "portrait",
-    "duration": "01:41",
-    "videoWebm": "./media/tool-video-3-browser.webm"
-  },
-  {
     "id": "game-video-1",
     "type": "game",
     "group": "games",
