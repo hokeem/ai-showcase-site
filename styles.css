@@ -645,7 +645,7 @@ img { height: auto; }
   background:
     linear-gradient(90deg, #080604 20%, #08060499 70%, #08060466),
     linear-gradient(0deg, #080604 3%, transparent 85%),
-    url('./assets/closing-leopard-20261015.webp') right center / cover no-repeat;
+    url('./assets/leopard-closing-desktop-20261018.webp') right center / cover no-repeat;
 }
 @media (max-width:800px) {
   .intro-project--portrait { max-width: 360px; }
@@ -666,7 +666,7 @@ img { height: auto; }
   .portfolio-footer::before {
     background:
       linear-gradient(90deg, #080604e6, #080604aa),
-      url('./assets/closing-leopard-20261015.webp') 70% center / cover no-repeat;
+      url('./assets/leopard-closing-mobile-20261018.webp') 70% center / cover no-repeat;
   }
 }
 
@@ -901,4 +901,28 @@ img { height: auto; }
  .portfolio-series__heading h3 { font-size: 18px; }
  .catalog .group-filters { gap: 8px 14px; }
  .group-filters__label { flex-basis: 100%; }
+}
+
+
+/* Smaller, responsive chapter art; WebP also covers older browsers. */
+.brand-cover { background-image: var(--cover-webp); }
+@media (max-width: 800px) {
+ .brand-cover { background-image: var(--cover-webp-mobile); }
+}
+@supports (background-image: image-set(url('test.avif') type('image/avif'), url('test.webp') type('image/webp'))) {
+ .brand-cover { background-image: image-set(var(--cover-avif) type('image/avif'), var(--cover-webp) type('image/webp')); }
+ .portfolio-footer::before {
+  background-image: linear-gradient(90deg, #080604 20%, #08060499 70%, #08060466), linear-gradient(0deg, #080604 3%, transparent 85%), image-set(url('./assets/leopard-closing-desktop-20261018.avif') type('image/avif'), url('./assets/leopard-closing-desktop-20261018.webp') type('image/webp'));
+ }
+ @media (max-width: 800px) {
+  .brand-cover { background-image: image-set(var(--cover-avif-mobile) type('image/avif'), var(--cover-webp-mobile) type('image/webp')); }
+  .portfolio-footer::before {
+   background-image: linear-gradient(90deg, #080604 20%, #08060499 70%, #08060466), linear-gradient(0deg, #080604 3%, transparent 85%), image-set(url('./assets/leopard-closing-mobile-20261018.avif') type('image/avif'), url('./assets/leopard-closing-mobile-20261018.webp') type('image/webp'));
+  }
+ }
+ @media (max-width: 600px) {
+  .portfolio-footer::before {
+   background-image: linear-gradient(90deg, #080604e6, #080604aa), image-set(url('./assets/leopard-closing-mobile-20261018.avif') type('image/avif'), url('./assets/leopard-closing-mobile-20261018.webp') type('image/webp'));
+  }
+ }
 }
