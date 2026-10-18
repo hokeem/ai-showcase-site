@@ -128,8 +128,7 @@ img { height: auto; }
 .experience-brand figcaption { margin-top: 12px; text-align: center; font-size: 11px; line-height: 1.5; white-space: nowrap; color: var(--muted); }
 .experience-brand .experience-logo { border-radius: 4px; }
 .experience-brand__name { display: block; }
-.experience-badge { display: inline-flex; justify-content: center; align-items: center; gap: 4px; padding: 3px 5px; margin-top: 7px; border: 1px solid #443728; border-radius: 4px; background: #17130e; color: #c8bda9; font-size: 8px; font-weight: 400; line-height: 1.35; letter-spacing: .01em; white-space: nowrap; vertical-align: top; }
-.experience-badge svg { width: 10px; height: 10px; flex: none; color: var(--gold); }
+.experience-badge { display: inline-flex; justify-content: center; align-items: center; padding: 3px 5px; margin-top: 7px; border: 1px solid #443728; border-radius: 4px; background: #17130e; color: #d6c8b2; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; font-size: 8px; font-weight: 700; line-height: 1.35; letter-spacing: .025em; text-transform: uppercase; white-space: nowrap; vertical-align: top; }
 @media (max-width: 800px) {
   .intro-experience { --experience-brand-width: 88px; }
   .experience-row--year { min-height: 148px; }
@@ -803,4 +802,68 @@ img { height: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .featured-all__link:hover, .featured-all__link:focus-visible, .featured-card:hover .featured-media__image, .featured-card:focus-visible .featured-media__image { transform: none; }
+}
+
+/* A compact, continuous chronology for About. */
+body[data-page="about"] .page-section { width: min(calc(100% - 48px), 1200px); padding-block: 24px 48px; }
+body[data-page="about"] #app > .hero.hero--about { min-height: clamp(400px, 55svh, 520px); }
+.hero--about .hero__content { width: min(calc(100% - 48px), 1200px); padding-block: 135px 36px; }
+.hero--about .page-hero-title h1 { max-width: none; font-size: clamp(44px, 5.5vw, 76px); margin-top: 20px; }
+.hero--about .hero__content--bottom > p { font-size: 15px; }
+body[data-page="about"] .personal-bio__layout { grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); gap: 48px; padding-top: 38px; }
+body[data-page="about"] .personal-bio__layout h2 { font-size: clamp(28px, 3vw, 42px); line-height: 1.15; font-weight: 400; }
+body[data-page="about"] .personal-bio__layout p { font-size: 18px; line-height: 1.6; margin-bottom: 0; }
+body[data-page="about"] .personal-bio__layout .underlined-link { margin-top: 22px; font-size: 14px; }
+.career-year { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 24px; padding-top: 30px; }
+.career-year__title { padding-top: 18px; font-size: 28px; line-height: 1.1; font-weight: 400; letter-spacing: -.035em; }
+.career-compact .career-entry { grid-template-columns: 124px minmax(0, 1fr) 100px; gap: 20px; padding-block: 18px; }
+.career-compact .career-entry__date { padding-top: 3px; font-size: 11px; line-height: 1.5; }
+.career-compact .career-entry__copy h3 { font-size: 22px; line-height: 1.2; }
+.career-compact .career-entry__role { margin-top: 6px; font-size: 11px; line-height: 1.5; }
+.career-compact .career-entry__summary { max-width: none; margin-top: 8px; font-size: 14px; line-height: 1.55; }
+.career-compact .career-entry__brands { gap: 8px; }
+.career-compact .career-entry__brands--multiple { display: flex; gap: 10px; max-width: none; }
+.career-compact .career-entry__brands--multiple .career-brand { width: 80px; }
+body[data-page="about"] .career-background__layout { padding-top: 32px; gap: 48px; }
+body[data-page="about"] .career-education__date { margin-top: 18px; font-size: 11px; }
+body[data-page="about"] .career-education h2 { margin-top: 14px; font-size: 30px; }
+body[data-page="about"] .career-education > p:last-child { margin-top: 16px; font-size: 14px; line-height: 1.6; }
+body[data-page="about"] .career-highlights li { padding-bottom: 18px; margin-bottom: 18px; }
+body[data-page="about"] .career-highlights h3 { margin-top: 8px; font-size: 18px; }
+body[data-page="about"] .career-highlights p { margin-top: 8px; font-size: 14px; line-height: 1.6; }
+body[data-page="about"] .career-practice__grid { padding-block: 32px; gap: 32px; }
+body[data-page="about"] .career-practice h2 { font-size: 21px; }
+body[data-page="about"] .career-practice p { margin-top: 12px; font-size: 14px; line-height: 1.6; }
+body[data-page="about"] .career-practice > .underlined-link { font-size: 14px; }
+body[data-page="about"] .portfolio-footer { padding-top: 42px; }
+body[data-page="about"] .portfolio-footer__top { padding-bottom: 42px; }
+body[data-page="about"] .portfolio-footer h2 { font-size: clamp(30px, 4vw, 52px); }
+@media (max-width: 1000px) {
+  .career-year { grid-template-columns: 60px minmax(0, 1fr); gap: 20px; }
+  .career-compact .career-entry { grid-template-columns: 100px minmax(0, 1fr) 86px; gap: 16px; }
+}
+@media (max-width: 700px) {
+  body[data-page="about"] .page-section { width: calc(100% - 40px); padding-block: 22px 36px; }
+  body[data-page="about"] #app > .hero.hero--about { min-height: 380px; }
+  .hero--about .hero__content { width: calc(100% - 40px); gap: 18px; padding-block: 125px 28px; }
+  body[data-page="about"] .personal-bio__layout { grid-template-columns: minmax(0, 1fr); gap: 22px; padding-top: 30px; }
+  body[data-page="about"] .personal-bio__layout h2 br { display: none; }
+  body[data-page="about"] .personal-bio__layout h2 { max-width: 18ch; font-size: 28px; }
+  body[data-page="about"] .personal-bio__layout p { font-size: 16px; line-height: 1.6; }
+  .career-year { display: block; padding-top: 26px; }
+  .career-year__title { padding-top: 0; margin-bottom: 14px; font-size: 26px; }
+  .career-compact .career-entry { grid-template-columns: minmax(0, 1fr) 78px; gap: 6px 16px; padding-block: 16px; }
+  .career-compact .career-entry__date { grid-column: 1; grid-row: 1; padding-top: 0; font-size: 10px; }
+  .career-compact .career-entry__copy { display: contents; }
+  .career-compact .career-entry__copy h3 { grid-column: 1; grid-row: 2; font-size: 21px; }
+  .career-compact .career-entry__role { grid-column: 1; grid-row: 3; margin-top: 0; }
+  .career-compact .career-entry__summary { grid-column: 1 / -1; grid-row: 4; margin-top: 4px; font-size: 14px; }
+  .career-compact .career-entry__brands { grid-column: 2; grid-row: 1 / span 3; }
+  .career-compact .career-entry__brands--multiple { grid-column: 1 / -1; grid-row: 5; margin-top: 6px; }
+  .career-compact .career-entry__brands--multiple .career-brand { width: 78px; }
+  .career-compact .career-entry:has(.career-entry__brands--multiple) .career-entry__copy h3,
+  .career-compact .career-entry:has(.career-entry__brands--multiple) .career-entry__role { grid-column: 1 / -1; }
+  .career-compact .career-brand .experience-badge { font-size: 7px; padding-inline: 3px; }
+  body[data-page="about"] .career-background__layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  body[data-page="about"] .career-practice__grid { grid-template-columns: minmax(0, 1fr); gap: 22px; }
 }

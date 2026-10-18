@@ -19,79 +19,79 @@ window.HOKEEM_CAREER = {
   ],
   roles: [
     {
-      company: 'Airacle', brand: 'airacle', dates: 'Jul 2026 — Oct 2026',
+      company: 'Airacle', brand: 'airacle', start: '2026-07', dates: 'Jul 2026 — Oct 2026',
       role: 'Influencer Marketing',
       summary: 'Worked on influencer marketing for brands expanding into international markets.'
     },
     {
-      company: 'Hotcoin', brand: 'hotcoin', dates: 'From Jul 2026',
+      company: 'Hotcoin', brand: 'hotcoin', start: '2026-07', dates: 'From Jul 2026',
       role: 'Platform Content Lead',
       summary: 'Moved into platform content, covering academy articles, SEO, and US market content for X and Instagram.'
     },
     {
-      company: 'Kuaishou / Kwai', brand: 'kwai', dates: 'Apr 2026 — Present',
+      company: 'Kuaishou / Kwai', brand: 'kwai', start: '2026-04', dates: 'Apr 2026 — Present',
       role: 'Creator Operations',
       summary: 'Supported comedy creators in Brazil through content feedback and themed campaigns. Built AI video analysis and script tools used by 70+ leading creators.'
     },
     {
-      company: 'PinkWallet', brand: 'pinkwallet', dates: 'Mar 2026 — May 2026',
+      company: 'PinkWallet', brand: 'pinkwallet', start: '2026-03', dates: 'Mar 2026 — May 2026',
       role: 'Web3 BD, SEO & China Social Media',
       summary: 'Led China social media and worked on Web3 business development and SEO.'
     },
     {
-      company: 'Hotcoin', brand: 'hotcoin', dates: 'Dec 2025 — Jul 2026',
+      company: 'Hotcoin', brand: 'hotcoin', start: '2025-12', dates: 'Dec 2025 — Jul 2026',
       role: 'Social Media Operations',
       summary: 'Launched the official WeChat account “潮见” and created accessible financial explainers. Content reached 10M+ views and added 30K followers in three months.'
     },
     {
-      company: 'Tec-Do', brand: 'tecdo', dates: 'Oct 2025 — Jan 2026',
+      company: 'Tec-Do', brand: 'tecdo', start: '2025-10', dates: 'Oct 2025 — Jan 2026',
       role: 'Overseas Content Marketing',
       summary: 'Sourced creators and coordinated overseas campaigns for brands including SHEIN. Worked on content briefs, outreach and campaign delivery.'
     },
     {
-      company: 'Baidu', brand: 'baidu', dates: 'Jul 2025 — Oct 2025',
+      company: 'Baidu', brand: 'baidu', start: '2025-07', dates: 'Jul 2025 — Oct 2025',
       role: 'Content Operations',
       summary: 'Planned and promoted the AI Carnival, supported AI competitions and coordinated the music festival. The campaign generated 2,771+ pieces of user content.'
     },
     {
-      company: 'NetEase', brand: 'netease', dates: 'Mar 2025 — Jul 2025',
+      company: 'NetEase', brand: 'netease', start: '2025-03', dates: 'Mar 2025 — Jul 2025',
       role: 'AI Content Operations',
       summary: 'Helped launch the Xiaomifeng platform and ran Qingmei content across WeChat, Xiaohongshu and communities. Built AI production workflows and added 30K WeChat followers in two months.'
     }
   ],
   projects: [
     {
-      name: 'PinPin Camera', brands: ['pinpin'], dates: 'Joined Jan 2026',
+      name: 'PinPin Camera', brands: ['pinpin'], start: '2026-01', dates: 'Joined Jan 2026',
       role: 'Product Design & Launch',
       summary: 'Helped design and promote a creative camera app built around capturing images with a screen swipe, with an AI visual treasure-hunt feature.'
     },
     {
-      name: 'NCC', brands: ['ncc'], dates: 'Jan 2026',
+      name: 'NCC', brands: ['ncc'], start: '2026-01', dates: 'Jan 2026',
       role: 'Community Content & Photography',
       summary: 'Created Xiaohongshu content for the Chiang Mai digital nomad conference and served as an official photographer. The photography reached 100K viewers.'
     },
     {
-      name: 'AI Short Dramas', brands: [], dates: 'Sep 2025 — Jan 2026',
+      name: 'AI Short Dramas', brands: [], start: '2025-09', dates: 'Sep 2025 — Jan 2026',
       role: 'Scripts, Tools & Production',
       summary: 'Worked with the team of AI creator 糖果果的未来要发光, building script tools and writing 50+ short-drama scripts for Chinese and overseas audiences.'
     },
     {
-      name: 'When2buy', brands: ['when2buy'], dates: 'Mar 2025 — Mar 2026',
+      name: 'When2buy', brands: ['when2buy'], start: '2025-03', dates: 'Mar 2025 — Mar 2026',
       role: 'Independent Creator & Builder',
       summary: 'Ran an AI and investing account and shared self-built products. Published 10+ posts with 100K+ views and developed automated workflows for research, visuals, video and content review.'
     },
     {
-      name: 'Aippy', brands: ['aippy'], dates: 'Joined Feb 2025',
+      name: 'Aippy', brands: ['aippy'], start: '2025-02', dates: 'Joined Feb 2025',
       role: 'Interactive Content Creator',
       summary: 'Created 10+ interactive mini-games with six-figure reach and became a top-10 creator on the platform.'
     },
     {
-      name: 'Spark Lab', brands: ['sparklab'], dates: 'Feb 2025 — Mar 2025',
+      name: 'Spark Lab', brands: ['sparklab'], start: '2025-02', dates: 'Feb 2025 — Mar 2025',
       role: 'Startup Incubation',
       summary: 'Built an AI critique agent in ten days and won first prize at the incubation program.'
     },
     {
-      name: 'Homebar Ventures', brands: ['fuqi', 'yeluzi', 'yunv'], dates: 'May 2024 — Jul 2025',
+      name: 'Homebar Ventures', brands: ['fuqi', 'yeluzi', 'yunv'], start: '2024-05', dates: 'May 2024 — Jul 2025',
       role: 'Founder & Operator',
       summary: 'Opened three bars: future homebar, yeluzi homebar and yunvhomebar. Worked on site selection, interiors, bartending, social content, community events and hosting; the ventures reached the local bar top three.'
     }
