@@ -280,17 +280,20 @@ function careerArticle(entry){
  return `<li class="career-entry" data-start="${entry.start}"><div class="career-entry__date">${escapeHtml(entry.dates)}</div><div class="career-entry__copy"><h3>${escapeHtml(name)}</h3><p class="career-entry__role">${escapeHtml(entry.role)}</p><p class="career-entry__summary">${escapeHtml(entry.summary)}</p></div>${brands.length?`<div class="career-entry__brands${brands.length>1?' career-entry__brands--multiple':''}">${brands.map(id=>`<div class="career-brand">${brandTile(id,brands.length>1?(homebarNames[id]||name):name)}${experienceBadge(brandTypes[id])}</div>`).join('')}</div>`:''}</li>`;
 }
 function about(){
- const education=career.education;
- const entries=[...career.roles.map(entry=>({...entry,name:entry.company,brands:[entry.brand]})),...career.projects].sort((a,b)=>a.start.localeCompare(b.start));
+ const records=[...career.roles.map(entry=>({...entry,name:entry.company,brands:[entry.brand]})),...career.projects];
+ // Match the selected homepage chapters in the exact order supplied by the user.
+ const entries=career.timeline.map(chapter=>{
+  const record=records.find(entry=>entry.start===chapter.start&&entry.brands.includes(chapter.brands[0]));
+  if(!record)throw new Error('Missing experience: '+chapter.name);
+  return record;
+ });
  const years=[...new Set(entries.map(entry=>entry.start.slice(0,4)))];
  const chronology=years.map(year=>`<section class="career-year" data-year="${year}" aria-labelledby="career-year-${year}"><h2 class="career-year__title" id="career-year-${year}">${year}</h2><ul class="career-list">${entries.filter(entry=>entry.start.startsWith(year)).map(careerArticle).join('')}</ul></section>`).join('');
  return pageHero('About Hokeem', 'Who I am, and what I’ve done.')+`
  <section class="page-section personal-bio">${sectionBar('01','About Me')}
   <div class="personal-bio__layout"><h2>My Guiding <br>Principles</h2><div><p>${escapeHtml(lifePrinciple)}</p><a class="underlined-link" href="#work">View My Portfolio <span>↗</span></a></div></div>
  </section>
- <section class="page-section career-section career-compact" id="career-experience">${sectionBar('02','Life & Work')}${chronology}</section>
- <section class="page-section career-background" id="career-background">${sectionBar('03','Education & Beyond')}<div class="career-background__layout"><div class="career-education"><span class="eyebrow">EDUCATION</span><p class="career-education__date">${escapeHtml(education.dates)}</p><h2>${escapeHtml(education.school)}</h2><p>${escapeHtml(education.summary)}</p></div><div><ul class="career-highlights">${career.highlights.map(item=>`<li><span>${escapeHtml(item.date)}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.text)}</p></li>`).join('')}</ul></div></div></section>
- <section class="page-section career-practice">${sectionBar('04','My Practice')}<div class="career-practice__grid">${career.practice.map(item=>`<div><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.text)}</p></div>`).join('')}</div><a class="underlined-link" href="#work">View My Portfolio <span>↗</span></a></section>`;
+ <section class="page-section career-section career-compact" id="career-experience">${sectionBar('02','Life & Work')}${chronology}</section>`;
 }
 function contact(){return `<section class="hero hero--contact"><div class="hero__image" aria-hidden="true" style="background-image:url('./assets/contact-leopard-hat-20261015.webp')"></div><div class="contact-screen"><span>HOKEEM / CONTACT</span><h1>Let's<br>connect.</h1><div class="contact-person"><img src="./assets/denghaoqing-avatar.png" alt="Denghaoqing avatar" width="1574" height="1260"><div><span>YOU'RE REACHING</span><strong>Denghaoqing</strong></div></div><div class="contact-screen__links"><div class="contact-method"><span>WECHAT</span><strong>dhq159162</strong><button type="button" data-copy="dhq159162" aria-label="Copy WeChat ID dhq159162">Copy ID ↗</button></div><a class="contact-method" href="https://t.me/hokeemDeng" target="_blank" rel="noopener noreferrer" aria-label="Message @hokeemDeng on Telegram"><span>TELEGRAM</span><strong>@hokeemDeng</strong><em>Open Telegram ↗</em></a></div><p class="contact-feedback" role="status" aria-live="polite"></p></div></section>`;}
 function route(){
