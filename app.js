@@ -4,8 +4,9 @@ const header = document.getElementById('site-header');
 const siteFooter = document.querySelector('.portfolio-footer');
 const imageDialog = document.getElementById('image-dialog');
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const typeName = {product:'PRODUCT DEMO',video:'VIDEO WORK',image:'IMAGE WORK'};
-const typeLabel = {product:'Product Demos',video:'Video Works',image:'Images'};
+const typeName = {product:'PRODUCT DEMO',video:'VIDEO',image:'IMAGE',game:'GAME'};
+const portfolioTypes=['product','video','image','game'];
+const typeLabel = {product:'Product Demos',video:'Videos',image:'Images',game:'Games'};
 const count = type => projects.filter(p=>p.type===type).length;
 const pad = n => String(n).padStart(2,'0');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -206,20 +207,25 @@ function card(p,i){
   return `<a class="work-card" href="#project/${p.id}" aria-label="View ${escapeHtml(p.title)}">${art}${meta}</a>`;
 }
 function catalogBody(){
-  const filtered=projects.filter(p=>(activeType==='all'||p.type===activeType)&&(activeGroup==='all'||p.group===activeGroup));
-  const groups=[...new Set(filtered.map(p=>p.group))];
-  return `<p class="result-count" role="status">${filtered.length} works / ${typeLabel[activeType]||'All Work'}</p>`+groups.map((group,i)=>{
-    const items=filtered.filter(p=>p.group===group),first=items[0],isImage=first.type==='image';
-    return `<section class="catalog-group" aria-labelledby="group-${group}"><div class="group-heading"><div><span>(${pad(i+1)}) / ${typeName[first.type]}</span><h2 id="group-${group}">${escapeHtml(first.groupTitle)} <sup>(${pad(items.length)})</sup></h2></div><span>${isImage?'Click to enlarge':'Open a project to watch'}</span></div><div class="work-grid ${isImage?'work-grid--images':items.every(p=>p.aspect==='portrait')?'work-grid--portraits':''}">${items.map(card).join('')}</div></section>`;
-  }).join('');
+ const filtered=projects.filter(p=>(activeType==='all'||p.type===activeType)&&(activeGroup==='all'||p.group===activeGroup));
+ const board=(items,kind)=>`<div class="work-grid portfolio-board portfolio-board--${kind} ${kind==='image'?'work-grid--images':''}">${items.map(card).join('')}</div>`;
+ return `<p class="result-count" role="status">${pad(filtered.length)} works / ${typeLabel[activeType]||'All Portfolio'}</p>`+portfolioTypes.filter(type=>filtered.some(p=>p.type===type)).map(type=>{
+  const items=filtered.filter(p=>p.type===type);
+  const content=type==='video'?[...new Set(items.map(p=>p.group))].map(group=>{
+   const series=items.filter(p=>p.group===group);
+   return `<section class="portfolio-series" aria-labelledby="series-${group}"><div class="portfolio-series__heading"><h3 id="series-${group}">${escapeHtml(series[0].groupTitle)}</h3><span>${pad(series.length)} CASES</span></div>${board(series,group==='short-drama'?'shorts':'video')}</section>`;
+  }).join(''):board(items,type);
+  return `<section class="portfolio-format portfolio-format--${type}" id="portfolio-${type}" aria-labelledby="format-${type}"><div class="portfolio-format__heading"><h2 id="format-${type}"><span>(${pad(portfolioTypes.indexOf(type)+1)}) /</span> ${typeName[type]}</h2><span>${pad(items.length)} WORKS</span></div>${content}</section>`;
+ }).join('');
 }
 function groupFilters(){
-  const groups=[...new Set(projects.filter(p=>activeType==='all'||p.type===activeType).map(p=>p.group))];
-  return `<button data-group="all" class="${activeGroup==='all'?'is-active':''}" aria-pressed="${activeGroup==='all'}">All Collections</button>`+groups.map(g=>`<button data-group="${g}" class="${activeGroup===g?'is-active':''}" aria-pressed="${activeGroup===g}">${escapeHtml(projects.find(p=>p.group===g).groupTitle)}</button>`).join('');
+ if(activeType!=='video')return '';
+ const groups=[...new Set(projects.filter(p=>p.type==='video').map(p=>p.group))];
+ return '<span class="group-filters__label">VIDEO SERIES</span>'+[`<button type="button" data-group="all" class="${activeGroup==='all'?'is-active':''}" aria-pressed="${activeGroup==='all'}">All Series</button>`,...groups.map(g=>`<button type="button" data-group="${g}" class="${activeGroup===g?'is-active':''}" aria-pressed="${activeGroup===g}">${escapeHtml(projects.find(p=>p.group===g).groupTitle)}</button>`)].join('');
 }
 function work(){
- const catalog=`<section class="catalog page-section" id="portfolio-index">${sectionBar('01','Portfolio')}<div class="filter-row" role="group" aria-label="Filter by format"><span>FILTER BY FORMAT</span><div>${['all','product','video','image'].map(t=>`<button type="button" data-filter="${t}" class="${activeType===t?'is-active':''}" aria-pressed="${activeType===t}">${typeLabel[t]||'All Work'} <small>${pad(t==='all'?projects.length:count(t))}</small></button>`).join('')}</div></div><div class="group-filters" id="group-filters" role="group" aria-label="Filter by collection">${groupFilters()}</div><div id="catalog-body">${catalogBody()}</div></section>`;
- return pageHero('Latest Portfolio', 'A collection of AI products, films, and social visuals, organized by format and series.', 'work') + catalog;
+ const catalog=`<section class="catalog page-section" id="portfolio-index">${sectionBar('01','Portfolio')}<div class="filter-row" role="group" aria-label="Filter by format"><span>EXPLORE BY FORMAT</span><div>${['all',...portfolioTypes].map(t=>`<button type="button" data-filter="${t}" class="${activeType===t?'is-active':''}" aria-pressed="${activeType===t}">${t==='all'?'ALL':typeName[t]} <small>${pad(t==='all'?projects.length:count(t))}</small></button>`).join('')}</div></div><div class="group-filters" id="group-filters" role="group" aria-label="Filter video series" ${activeType==='video'?'':'hidden'}>${groupFilters()}</div><div id="catalog-body">${catalogBody()}</div></section>`;
+ return pageHero('ALL Portfolio', 'A collection of AI products, films, and social visuals', 'work') + catalog;
 }
 function pageHero(title,description,kind='about'){
  const image=kind==='work'?'./assets/portfolio-black-gold-20261015.webp':'./assets/about-leopard-profile-20261015.webp';
@@ -262,7 +268,7 @@ function featuredWork(){
  return `<section class="page-section home-featured" id="selected-work" aria-labelledby="featured-heading">${sectionBar('02','Product Showcase')}<div class="featured-layout"><div class="featured-context"><span class="eyebrow">VIBE CODING / PRODUCT DEMOS</span><h2 id="featured-heading">Vibe-coded<br>Products</h2><p>Four products built around creator discovery, content production, and KOL collaboration.</p><a class="underlined-link" href="#work/product">Explore the Products <span>↗</span></a></div><div class="featured-stack">${selected.map((p,i)=>`<a class="featured-card" href="#project/${p.id}" style="--card-order:${i}" aria-label="Watch ${escapeHtml(p.title)} demo"><div class="featured-media" style="--featured-art:url('${p.image}')"><div class="featured-media__blur" aria-hidden="true"></div><span class="featured-media__crop"><img class="featured-media__image" src="${p.image}" alt="${escapeHtml(p.title)} product cover" loading="lazy" width="1440" height="1080"></span><span class="featured-media__open" aria-hidden="true">↗</span></div><div class="featured-meta"><span>(${pad(i+1)})</span><div><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.subtitle)}</p></div><span class="featured-meta__type">PRODUCT DEMO</span></div></a>`).join('')}</div><div class="featured-all"><a class="featured-all__link" href="#work/product" aria-label="Explore all ${selected.length} product demos"><span class="featured-all__kicker">ALL PRODUCT DEMOS / ${pad(selected.length)}</span><strong>Explore All<br>Demos</strong><span class="featured-all__arrow" aria-hidden="true">↗</span></a></div></div></section>`;
 }
 function home(){
- const formats=[{type:'video',title:'Video Works',subtitle:'Brand Films / Short Dramas / Content',description:'Brand films, short dramas, explainers, news, rankings, tool guides, and game demos.',image:'./assets/aigc-amos-doodle-egg.webp'},{type:'image',title:'Images & Visuals',subtitle:'Hotcoin Social Visuals / Image Posts',description:'Market stories, information cards, and visual series, available as full-size images.',image:'./assets/tradfi-01.webp'}];
+ const formats=[{type:'video',title:'Video Works',subtitle:'AI Visual Films / Short Dramas / Hypit',description:'AI visual films, short dramas, and production cases made with Hypit.',image:'./assets/aigc-amos-doodle-egg.webp'},{type:'image',title:'Images & Visuals',subtitle:'Editorial / Brand / Social',description:'Market stories, information cards, and visual series, available as full-size images.',image:'./assets/tradfi-01.webp'}];
  const creativeCards=formats.map((f,i)=>`<article class="personal-format-card"><span class="format-number">${pad(i+1)}</span><a class="format-image" href="#work/${f.type}" aria-label="Explore ${f.title}"><img src="${f.image}" alt="${f.title} / Selected Work" loading="lazy" width="960" height="640"></a><div class="format-copy"><h3><a href="#work/${f.type}">${f.title}</a></h3><p class="format-subtitle">${f.subtitle}</p><p>${f.description}</p><a class="format-link" href="#work/${f.type}">Explore ${count(f.type)} ${f.type==='image'?'Images':'Videos'} ↗</a></div></article>`).join('');
  const musicCard=`<article class="personal-format-card personal-format-card--upcoming"><span class="format-number">03</span><div class="format-image format-image--music" role="img" aria-label="Music projects coming soon"><span class="music-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="music-cover-note">MUSIC / NEXT CHAPTER</span></div><div class="format-copy"><h3>Music</h3><p class="format-subtitle">Original Music / Coming Soon</p><p>Music projects will be added here once the work is ready to share.</p><span class="format-link format-link--pending">Coming Soon</span></div></article>`;
  return `<section class="hero hero--home"><div class="hero__image" style="background-image:url('./assets/hero-leopard.webp')"></div><div class="home-hero-content"><div class="home-hero-intro"><span class="eyebrow">HOKEEM / VIBE CODING PRODUCTS &amp; AIGC VISUALS</span><p>Products.<br>Videos.<br>Visuals.</p><a class="underlined-link" href="#work">Explore Work <span>↗</span></a></div><div class="hero-signature"><h1>PORTFOLIO</h1></div></div></section>${personalIntro()}${featuredWork()}<section class="page-section personal-formats">${sectionBar('03','Creative Portfolio')}<h2 class="formats-heading">Films, visuals &amp; music.</h2><div class="format-list">${creativeCards}${musicCard}</div></section>`;
@@ -298,8 +304,14 @@ function about(){
 function contact(){return `<section class="hero hero--contact"><div class="hero__image" aria-hidden="true" style="background-image:url('./assets/contact-leopard-hat-20261015.webp')"></div><div class="contact-screen"><span>HOKEEM / CONTACT</span><h1>Let's<br>connect.</h1><div class="contact-person"><img src="./assets/denghaoqing-avatar.png" alt="Denghaoqing avatar" width="1574" height="1260"><div><span>YOU'RE REACHING</span><strong>Denghaoqing</strong></div></div><div class="contact-screen__links"><div class="contact-method"><span>WECHAT</span><strong>dhq159162</strong><button type="button" data-copy="dhq159162" aria-label="Copy WeChat ID dhq159162">Copy ID ↗</button></div><a class="contact-method" href="https://t.me/hokeemDeng" target="_blank" rel="noopener noreferrer" aria-label="Message @hokeemDeng on Telegram"><span>TELEGRAM</span><strong>@hokeemDeng</strong><em>Open Telegram ↗</em></a></div><p class="contact-feedback" role="status" aria-live="polite"></p></div></section>`;}
 function route(){
  let hash;try{hash=decodeURIComponent(location.hash.slice(1))||'home';}catch{hash='home';}
- const [page,id,groupId]=hash.split('/');const p=page==='project'?projects.find(x=>x.id===id):null;
- if(page==='work'){activeType=['product','video','image'].includes(id)?id:'all';activeGroup=projects.some(x=>x.group===groupId&&(activeType==='all'||x.type===activeType))?groupId:'all';}
+ let [page,id,groupId]=hash.split('/');
+ if(page==='work'){
+  const aliases={'aigc-brand-films':'ai-visual-films','aigc-visual-films':'ai-visual-films','ranking-video':'hypit-production','tool-video':'hypit-production','hotcoin-x-social':'selected-images','image-post':'selected-images'};
+  if(id==='video'&&groupId==='game-video'){id='game';groupId='games';}
+  groupId=aliases[groupId]||groupId;
+ }
+ const p=page==='project'?projects.find(x=>x.id===id):null;
+ if(page==='work'){activeType=portfolioTypes.includes(id)?id:'all';activeGroup=projects.some(x=>x.group===groupId&&(activeType==='all'||x.type===activeType))?groupId:'all';}
  if(imageDialog.open)imageDialog.close();
  app.querySelectorAll('video').forEach(video=>video.pause());
  app.innerHTML=p?detail(p):({home,work,about,contact}[page]||home)();
@@ -317,6 +329,7 @@ function route(){
 }
 function refreshCatalog(){
  document.getElementById('group-filters').innerHTML=groupFilters();
+ document.getElementById('group-filters').hidden=activeType!=='video';
  document.getElementById('catalog-body').innerHTML=catalogBody();
  animateView(false);
 }
