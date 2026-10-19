@@ -269,6 +269,21 @@ window.HOKEEM_I18N = (() => {
   "Hokeem’s portfolio of vibe-coded products, AIGC video, and visual work.": "Hokeem 的产品、AI 影像与视觉创作作品集。"
 };
 
+ Object.assign(dictionary,{
+  'Accounts & Audiences':'账号与受众',
+  'Independent work and official channels.':'个人创作与官方账号。',
+  'Xiaohongshu':'小红书',
+  'Official X Account':'X 官方账号',
+  'Official Xiaohongshu Account':'小红书官方账号',
+  'Official Instagram Account':'Instagram 官方账号',
+  'NetEase Qingmei Program':'网易青媒计划',
+  'Sole Content Creator':'全部内容由我独立制作',
+  'Company Content Lead':'公司内容负责人',
+  '38K':'3.8万','16K':'1.6万','200K':'20万',
+  'followers':'粉丝',
+  'followers across platforms':'全网粉丝',
+  'View Account':'查看账号'
+ });
  let language='en';
  try { if(localStorage.getItem('hokeem-language')==='zh') language='zh'; } catch {}
  const textSources=new WeakMap(), attributeSources=new WeakMap();

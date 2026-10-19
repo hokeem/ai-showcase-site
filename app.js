@@ -335,8 +335,17 @@ function experienceList(){
  }).join('');
  return `<div class="intro-experience" aria-labelledby="experience-title"><div class="experience-heading"><h3 id="experience-title">(Experience)</h3><span>COMPANIES, PROJECTS &amp; COMMUNITIES</span></div><ul class="experience-list">${rows}</ul><div class="experience-footer"><a class="underlined-link" href="#about">Explore My Work <span>↗</span></a></div></div>`;
 }
+const accountPortfolio=[
+ {brand:'when2buy',name:'When2buy',platform:'Xiaohongshu',role:'Sole Content Creator',followers:'38K',audience:'followers',url:'https://xhslink.cn/o/IlYsL1rgvY'},
+ {brand:'hotcoin',name:'Hotcoin',platform:'Official X Account',role:'Company Content Lead',followers:'16K',audience:'followers',url:'https://x.com/HotcoinGlobal'},
+ {brand:'netease',name:'NetEase Qingmei Program',platform:'Official Xiaohongshu Account',role:'Company Content Lead',followers:'200K',audience:'followers across platforms',url:'https://xhslink.cn/o/5KJbNO0aXsL'},
+ {brand:'airacle',name:'Airacle',platform:'Official Instagram Account',role:'Sole Content Creator',url:'https://www.instagram.com/airacle.ai/'}
+];
+function accountShowcase(){
+ return `<section class="account-showcase" aria-labelledby="accounts-heading"><div class="account-showcase__heading"><h3 id="accounts-heading">Accounts &amp; Audiences</h3><p>Independent work and official channels.</p></div><div class="accounts-grid" tabindex="0" aria-label="Social accounts">${accountPortfolio.map(account=>`<a class="account-card" href="${account.url}" target="_blank" rel="noopener noreferrer" data-account="${account.brand}"><img class="account-card__background" ${imageAttrs(`./assets/brand-${account.brand}-black-20261018.webp`,'(max-width: 900px) 260px, 25vw',480)} alt="" loading="lazy" width="480" height="300"><div class="account-card__content"><span class="account-card__platform">${account.platform}</span><h4>${account.name}</h4><p class="account-card__role">${account.role}</p><div class="account-card__metric">${account.followers?`<strong>${account.followers}</strong><span>${account.audience}</span>`:'<span class="account-card__visit">View Account</span>'}</div><span class="account-card__url" data-no-translate>${account.url}<span class="account-card__arrow" aria-hidden="true">↗</span></span></div></a>`).join('')}</div></section>`;
+}
 function personalIntro(){
- return `<section class="page-section personal-intro" id="about-intro">${sectionBar('01','About Me')}<h2 class="intro-lead">${escapeHtml(lifePrinciple)}</h2><div class="intro-layout"><figure class="intro-project intro-project--portrait"><img ${imageAttrs('./assets/hokeem-portrait-light-20261018.webp','(max-width: 600px) 85vw, 32vw',800)} alt="Hokeem’s leopard persona in a black suit, standing upright with one hand lowering a round black hat" loading="lazy" width="720" height="1080"><figcaption>HOKEEM / THE PERSON BEHIND THE WORK</figcaption></figure>${experienceList()}</div></section>`;
+ return `<section class="page-section personal-intro" id="about-intro">${sectionBar('01','About Me')}<h2 class="intro-lead">${escapeHtml(lifePrinciple)}</h2><div class="intro-layout"><figure class="intro-project intro-project--portrait"><img ${imageAttrs('./assets/hokeem-portrait-light-20261018.webp','(max-width: 600px) 85vw, 32vw',800)} alt="Hokeem’s leopard persona in a black suit, standing upright with one hand lowering a round black hat" loading="lazy" width="720" height="1080"><figcaption>HOKEEM / THE PERSON BEHIND THE WORK</figcaption></figure>${experienceList()}</div>${accountShowcase()}</section>`;
 }
 function featuredWork(){
  const selected=projects.filter(p=>p.type==='product');
