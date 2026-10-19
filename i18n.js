@@ -271,6 +271,10 @@ window.HOKEEM_I18N = (() => {
 
  Object.assign(dictionary,{
   'Accounts & Audiences':'账号与受众',
+  'Hotcoin Official':'Hotcoin 官方号',
+  'NetEase Qingmei Official':'网易青媒计划官方号',
+  'Airacle Official':'Airacle 官方号',
+  'Social accounts':'社交账号',
   'Independent work and official channels.':'个人创作与官方账号。',
   'Xiaohongshu':'小红书',
   'Official X Account':'X 官方账号',
