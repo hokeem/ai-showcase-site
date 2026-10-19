@@ -241,8 +241,25 @@ const pageDeck=(()=>{
   return {init,refresh};
 })();
 function sectionBar(number,title){return `<div class="section-bar"><span>(${number})</span><span>(${title})</span><span>© 2026</span></div>`;}
+// Load decorative card backgrounds only after the lazy cover has arrived.
+app.addEventListener('load',event=>{
+ const image=event.target;
+ if(image.matches?.('.work-card__art > img'))image.parentElement.style.setProperty('--art',`url("${image.currentSrc}")`);
+},true);
+function releaseMedia(container){
+ container.querySelectorAll('img').forEach(image=>{
+  image.removeAttribute('srcset');
+  image.removeAttribute('src');
+ });
+ container.querySelectorAll('video').forEach(video=>{
+  video.pause();
+  video.removeAttribute('src');
+  video.querySelectorAll('source').forEach(source=>source.removeAttribute('src'));
+  video.load();
+ });
+}
 function card(p,i){
-  const art=`<div class="work-card__art ${p.aspect==='portrait'?'work-card__art--portrait':''}" style="--art:url('${p.image}')"><img src="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy" width="${p.aspect==='portrait'?540:960}" height="${p.aspect==='portrait'?960:540}" /><span class="work-card__open" aria-hidden="true">${p.type==='image'?'↗':'▶'}</span>${p.duration?`<span class="duration">${p.duration}</span>`:''}</div>`;
+  const art=`<div class="work-card__art ${p.aspect==='portrait'?'work-card__art--portrait':''}"><img src="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy" width="${p.aspect==='portrait'?540:960}" height="${p.aspect==='portrait'?960:540}" /><span class="work-card__open" aria-hidden="true">${p.type==='image'?'↗':'▶'}</span>${p.duration?`<span class="duration">${p.duration}</span>`:''}</div>`;
   const meta=`<div class="work-card__meta"><span>(${pad(i+1)})</span><span><strong>${escapeHtml(p.title)}</strong><small>${escapeHtml(p.subtitle)}</small></span><span>${typeName[p.type]}</span></div>`;
   if(p.type==='image')return `<article class="work-card work-card--image"><button type="button" data-image="${p.image}" data-title="${escapeHtml(p.title)}" aria-label="Enlarge ${escapeHtml(p.title)}">${art}</button><a href="#project/${p.id}">${meta}</a></article>`;
   return `<a class="work-card" href="#project/${p.id}" aria-label="View ${escapeHtml(p.title)}">${art}${meta}</a>`;
@@ -363,7 +380,7 @@ function route(options={}){
  const p=page==='project'?projects.find(x=>x.id===id):null;
  if(page==='work'){activeType=portfolioTypes.includes(id)?id:'all';activeGroup=projects.some(x=>x.group===groupId&&(activeType==='all'||x.type===activeType))?groupId:'all';}
  if(imageDialog.open)imageDialog.close();
- app.querySelectorAll('video').forEach(video=>video.pause());
+ releaseMedia(app);
  app.innerHTML=p?detail(p):({home,work,about,contact,music}[page]||home)();
  app.append(siteFooter);
  prepareSectionTransitions();
@@ -383,6 +400,7 @@ function route(options={}){
 function refreshCatalog(){
  document.getElementById('group-filters').innerHTML=groupFilters();
  document.getElementById('group-filters').hidden=activeType!=='video';
+ releaseMedia(document.getElementById('catalog-body'));
  document.getElementById('catalog-body').innerHTML=catalogBody();
  i18n.apply(document.getElementById('portfolio-index'));
  animateView(false);
