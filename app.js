@@ -6,6 +6,21 @@ const header = document.getElementById('site-header');
 const siteFooter = document.querySelector('.portfolio-footer');
 const imageDialog = document.getElementById('image-dialog');
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const imageAssets=window.HOKEEM_IMAGES||{};
+function imageUrl(source,width=1440){
+ const variants=imageAssets[source]?.variants;
+ return variants?.find(image=>image.width>=width)?.src||variants?.at(-1)?.src||source;
+}
+function imageAttrs(source,sizes='100vw',width=800){
+ const variants=imageAssets[source]?.variants;
+ return `src="${escapeHtml(imageUrl(source,width))}"${variants?` srcset="${variants.map(image=>image.src+' '+image.width+'w').join(', ')}" sizes="${sizes}"`:''} decoding="async"`;
+}
+function imageCover(source){
+ return `--image-large:url('${imageUrl(source,1440)}');--image-small:url('${imageUrl(source,800)}')`;
+}
+function inlineBack(label='← Back'){
+ return `<button class="project-back context-back" type="button" data-page-back>${label}</button>`;
+}
 const typeName = {product:'PRODUCT DEMO',video:'VIDEO',image:'IMAGE',game:'GAME'};
 const portfolioTypes=['product','video','image','game'];
 const typeLabel = {product:'Product Demos',video:'Videos',image:'Images',game:'Games'};
@@ -33,10 +48,6 @@ function enterNavigation(){
  navigationEntries.set(id,{y:0});currentEntryId=id;return 0;
 }
 function syncUtilities(){
- const button=document.getElementById('page-back');
- const from=history.state?.hokeemNav?.from;
- const page=location.hash.slice(1).split('/')[0]||'home';
- button.textContent=from&&navigationEntries.has(from)?'← Back':page==='project'?'← Back to Portfolio':page==='home'?'← Portfolio':'← Back Home';
  document.querySelectorAll('button[data-language]').forEach(button=>{
   const active=button.dataset.language===i18n.language;
   button.classList.toggle('is-active',active);button.setAttribute('aria-pressed',String(active));
@@ -245,9 +256,11 @@ function sectionBar(number,title){return `<div class="section-bar"><span>(${numb
 app.addEventListener('load',event=>{
  const image=event.target;
  if(image.matches?.('.work-card__art > img'))image.parentElement.style.setProperty('--art',`url("${image.currentSrc}")`);
+ if(image.matches?.('.featured-media__image'))image.closest('.featured-media').style.setProperty('--featured-art',`url("${image.currentSrc}")`);
 },true);
 function releaseMedia(container){
  container.querySelectorAll('img').forEach(image=>{
+  if(header.contains(image))return;
   image.removeAttribute('srcset');
   image.removeAttribute('src');
  });
@@ -259,9 +272,9 @@ function releaseMedia(container){
  });
 }
 function card(p,i){
-  const art=`<div class="work-card__art ${p.aspect==='portrait'?'work-card__art--portrait':''}"><img src="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy" width="${p.aspect==='portrait'?540:960}" height="${p.aspect==='portrait'?960:540}" /><span class="work-card__open" aria-hidden="true">${p.type==='image'?'↗':'▶'}</span>${p.duration?`<span class="duration">${p.duration}</span>`:''}</div>`;
+  const art=`<div class="work-card__art ${p.aspect==='portrait'?'work-card__art--portrait':''}"><img ${imageAttrs(p.image,'(max-width: 500px) 46vw, (max-width: 1000px) 30vw, 24vw',400)} alt="${escapeHtml(p.title)}" loading="lazy" width="${p.aspect==='portrait'?540:960}" height="${p.aspect==='portrait'?960:540}" /><span class="work-card__open" aria-hidden="true">${p.type==='image'?'↗':'▶'}</span>${p.duration?`<span class="duration">${p.duration}</span>`:''}</div>`;
   const meta=`<div class="work-card__meta"><span>(${pad(i+1)})</span><span><strong>${escapeHtml(p.title)}</strong><small>${escapeHtml(p.subtitle)}</small></span><span>${typeName[p.type]}</span></div>`;
-  if(p.type==='image')return `<article class="work-card work-card--image"><button type="button" data-image="${p.image}" data-title="${escapeHtml(p.title)}" aria-label="Enlarge ${escapeHtml(p.title)}">${art}</button><a href="#project/${p.id}">${meta}</a></article>`;
+  if(p.type==='image')return `<article class="work-card work-card--image"><button type="button" data-image="${imageUrl(p.image)}" data-title="${escapeHtml(p.title)}" aria-label="Enlarge ${escapeHtml(p.title)}">${art}</button><a href="#project/${p.id}">${meta}</a></article>`;
   return `<a class="work-card" href="#project/${p.id}" aria-label="View ${escapeHtml(p.title)}">${art}${meta}</a>`;
 }
 function catalogBody(){
@@ -282,7 +295,7 @@ function groupFilters(){
  return '<span class="group-filters__label">VIDEO SERIES</span>'+[`<button type="button" data-group="all" class="${activeGroup==='all'?'is-active':''}" aria-pressed="${activeGroup==='all'}">All Series</button>`,...groups.map(g=>`<button type="button" data-group="${g}" class="${activeGroup===g?'is-active':''}" aria-pressed="${activeGroup===g}">${escapeHtml(projects.find(p=>p.group===g).groupTitle)}</button>`)].join('');
 }
 function work(){
- const catalog=`<section class="catalog page-section" id="portfolio-index">${sectionBar('01','Portfolio')}<div class="filter-row" role="group" aria-label="Filter by format"><span>EXPLORE BY FORMAT</span><div>${['all',...portfolioTypes].map(t=>`<button type="button" data-filter="${t}" class="${activeType===t?'is-active':''}" aria-pressed="${activeType===t}">${t==='all'?'ALL':typeName[t]} <small>${pad(t==='all'?projects.length:count(t))}</small></button>`).join('')}</div></div><div class="group-filters" id="group-filters" role="group" aria-label="Filter video series" ${activeType==='video'?'':'hidden'}>${groupFilters()}</div><div id="catalog-body">${catalogBody()}</div></section>`;
+ const catalog=`<section class="catalog page-section" id="portfolio-index">${sectionBar('01','Portfolio')}${inlineBack()}<div class="filter-row" role="group" aria-label="Filter by format"><span>EXPLORE BY FORMAT</span><div>${['all',...portfolioTypes].map(t=>`<button type="button" data-filter="${t}" class="${activeType===t?'is-active':''}" aria-pressed="${activeType===t}">${t==='all'?'ALL':typeName[t]} <small>${pad(t==='all'?projects.length:count(t))}</small></button>`).join('')}</div></div><div class="group-filters" id="group-filters" role="group" aria-label="Filter video series" ${activeType==='video'?'':'hidden'}>${groupFilters()}</div><div id="catalog-body">${catalogBody()}</div></section>`;
  return pageHero('ALL Portfolio', 'A collection of AI products, films, and social visuals', 'work') + catalog;
 }
 function brandCover(kind){
@@ -311,7 +324,7 @@ function experienceBadge(type){
  return badge?`<span class="experience-badge" data-type="${type}" title="${badge.title}">${badge.label}</span>`:'';
 }
 function brandTile(id, name, extraClass=''){
- return `<div class="experience-logo ${extraClass}"><img src="./assets/brand-${id}-black-20261018.webp" alt="${escapeHtml(name)} logo" loading="lazy" decoding="async" width="480" height="300"></div>`;
+ return `<div class="experience-logo ${extraClass}"><img ${imageAttrs(`./assets/brand-${id}-black-20261018.webp`,'90px',240)} alt="${escapeHtml(name)} logo" loading="lazy" width="480" height="300"></div>`;
 }
 function experienceList(){
  const years=[...new Set(career.timeline.map(entry=>entry.start.slice(0,4)))].sort();
@@ -323,29 +336,29 @@ function experienceList(){
  return `<div class="intro-experience" aria-labelledby="experience-title"><div class="experience-heading"><h3 id="experience-title">(Experience)</h3><span>COMPANIES, PROJECTS &amp; COMMUNITIES</span></div><ul class="experience-list">${rows}</ul><div class="experience-footer"><a class="underlined-link" href="#about">Explore My Work <span>↗</span></a></div></div>`;
 }
 function personalIntro(){
- return `<section class="page-section personal-intro" id="about-intro">${sectionBar('01','About Me')}<h2 class="intro-lead">${escapeHtml(lifePrinciple)}</h2><div class="intro-layout"><figure class="intro-project intro-project--portrait"><img src="./assets/hokeem-portrait-light-20261018.webp" alt="Hokeem’s leopard persona in a black suit, standing upright with one hand lowering a round black hat" loading="lazy" decoding="async" width="720" height="1080"><figcaption>HOKEEM / THE PERSON BEHIND THE WORK</figcaption></figure>${experienceList()}</div></section>`;
+ return `<section class="page-section personal-intro" id="about-intro">${sectionBar('01','About Me')}<h2 class="intro-lead">${escapeHtml(lifePrinciple)}</h2><div class="intro-layout"><figure class="intro-project intro-project--portrait"><img ${imageAttrs('./assets/hokeem-portrait-light-20261018.webp','(max-width: 600px) 85vw, 32vw',800)} alt="Hokeem’s leopard persona in a black suit, standing upright with one hand lowering a round black hat" loading="lazy" width="720" height="1080"><figcaption>HOKEEM / THE PERSON BEHIND THE WORK</figcaption></figure>${experienceList()}</div></section>`;
 }
 function featuredWork(){
  const selected=projects.filter(p=>p.type==='product');
- return `<section class="page-section home-featured" id="selected-work" aria-labelledby="featured-heading">${sectionBar('02','Product Showcase')}<div class="featured-layout"><div class="featured-context"><span class="eyebrow">VIBE CODING / PRODUCT DEMOS</span><h2 id="featured-heading">Vibe-coding</h2><p>Four products built around creator discovery, content production, and KOL collaboration.</p><a class="underlined-link" href="#work/product">Explore the Products <span>↗</span></a></div><div class="featured-stack">${selected.map((p,i)=>`<a class="featured-card" href="#project/${p.id}" style="--card-order:${i}" aria-label="Watch ${escapeHtml(p.title)} demo"><div class="featured-media" style="--featured-art:url('${p.image}')"><div class="featured-media__blur" aria-hidden="true"></div><span class="featured-media__crop"><img class="featured-media__image" src="${p.image}" alt="${escapeHtml(p.title)} product cover" loading="lazy" width="1440" height="1080"></span><span class="featured-media__open" aria-hidden="true">↗</span></div><div class="featured-meta"><span>(${pad(i+1)})</span><div><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.subtitle)}</p></div><span class="featured-meta__type">PRODUCT DEMO</span></div></a>`).join('')}</div><div class="featured-all"><a class="featured-all__link" href="#work/product" aria-label="Explore all ${selected.length} product demos"><span class="featured-all__kicker">ALL PRODUCT DEMOS / ${pad(selected.length)}</span><strong>Explore All<br>Demos</strong><span class="featured-all__arrow" aria-hidden="true">↗</span></a></div></div></section>`;
+ return `<section class="page-section home-featured" id="selected-work" aria-labelledby="featured-heading">${sectionBar('02','Product Showcase')}<div class="featured-layout"><div class="featured-context"><span class="eyebrow">VIBE CODING / PRODUCT DEMOS</span><h2 id="featured-heading">Vibe-coding</h2><p>Four products built around creator discovery, content production, and KOL collaboration.</p><a class="underlined-link" href="#work/product">Explore the Products <span>↗</span></a></div><div class="featured-stack">${selected.map((p,i)=>`<a class="featured-card" href="#project/${p.id}" style="--card-order:${i}" aria-label="Watch ${escapeHtml(p.title)} demo"><div class="featured-media" ><div class="featured-media__blur" aria-hidden="true"></div><span class="featured-media__crop"><img class="featured-media__image" ${imageAttrs(p.image,'(max-width: 800px) 90vw, 46vw',800)} alt="${escapeHtml(p.title)} product cover" loading="lazy" width="1440" height="1080"></span><span class="featured-media__open" aria-hidden="true">↗</span></div><div class="featured-meta"><span>(${pad(i+1)})</span><div><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.subtitle)}</p></div><span class="featured-meta__type">PRODUCT DEMO</span></div></a>`).join('')}</div><div class="featured-all"><a class="featured-all__link" href="#work/product" aria-label="Explore all ${selected.length} product demos"><span class="featured-all__kicker">ALL PRODUCT DEMOS / ${pad(selected.length)}</span><strong>Explore All<br>Demos</strong><span class="featured-all__arrow" aria-hidden="true">↗</span></a></div></div></section>`;
 }
 function home(){
  const formats=[{type:'video',title:'Video Works',subtitle:'AI Visual Films / Short Dramas / Hypit',description:'AI visual films, short dramas, and production cases made with Hypit.',image:'./assets/aigc-amos-doodle-egg.webp'},{type:'image',title:'Images & Visuals',subtitle:'Editorial / Brand / Social',description:'Market stories, information cards, and visual series, available as full-size images.',image:'./assets/cover-images-john-williams-20261019.webp'}];
- const creativeCards=formats.map((f,i)=>`<article class="personal-format-card"><span class="format-number">${pad(i+1)}</span><a class="format-image" href="#work/${f.type}" aria-label="Explore ${f.title}"><img src="${f.image}" alt="${f.title} / Selected Work" loading="lazy" width="960" height="640"></a><div class="format-copy"><h3><a href="#work/${f.type}">${f.title}</a></h3><p class="format-subtitle">${f.subtitle}</p><p>${f.description}</p><a class="format-link" href="#work/${f.type}">Explore ${count(f.type)} ${f.type==='image'?'Images':'Videos'} ↗</a></div></article>`).join('');
- const musicCard=`<article class="personal-format-card"><span class="format-number">03</span><a class="format-image" href="#music" aria-label="Explore Music"><img src="${musicTracks[0].image}" alt="${escapeHtml(musicTracks[0].title)}" loading="lazy" width="1000" height="1000"></a><div class="format-copy"><h3><a href="#music">Music</a></h3><p class="format-subtitle">Original Music</p><p>Original songs · 3M plays across platforms.</p><a class="format-link" href="#music">Listen to the Music ↗</a></div></article>`;
+ const creativeCards=formats.map((f,i)=>`<article class="personal-format-card"><span class="format-number">${pad(i+1)}</span><a class="format-image" href="#work/${f.type}" aria-label="Explore ${f.title}"><img ${imageAttrs(f.image,'(max-width: 800px) 90vw, 44vw',800)} alt="${f.title} / Selected Work" loading="lazy" width="960" height="640"></a><div class="format-copy"><h3><a href="#work/${f.type}">${f.title}</a></h3><p class="format-subtitle">${f.subtitle}</p><p>${f.description}</p><a class="format-link" href="#work/${f.type}">Explore ${count(f.type)} ${f.type==='image'?'Images':'Videos'} ↗</a></div></article>`).join('');
+ const musicCard=`<article class="personal-format-card"><span class="format-number">03</span><a class="format-image" href="#music" aria-label="Explore Music"><img ${imageAttrs(musicTracks[0].image,'(max-width: 800px) 90vw, 44vw',800)} alt="${escapeHtml(musicTracks[0].title)}" loading="lazy" width="1000" height="1000"></a><div class="format-copy"><h3><a href="#music">Music</a></h3><p class="format-subtitle">Original Music</p><p>Original songs · 3M plays across platforms.</p><a class="format-link" href="#music">Listen to the Music ↗</a></div></article>`;
  return `<section class="hero hero--home">${brandCover('home')}<div class="home-hero-content"><div class="home-hero-intro"><span class="eyebrow">HOKEEM / VIBE CODING PRODUCTS &amp; AIGC VISUALS</span><p>Products.<br>Videos.<br>Visuals.</p><a class="underlined-link" href="#work">Explore Work <span>↗</span></a></div><div class="hero-signature"><h1>PORTFOLIO</h1></div></div></section>${personalIntro()}${featuredWork()}<section class="page-section personal-formats">${sectionBar('03','Creative Portfolio')}<h2 class="formats-heading">Films, visuals &amp; music.</h2><div class="format-list">${creativeCards}${musicCard}</div></section>`;
 }
 function media(p){
- if(p.type==='image')return `<button class="media-viewer media-viewer--image" type="button" data-image="${p.image}" data-title="${escapeHtml(p.title)}"><img src="${p.image}" alt="${escapeHtml(p.title)}" /><span>View full image ↗</span></button>`;
- return `<div class="video-player"><video class="inline-video" controls playsinline preload="metadata" poster="${p.image}" aria-label="${escapeHtml(p.title)}" data-aspect="${p.aspect}" data-fallback="${p.videoWebm || ''}"><source src="${p.video}" type="video/mp4">${p.videoWebm?`<source src="${p.videoWebm}" type="video/webm">`:''}Your browser does not support embedded video.</video><div class="video-player__links"><span class="video-status" role="status" aria-live="polite"></span><a href="${p.video}" target="_blank" rel="noopener noreferrer">Open video separately ↗</a></div></div>`;
+ if(p.type==='image')return `<button class="media-viewer media-viewer--image" type="button" data-image="${imageUrl(p.image)}" data-title="${escapeHtml(p.title)}"><img ${imageAttrs(p.image,'(max-width: 800px) 90vw, 58vw',1440)} alt="${escapeHtml(p.title)}" /><span>View full image ↗</span></button>`;
+ return `<div class="video-player"><video class="inline-video" controls playsinline preload="none" poster="${imageUrl(p.image,innerWidth<=800?800:1440)}" aria-label="${escapeHtml(p.title)}" data-aspect="${p.aspect}" data-fallback="${p.videoWebm || ''}"><source src="${p.video}" type="video/mp4">${p.videoWebm?`<source src="${p.videoWebm}" type="video/webm">`:''}Your browser does not support embedded video.</video><div class="video-player__links"><span class="video-status" role="status" aria-live="polite"></span><a href="${p.video}" target="_blank" rel="noopener noreferrer">Open video separately ↗</a></div></div>`;
 }
 function detail(p){
  const others=projects.filter(x=>x.id!==p.id&&x.group===p.group).slice(0,p.type==='image'?6:2);
  const cue=p.type==='image'?'Scroll down to view the full image':'Scroll down to watch the video';
- return `<section class="hero hero--detail"><div class="hero__image" style="background-image:url('${p.image}')"></div><div class="hero__content hero__content--detail"><span>${typeName[p.type]} / ${escapeHtml(p.groupTitle)}</span><h1>${escapeHtml(p.title)}</h1><button class="project-scroll-cue" type="button" data-scroll-project><span>${cue}</span><span aria-hidden="true">↓</span></button></div></section><section class="page-section detail-section" id="project-overview">${sectionBar('01','Project Overview')}<div class="project-layout"><div class="detail-media ${p.aspect==='portrait'?'detail-media--portrait':''}">${media(p)}</div><article class="project-copy"><span class="eyebrow">${escapeHtml(p.groupTitle)}</span><h2>${escapeHtml(p.title)}</h2><p>${escapeHtml(p.description)}</p><dl class="project-facts"><div><dt>FORMAT</dt><dd>${typeLabel[p.type]}</dd></div>${p.duration?`<div><dt>DURATION</dt><dd>${p.duration}</dd></div>`:''}</dl><button class="project-back" type="button" data-page-back>← Back to Portfolio</button></article></div></section>${others.length?`<section class="page-section related-work">${sectionBar('02','Related Work')}<div class="group-heading"><h2>Related Work</h2></div><div class="work-grid ${p.type==='image'?'work-grid--images':''}">${others.map(card).join('')}</div></section>`:''}`;
+ return `<section class="hero hero--detail"><div class="hero__image" style="${imageCover(p.image)}"></div><div class="hero__content hero__content--detail">${inlineBack('← Back to Portfolio')}<span>${typeName[p.type]} / ${escapeHtml(p.groupTitle)}</span><h1>${escapeHtml(p.title)}</h1><button class="project-scroll-cue" type="button" data-scroll-project><span>${cue}</span><span aria-hidden="true">↓</span></button></div></section><section class="page-section detail-section" id="project-overview">${sectionBar('01','Project Overview')}<div class="project-layout"><div class="detail-media ${p.aspect==='portrait'?'detail-media--portrait':''}">${media(p)}</div><article class="project-copy"><span class="eyebrow">${escapeHtml(p.groupTitle)}</span><h2>${escapeHtml(p.title)}</h2><p>${escapeHtml(p.description)}</p><dl class="project-facts"><div><dt>FORMAT</dt><dd>${typeLabel[p.type]}</dd></div>${p.duration?`<div><dt>DURATION</dt><dd>${p.duration}</dd></div>`:''}</dl><button class="project-back" type="button" data-page-back>← Back to Portfolio</button></article></div></section>${others.length?`<section class="page-section related-work">${sectionBar('02','Related Work')}<div class="group-heading"><h2>Related Work</h2></div><div class="work-grid ${p.type==='image'?'work-grid--images':''}">${others.map(card).join('')}</div></section>`:''}`;
 }
 function music(){
- return `<section class="hero hero--music"><div class="hero__image" aria-hidden="true" style="background-image:url('${musicTracks[0].image}')"></div><div class="music-hero-content"><span class="eyebrow">HOKEEM / ORIGINAL MUSIC</span><h1>Music</h1><p>Original songs, shared with the world.</p><div class="music-total"><strong>3M</strong><span>plays across platforms</span></div></div></section><section class="page-section music-collection">${sectionBar('01','Original Music')}<div class="music-collection__intro"><p>Listen to three original releases on NetEase Cloud Music.</p><span>03 TRACKS</span></div><div class="music-grid">${musicTracks.map((track,i)=>`<article class="music-track"><a class="music-cover" href="${track.url}" target="_blank" rel="noopener noreferrer" aria-label="Listen to ${escapeHtml(track.title)}"><img src="${track.image}" alt="${escapeHtml(track.title)}" loading="lazy" width="1000" height="1000"><span aria-hidden="true">↗</span></a><span class="music-track__number">(${pad(i+1)}) / HOKEEM</span><h2>${escapeHtml(track.title)}</h2><p class="music-track__artist">${escapeHtml(track.artist)}</p><p class="music-track__album">${escapeHtml(track.album)}</p><a class="underlined-link" href="${track.url}" target="_blank" rel="noopener noreferrer">Listen on NetEase <span>↗</span></a></article>`).join('')}</div></section>`;
+ return `<section class="hero hero--music"><div class="hero__image" aria-hidden="true" style="${imageCover(musicTracks[0].image)}"></div><div class="music-hero-content"><span class="eyebrow">HOKEEM / ORIGINAL MUSIC</span><h1>Music</h1><p>Original songs, shared with the world.</p><div class="music-total"><strong>3M</strong><span>plays across platforms</span></div></div></section><section class="page-section music-collection">${sectionBar('01','Original Music')}${inlineBack()}<div class="music-collection__intro"><p>Listen to three original releases on NetEase Cloud Music.</p><span>03 TRACKS</span></div><div class="music-grid">${musicTracks.map((track,i)=>`<article class="music-track"><a class="music-cover" href="${track.url}" target="_blank" rel="noopener noreferrer" aria-label="Listen to ${escapeHtml(track.title)}"><img ${imageAttrs(track.image,'(max-width: 600px) 90vw, 30vw',800)} alt="${escapeHtml(track.title)}" loading="lazy" width="1000" height="1000"><span aria-hidden="true">↗</span></a><span class="music-track__number">(${pad(i+1)}) / HOKEEM</span><h2>${escapeHtml(track.title)}</h2><p class="music-track__artist">${escapeHtml(track.artist)}</p><p class="music-track__album">${escapeHtml(track.album)}</p><a class="underlined-link" href="${track.url}" target="_blank" rel="noopener noreferrer">Listen on NetEase <span>↗</span></a></article>`).join('')}</div></section>`;
 }
 function careerArticle(entry){
  const name=entry.name,brands=entry.brands;
@@ -362,12 +375,12 @@ function about(){
  const years=[...new Set(entries.map(entry=>entry.start.slice(0,4)))];
  const chronology=years.map(year=>`<section class="career-year" data-year="${year}" aria-labelledby="career-year-${year}"><h2 class="career-year__title" id="career-year-${year}">${year}</h2><ul class="career-list">${entries.filter(entry=>entry.start.startsWith(year)).map(careerArticle).join('')}</ul></section>`).join('');
  return pageHero('About Hokeem', 'Who I am, and what I’ve done.')+`
- <section class="page-section personal-bio">${sectionBar('01','About Me')}
+ <section class="page-section personal-bio">${sectionBar('01','About Me')}${inlineBack()}
   <div class="personal-bio__layout"><h2>My Guiding <br>Principles</h2><div><p>${escapeHtml(lifePrinciple)}</p><a class="underlined-link" href="#work">View My Portfolio <span>↗</span></a></div></div>
  </section>
  <section class="page-section career-section career-compact" id="career-experience">${sectionBar('02','Life & Work')}${chronology}</section>`;
 }
-function contact(){return `<section class="hero hero--contact">${brandCover('contact')}<div class="contact-screen"><span>HOKEEM / CONTACT</span><h1>Let's<br>connect.</h1><div class="contact-person"><img src="./assets/hokeem-avatar-light-20261018.webp" alt="Denghaoqing avatar" width="192" height="154"><div><span>YOU'RE REACHING</span><strong>Denghaoqing</strong></div></div><div class="contact-screen__links"><div class="contact-method"><span>WECHAT</span><strong>dhq159162</strong><button type="button" data-copy="dhq159162" aria-label="Copy WeChat ID dhq159162">Copy ID ↗</button></div><a class="contact-method" href="https://t.me/hokeemDeng" target="_blank" rel="noopener noreferrer" aria-label="Message @hokeemDeng on Telegram"><span>TELEGRAM</span><strong>@hokeemDeng</strong><em>Open Telegram ↗</em></a></div><p class="contact-feedback" role="status" aria-live="polite"></p></div></section>`;}
+function contact(){return `<section class="hero hero--contact">${brandCover('contact')}<div class="contact-screen">${inlineBack()}<span>HOKEEM / CONTACT</span><h1>Let's<br>connect.</h1><div class="contact-person"><img ${imageAttrs('./assets/hokeem-avatar-light-20261018.webp','66px',192)} alt="Denghaoqing avatar" width="192" height="154"><div><span>YOU'RE REACHING</span><strong>Denghaoqing</strong></div></div><div class="contact-screen__links"><div class="contact-method"><span>WECHAT</span><strong>dhq159162</strong><button type="button" data-copy="dhq159162" aria-label="Copy WeChat ID dhq159162">Copy ID ↗</button></div><a class="contact-method" href="https://t.me/hokeemDeng" target="_blank" rel="noopener noreferrer" aria-label="Message @hokeemDeng on Telegram"><span>TELEGRAM</span><strong>@hokeemDeng</strong><em>Open Telegram ↗</em></a></div><p class="contact-feedback" role="status" aria-live="polite"></p></div></section>`;}
 function route(options={}){
  const restoreY=options.preserveScroll?window.scrollY:enterNavigation();
  let hash;try{hash=decodeURIComponent(location.hash.slice(1))||'home';}catch{hash='home';}
@@ -468,7 +481,6 @@ imageDialog.addEventListener('click',e=>{if(e.target===imageDialog)imageDialog.c
 window.addEventListener('hashchange',route);
 route();
 
-document.getElementById('page-back').addEventListener('click',goBack);
 document.querySelectorAll('button[data-language]').forEach(button=>button.addEventListener('click',()=>{
  const next=button.dataset.language;
  if(next===i18n.language)return;
@@ -477,8 +489,11 @@ document.querySelectorAll('button[data-language]').forEach(button=>button.addEve
  const playback=oldVideo?{time:oldVideo.currentTime,paused:oldVideo.paused,muted:oldVideo.muted,volume:oldVideo.volume}:null;
  i18n.set(next);route({preserveScroll:true});
  const video=app.querySelector('video');
- if(video&&playback){
+ if(video&&playback&&(playback.time>0||!playback.paused)){
   const restore=()=>{video.currentTime=playback.time;video.muted=playback.muted;video.volume=playback.volume;if(!playback.paused)video.play().catch(()=>{});};
-  if(video.readyState>=1)restore();else video.addEventListener('loadedmetadata',restore,{once:true});
+  if(video.readyState>=1)restore();else{
+   video.addEventListener('loadedmetadata',restore,{once:true});
+   video.preload='metadata';video.load();
+  }
  }
 }));

@@ -927,23 +927,27 @@ img { height: auto; }
  }
 }
 
-/* Transparent brand mark and persistent page utilities. */
+/* Transparent brand mark and an integrated language selector. */
 .brand--custom { mix-blend-mode: normal; }
 .brand-logo > img { filter: none; }
-.site-utilities { position: fixed; z-index: 200; left: max(24px, calc((100vw - 1440px) / 2)); right: max(24px, calc((100vw - 1440px) / 2)); bottom: max(20px, env(safe-area-inset-bottom)); display: flex; justify-content: space-between; align-items: center; gap: 16px; pointer-events: none; }
-.site-utilities > * { pointer-events: auto; box-shadow: 0 5px 24px #0005; }
-.page-back-control { min-height: 46px; padding: 11px 18px; border: 1px solid #f2cb7f; border-radius: 999px; background: var(--gold); color: #171009; font-size: 14px; line-height: 1.4; font-weight: 700; }
-.page-back-control:hover, .page-back-control:focus-visible { background: #f4cd83; }
-.language-switch { display: flex; align-items: center; gap: 2px; padding: 4px; border: 1px solid #ad8a515c; border-radius: 999px; background: #100d09eb; backdrop-filter: blur(12px); }
-.language-switch button { min-width: 43px; min-height: 36px; border: 0; border-radius: 999px; padding: 7px 10px; background: transparent; color: #c5bba9; font-size: 12px; font-weight: 650; }
-.language-switch button.is-active { background: var(--gold); color: #171009; }
-.portfolio-footer { padding-bottom: 100px; }
+.header-actions { display: flex; align-items: center; justify-content: flex-end; gap: clamp(12px, 1.8vw, 26px); }
+.language-switch { display: inline-flex; flex: none; align-items: center; gap: 3px; padding: 2px 9px; border: 1px solid #f4efe428; border-radius: 5px; background: #0b090780; color: #c5bba9; backdrop-filter: blur(12px); }
+.language-switch__icon { flex: none; width: 18px; height: 18px; margin-right: 6px; opacity: .8; }
+.language-switch__divider { width: 1px; height: 12px; background: #f4efe42b; margin-inline: 2px; }
+.language-switch button { position: relative; min-width: 30px; min-height: 40px; padding: 6px 3px; border: 0; background: transparent; color: #b4ab9b; font-family: 'Iowan Old Style', Baskerville, 'Times New Roman', 'Songti SC', serif; font-size: 15px; font-weight: 400; line-height: 1; letter-spacing: .06em; transition: color .2s; }
+.language-switch button[data-language="zh"] { font-family: 'Songti SC', SimSun, serif; font-size: 14px; }
+.language-switch button::after { content: ''; position: absolute; bottom: 5px; left: 6px; right: 7px; height: 1px; background: currentColor; transform: scaleX(0); transition: transform .2s; }
+.language-switch button.is-active { color: #f2cc87; }
+.language-switch button.is-active::after { transform: scaleX(1); }
+.language-switch button:hover { color: var(--ink); }
+.portfolio-footer { padding-bottom: 32px; }
 .format-image { position: relative; }
 .format-image > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .image-dialog__close { min-width: 44px; min-height: 44px; }
 
 /* Project overview: media on the left, a concise reading column on the right. */
 .hero--detail .hero__image::after { background: linear-gradient(180deg, #0007, #0001 40%, #0009), linear-gradient(90deg, #0004, #0001); }
+.hero--detail .hero__image, .hero--music .hero__image { background-image: var(--image-large); }
 .hero--detail .hero__content--detail { gap: 24px; justify-content: center; padding-top: 150px; }
 .hero--detail .hero__content--detail h1 { max-width: 1200px; font-size: clamp(36px, 6.2vw, 94px); line-height: 1.14; letter-spacing: -.035em; }
 .project-scroll-cue { display: inline-flex; align-items: center; align-self: center; justify-content: center; gap: 24px; padding: 13px 22px; margin-top: 14px; border: 1px solid #f4efe47a; border-radius: 999px; background: #0806049c; color: var(--ink); font-size: 14px; line-height: 1.5; backdrop-filter: blur(8px); }
@@ -967,6 +971,9 @@ img { height: auto; }
 .project-facts dd { font-size: 14px; line-height: 1.6; }
 .project-back { margin-top: 28px; padding: 11px 16px; border: 1px solid var(--gold); border-radius: 3px; color: var(--gold); background: transparent; font-size: 13px; }
 .project-back:hover { background: #e2ad5115; }
+.context-back { display: inline-flex; align-items: center; width: fit-content; margin-block: 20px 8px; min-height: 44px; }
+.hero__content--detail > .context-back { align-self: center; margin-block: 0 10px; padding: 10px 17px; border-color: #f4efe46b; color: var(--ink); background: #0b09076b; font-size: 13px; }
+.contact-screen > .context-back { margin-block: 0 20px; font-size: 13px; }
 
 /* Three original releases, with full square artwork. */
 .hero--music { min-height: 460px; }
@@ -1006,16 +1013,18 @@ html[lang="zh-CN"] .career-entry__summary, html[lang="zh-CN"] .project-copy > p 
 html[lang="zh-CN"] .portfolio-footer h2 { font-size: clamp(29px, 4.5vw, 66px); line-height: 1.55; letter-spacing: .015em; }
 html[lang="zh-CN"] .formats-heading { line-height: 1.5; letter-spacing: .01em; }
 @media (max-width: 800px) {
+ .hero--detail .hero__image, .hero--music .hero__image { background-image: var(--image-small); }
+ .header-actions { gap: 14px; }
  .project-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; }
  .project-copy { max-width: 680px; }
  .project-copy > h2 { font-size: 29px; }
  .music-grid { gap: 18px; }
 }
 @media (max-width: 600px) {
- .site-utilities { left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); gap: 8px; }
- .page-back-control { min-height: 43px; padding: 10px 14px; font-size: 12px; }
- .language-switch { padding: 3px; }
- .language-switch button { min-width: 39px; min-height: 34px; padding: 7px 8px; font-size: 11px; }
+ .header-actions { gap: 12px; }
+ .language-switch { padding: 1px 6px; }
+ .language-switch button { min-width: 27px; min-height: 36px; }
+ .language-switch__icon { width: 16px; height: 16px; margin-right: 2px; }
  .hero--detail .hero__content--detail { padding-top: 130px; gap: 20px; }
  .project-scroll-cue { max-width: 100%; font-size: 12px; gap: 14px; padding: 11px 16px; }
  .project-layout { padding-top: 30px; gap: 28px; }
@@ -1035,4 +1044,9 @@ html[lang="zh-CN"] .formats-heading { line-height: 1.5; letter-spacing: .01em; }
  html[lang="zh-CN"] .intro-lead { font-size: 27px; line-height: 1.7; }
  html[lang="zh-CN"] .page-hero-title h1 { font-size: 54px; }
  html[lang="zh-CN"] .portfolio-footer h2 { font-size: clamp(26px, 6.5vw, 34px); }
+}
+@media (max-width: 520px) {
+ .header-actions .header-link.contact-cta { display: none; }
+ .header-actions .mobile-toggle { font-size: 12px; }
+ .header-actions { gap: 14px; }
 }
